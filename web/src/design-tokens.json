@@ -1,0 +1,52 @@
+{
+  "theme": {
+    "light": {
+      "bg": "#F4F1EA",
+      "surface": "#FBF9F4",
+      "border": "#D9D3C6",
+      "text": "#1F2421",
+      "textSecondary": "#5E655F",
+      "accent": "#2F6B5B",
+      "accentHover": "#255849",
+      "statusOk": "#4C7A3F",
+      "statusWarn": "#B7791F",
+      "statusDanger": "#B23A2E"
+    },
+    "dark": {
+      "bg": "#151816",
+      "surface": "#1D211E",
+      "border": "#2D332F",
+      "text": "#E8E6DF",
+      "textSecondary": "#8E948F",
+      "accent": "#5FA08E",
+      "accentHover": "#4D8575",
+      "statusOk": "#4C7A3F",
+      "statusWarn": "#B7791F",
+      "statusDanger": "#B23A2E"
+    }
+  },
+  "typography": {
+    "fontBody": "'Public Sans', sans-serif",
+    "fontMono": "'IBM Plex Mono', monospace",
+    "fontSize": {
+      "xs": "13px",
+      "sm": "15px",
+      "md": "18px",
+      "lg": "24px",
+      "xl": "32px"
+    }
+  },
+  "spacing": {
+    "1": "4px",
+    "2": "8px",
+    "3": "12px",
+    "4": "16px",
+    "6": "24px",
+    "8": "32px"
+  },
+  "radius": {
+    "sm": "6px",
+    "md": "10px"
+  },
+  "controlHeight": "40px"
+}

@@ -1,0 +1,64 @@
+/* ==============================================================================
+   DESIGN TOKENS — SMART HOME "RUMAH"
+   PERHATIAN: Dilarang hardcode warna HEX di komponen atau file CSS lain.
+   Gunakan variabel CSS di bawah ini di seluruh antarmuka.
+   ============================================================================== */
+
+:root {
+  /* Typography */
+  --font-body: 'Public Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+
+  --text-xs: 13px;
+  --text-sm: 15px;
+  --text-md: 18px;
+  --text-lg: 24px;
+  --text-xl: 32px;
+
+  /* Spacing (kelipatan 4) */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+
+  /* Radii */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+
+  /* Control dimension */
+  --control-height: 40px;
+  --border-width: 1px;
+
+  /* Theme: Terang (Light Default) */
+  --color-bg: #F4F1EA;
+  --color-surface: #FBF9F4;
+  --color-border: #D9D3C6;
+  --color-text: #1F2421;
+  --color-text-secondary: #5E655F;
+  --color-accent: #2F6B5B;
+  --color-accent-hover: #255849;
+  --color-accent-text: #FBF9F4;
+
+  /* Status */
+  --color-status-ok: #4C7A3F;
+  --color-status-warn: #B7791F;
+  --color-status-danger: #B23A2E;
+}
+
+/* Theme: Gelap (Dark Mode) */
+[data-theme="dark"] {
+  --color-bg: #151816;
+  --color-surface: #1D211E;
+  --color-border: #2D332F;
+  --color-text: #E8E6DF;
+  --color-text-secondary: #8E948F;
+  --color-accent: #5FA08E;
+  --color-accent-hover: #4D8575;
+  --color-accent-text: #151816;
+
+  --color-status-ok: #4C7A3F;
+  --color-status-warn: #B7791F;
+  --color-status-danger: #B23A2E;
+}
