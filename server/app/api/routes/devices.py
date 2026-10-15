@@ -101,14 +101,24 @@ async def list_devices(
     result = await db.execute(query)
     devices = result.scalars().all()
 
+    now = datetime.datetime.utcnow()
     items = []
     for d in devices:
+        # Evaluasi status online dinamis: jika heartbeat terakhir > 15 detik, anggap offline
+        is_online = bool(d.is_online)
+        if d.last_seen_at:
+            delta = (now - d.last_seen_at).total_seconds()
+            if delta > 15:
+                is_online = False
+        else:
+            is_online = False
+
         items.append({
             "id": d.id,
             "name": d.name,
             "room": d.room,
             "device_type": d.device_type,
-            "is_online": d.is_online,
+            "is_online": is_online,
             "last_seen_at": d.last_seen_at.isoformat() if d.last_seen_at else None,
             "ip_address": d.ip_address,
             "mqtt_username": d.mqtt_username,
@@ -123,6 +133,7 @@ async def list_devices(
                     "updated_at": c.updated_at.isoformat() if c.updated_at else None,
                 }
                 for c in d.channels
+                if c.channel_key not in ("lamp", "relay_fan")
             ],
         })
     return {"status": "ok", "devices": items}
@@ -280,12 +291,10 @@ async def claim_device(
     ch_res = await db.execute(ch_query)
     existing_channels = {c.channel_key: c for c in ch_res.scalars().all()}
     default_channels = [
-        ("lamp", "Semua Lampu", "switch", None),
         ("lamp_tengah", "Lampu Tengah", "switch", None),
         ("lamp_dapur_tamu", "Lampu Dapur & Tamu", "switch", None),
         ("lamp_kamar", "Lampu Kamar", "switch", None),
         ("relay", "Relay / Kipas", "relay", None),
-        ("relay_fan", "Kipas Exhaust", "relay", None),
         ("buzzer", "Sirine Alarm", "buzzer", None),
         ("mq2", "Sensor Gas MQ-2", "gas_sensor", "raw"),
         ("ldr", "Sensor Cahaya LDR", "light_sensor", "raw"),
@@ -567,12 +576,10 @@ async def device_status_report(
     ch_res = await db.execute(ch_query)
     existing_channels = {c.channel_key: c for c in ch_res.scalars().all()}
     default_channels = [
-        ("lamp", "Semua Lampu", "switch", None),
         ("lamp_tengah", "Lampu Tengah", "switch", None),
         ("lamp_dapur_tamu", "Lampu Dapur & Tamu", "switch", None),
         ("lamp_kamar", "Lampu Kamar", "switch", None),
         ("relay", "Relay / Kipas", "relay", None),
-        ("relay_fan", "Kipas Exhaust", "relay", None),
         ("buzzer", "Sirine Alarm", "buzzer", None),
         ("mq2", "Sensor Gas MQ-2", "gas_sensor", "raw"),
         ("ldr", "Sensor Cahaya LDR", "light_sensor", "raw"),
@@ -711,13 +718,26 @@ async def device_status_report(
 
 @router.post("/device/poll")
 @router.post("/devices/poll")
-async def device_poll_commands(payload: DevicePollPayload):
+async def device_poll_commands(
+    payload: DevicePollPayload,
+    db: AsyncSession = Depends(get_db),
+):
     """
     Diambil oleh esp32_thonny.py untuk menarik antrean perintah tertunda.
     """
     device_id = payload.device_id.strip()
     limit = payload.limit or 5
     commands = device_queue.get_pending_commands(device_id, limit=limit)
+
+    # Catat heartbeat polling aktif
+    now = datetime.datetime.utcnow()
+    res = await db.execute(select(Device).where(Device.id == device_id))
+    dev = res.scalar_one_or_none()
+    if dev:
+        dev.last_seen_at = now
+        dev.is_online = True
+        await db.commit()
+
     return {"ok": True, "commands": commands}
 
 

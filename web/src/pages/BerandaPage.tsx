@@ -156,32 +156,37 @@ export const BerandaPage: React.FC = () => {
     return () => unsub();
   }, [queryClient]);
 
-  // Aggregate switch and relay channels
+  // Hanya 4 saklar fisik hardware yang didukung (GPIO 21, 17, 16, 32)
+  const PHYSICAL_SWITCH_KEYS = ['lamp_tengah', 'lamp_dapur_tamu', 'lamp_kamar', 'relay'];
+
   const switchChannels: { deviceId: string; channel: ChannelItem }[] = [];
-  let gasValue = 0;
-  let gasThreshold = 1500;
-  let lightRawValue = 0;
-  let lightIsDark = false;
-  let totalActuators = 0;
+  let gasValue: number | null = null;
+  const gasThreshold = 1500;
+  let lightRawValue: number | null = null;
+  const totalActuators = 4;
   let activeActuators = 0;
 
-  devices.forEach((dev) => {
-    dev.channels.forEach((ch) => {
-      if (ch.channel_type === 'switch' || ch.channel_type === 'relay') {
-        totalActuators++;
-        const isCurrentOn = ch.current_value === 'true' || ch.current_value === '1';
-        if (isCurrentOn) activeActuators++;
-        switchChannels.push({ deviceId: dev.id, channel: ch });
-      } else if (ch.channel_type === 'gas_sensor') {
-        const val = parseFloat(ch.current_value || '0');
-        if (!isNaN(val)) gasValue = val;
-      } else if (ch.channel_type === 'light_sensor') {
-        const val = parseFloat(ch.current_value || '0');
-        if (!isNaN(val)) lightRawValue = val;
-        lightIsDark = ch.current_value === '0' || lightRawValue < 500;
-      }
+  // Evaluasi perangkat aktif/online (heartbeat < 15 detik)
+  const onlineDevices = devices.filter((d) => d.is_online);
+  const hasOnlineDevice = onlineDevices.length > 0;
+
+  if (hasOnlineDevice) {
+    onlineDevices.forEach((dev) => {
+      dev.channels.forEach((ch) => {
+        if (PHYSICAL_SWITCH_KEYS.includes(ch.channel_key)) {
+          const isCurrentOn = ch.current_value === 'true' || ch.current_value === '1';
+          if (isCurrentOn) activeActuators++;
+          switchChannels.push({ deviceId: dev.id, channel: ch });
+        } else if (ch.channel_type === 'gas_sensor' || ch.channel_key === 'mq2') {
+          const val = parseFloat(ch.current_value || '');
+          if (!isNaN(val)) gasValue = Math.round(val);
+        } else if (ch.channel_type === 'light_sensor' || ch.channel_key === 'ldr') {
+          const val = parseFloat(ch.current_value || '');
+          if (!isNaN(val)) lightRawValue = Math.round(val);
+        }
+      });
     });
-  });
+  }
 
   const activeCamerasCount = cameras.filter((c) => c.status === 'online' && !c.privacy_mode).length;
 
@@ -254,11 +259,17 @@ export const BerandaPage: React.FC = () => {
           </div>
           <div className={styles.summaryBottom}>
             <div className={styles.metricValue}>
-              {activeActuators} dari {totalActuators}
+              {hasOnlineDevice ? `${activeActuators} dari ${totalActuators}` : '—'}
             </div>
-            <span className={styles.metricBadge}>
-              {activeActuators > 0 ? 'Aktif' : 'Semua Mati'}
-            </span>
+            {hasOnlineDevice ? (
+              <span className={styles.metricBadge}>
+                {activeActuators > 0 ? 'Aktif' : 'Semua Mati'}
+              </span>
+            ) : (
+              <span className={styles.metricBadgeNeutral}>
+                Tidak terhubung
+              </span>
+            )}
           </div>
         </div>
 
@@ -272,9 +283,19 @@ export const BerandaPage: React.FC = () => {
           </div>
           <div className={styles.summaryBottom}>
             <div className={styles.metricValue} style={{ fontSize: 'var(--text-md)' }}>
-              Gas {gasValue} (ambang {gasThreshold})
+              {!hasOnlineDevice
+                ? '—'
+                : gasValue === null
+                ? 'Kalibrasi...'
+                : `Gas ${gasValue} (ambang ${gasThreshold})`}
             </div>
-            {getGasStatusBadge(gasValue, gasThreshold)}
+            {!hasOnlineDevice ? (
+              <span className={styles.metricBadgeNeutral}>Tidak terhubung</span>
+            ) : gasValue === null ? (
+              <span className={styles.metricBadge}>Kalibrasi</span>
+            ) : (
+              getGasStatusBadge(gasValue, gasThreshold)
+            )}
           </div>
         </div>
 
@@ -288,11 +309,21 @@ export const BerandaPage: React.FC = () => {
           </div>
           <div className={styles.summaryBottom}>
             <div className={styles.metricValue}>
-              {lightIsDark ? 'Gelap' : 'Terang'} · {lightRawValue}
+              {!hasOnlineDevice
+                ? '—'
+                : lightRawValue === null
+                ? 'Kalibrasi...'
+                : `${lightRawValue < 500 ? 'Gelap' : 'Terang'} · ${lightRawValue}`}
             </div>
-            <span className={styles.metricBadge}>
-              {lightIsDark ? 'Malam' : 'Siang'}
-            </span>
+            {!hasOnlineDevice ? (
+              <span className={styles.metricBadgeNeutral}>Tidak terhubung</span>
+            ) : lightRawValue === null ? (
+              <span className={styles.metricBadge}>Kalibrasi</span>
+            ) : (
+              <span className={styles.metricBadge}>
+                {lightRawValue < 500 ? 'Malam' : 'Siang'}
+              </span>
+            )}
           </div>
         </div>
 
@@ -306,9 +337,11 @@ export const BerandaPage: React.FC = () => {
           </div>
           <div className={styles.summaryBottom}>
             <div className={styles.metricValue}>
-              {activeCamerasCount} kamera
+              {activeCamerasCount > 0 ? `${activeCamerasCount} kamera` : '—'}
             </div>
-            <span className={styles.metricBadge}>Siaga</span>
+            <span className={activeCamerasCount > 0 ? styles.metricBadge : styles.metricBadgeNeutral}>
+              {activeCamerasCount > 0 ? 'Siaga' : 'Belum ada perangkat yang terhubung'}
+            </span>
           </div>
         </div>
       </section>
@@ -358,8 +391,8 @@ export const BerandaPage: React.FC = () => {
           ) : switchChannels.length === 0 ? (
             <EmptyState
               icon={Lightbulb}
-              title="Belum ada perangkat saklar terhubung"
-              description="Daftarkan perangkat ESP32 di menu Perangkat untuk mulai mengontrol lampu dan kipas."
+              title="Belum ada perangkat yang terhubung"
+              description="Nyalakan ESP32 atau hubungkan modul perangkat ke sistem untuk mengontrol saklar fisik."
             />
           ) : (
             <div className={styles.switchboardGrid}>
