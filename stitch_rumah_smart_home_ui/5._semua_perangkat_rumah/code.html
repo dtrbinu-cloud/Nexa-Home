@@ -1,0 +1,395 @@
+<!DOCTYPE html><html class="light" lang="id"><head>
+<meta charset="utf-8">
+<meta content="width=360, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+<title>Rumah - Semua Perangkat</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&amp;family=Public+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<!-- Tailwind Script -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-primary": "#ffffff",
+            "surface": "#fcf9f2",
+            "on-tertiary-fixed": "#012200",
+            "secondary-container": "#dbe1da",
+            "surface-container-low": "#f6f3ec",
+            "surface-container-high": "#ebe8e1",
+            "error": "#ba1a1a",
+            "surface-bright": "#fcf9f2",
+            "surface-container-lowest": "#ffffff",
+            "error-container": "#ffdad6",
+            "surface-variant": "#e5e2db",
+            "tertiary-container": "#3e6b32",
+            "surface-container-highest": "#e5e2db",
+            "outline": "#707975",
+            "surface-container": "#f1eee7",
+            "inverse-surface": "#31312c",
+            "on-primary-fixed": "#002019",
+            "secondary-fixed": "#dde4dd",
+            "outline-variant": "#bfc9c4",
+            "on-error": "#ffffff",
+            "surface-dim": "#dcdad3",
+            "on-background": "#1c1c18",
+            "inverse-on-surface": "#f3f0e9",
+            "inverse-primary": "#96d3bf",
+            "on-surface-variant": "#404945",
+            "surface-tint": "#2c6859",
+            "on-error-container": "#93000a",
+            "on-secondary": "#ffffff",
+            "on-secondary-fixed": "#171d19",
+            "background": "#fcf9f2",
+            "primary": "#115344",
+            "on-tertiary-fixed-variant": "#24501a",
+            "on-primary-container": "#abe9d5",
+            "primary-container": "#2f6b5b",
+            "secondary-fixed-dim": "#c1c8c1",
+            "on-tertiary-container": "#b6eaa3",
+            "on-secondary-fixed-variant": "#424843",
+            "tertiary-fixed": "#bcf1a9",
+            "on-surface": "#1c1c18",
+            "tertiary-fixed-dim": "#a1d48f",
+            "primary-fixed-dim": "#96d3bf",
+            "tertiary": "#26521c",
+            "on-secondary-container": "#5d645e",
+            "on-tertiary": "#ffffff",
+            "primary-fixed": "#b1efdb",
+            "secondary": "#59605a",
+            "on-primary-fixed-variant": "#0d5041"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "space-lg": "1.25rem",
+            "gutter-compact": "0.5rem",
+            "space-xs": "0.5rem",
+            "space-xl": "1.5rem",
+            "space-md": "1rem",
+            "space-xxs": "0.25rem",
+            "space-sm": "0.75rem",
+            "gutter": "0.75rem",
+            "margin": "1rem"
+          },
+          "fontFamily": {
+            "body-md": ["Public Sans", "sans-serif"],
+            "mono-data-lg": ["Courier Prime", "monospace"],
+            "title-md": ["Public Sans", "sans-serif"],
+            "headline-md": ["Public Sans", "sans-serif"],
+            "mono-data-sm": ["Courier Prime", "monospace"],
+            "mono-data-md": ["Courier Prime", "monospace"],
+            "headline-lg": ["Public Sans", "sans-serif"],
+            "body-sm": ["Public Sans", "sans-serif"],
+            "label-md": ["Public Sans", "sans-serif"]
+          },
+          "fontSize": {
+            "body-md": ["15px", { "lineHeight": "22px", "fontWeight": "400" }],
+            "mono-data-lg": ["24px", { "lineHeight": "28px", "fontWeight": "400" }],
+            "title-md": ["18px", { "lineHeight": "24px", "fontWeight": "600" }],
+            "headline-md": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "mono-data-sm": ["13px", { "lineHeight": "16px", "fontWeight": "400" }],
+            "mono-data-md": ["15px", { "lineHeight": "20px", "fontWeight": "400" }],
+            "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+            "body-sm": ["13px", { "lineHeight": "18px", "fontWeight": "400" }],
+            "label-md": ["13px", { "lineHeight": "16px", "letterSpacing": "0.01em", "fontWeight": "600" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+    .material-symbols-outlined.fill-icon {
+      font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    /* Hide scrollbars for seamless Android clean feed */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    /* Touch active state */
+    .tap-target {
+      min-width: 48px;
+      min-height: 48px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+  </style>
+</head>
+<body class="bg-background text-on-surface antialiased font-body-md flex justify-center selection:bg-secondary-fixed selection:text-primary">
+<!-- Mobile Simulator Frame: 360 x 800 dp -->
+<div class="w-full max-w-[360px] min-h-[800px] bg-background flex flex-col relative pb-24 overflow-x-hidden select-none">
+<!-- 1. Android Status Bar (09:41, wifi, battery, dark icons) -->
+<header class="w-full h-8 px-margin flex items-center justify-between text-on-surface bg-background shrink-0 z-40">
+<div class="font-label-md text-label-md text-on-surface font-semibold tracking-tight">09:41</div>
+<div class="flex items-center space-x-1.5 text-on-surface">
+<span class="material-symbols-outlined text-[16px]">wifi</span>
+<span class="material-symbols-outlined text-[16px]">signal_cellular_alt</span>
+<span class="material-symbols-outlined text-[18px]">battery_full</span>
+</div>
+</header>
+<!-- 2. Top App Bar (Shared Components standard: headline Rumah, context Semua perangkat) -->
+<nav class="flex justify-between items-center w-full px-margin h-16 max-w-[360px] mx-auto bg-background shrink-0">
+<div class="flex items-center gap-2">
+<button aria-label="Kembali" class="tap-target -ml-2 text-on-surface hover:bg-surface-container-high transition-colors duration-150 active:opacity-80 rounded-full" type="button">
+<span class="material-symbols-outlined text-[24px]">arrow_back</span>
+</button>
+<h1 class="font-title-md text-title-md text-on-surface font-semibold tracking-tight">Semua perangkat</h1>
+</div>
+<div class="flex items-center">
+<button aria-label="Cari atau Tambah" class="tap-target -mr-2 text-on-surface hover:bg-surface-container-high transition-colors duration-150 active:opacity-80 rounded-full" type="button">
+<span class="material-symbols-outlined text-[24px]">search</span>
+</button>
+<button aria-label="Opsi" class="tap-target text-on-surface hover:bg-surface-container-high transition-colors duration-150 active:opacity-80 rounded-full" type="button">
+<span class="material-symbols-outlined text-[24px]">tune</span>
+</button>
+</div>
+</nav>
+<!-- 3. Horizontally Scrollable Chip Filter Row -->
+<section class="w-full px-margin py-space-xs shrink-0 overflow-x-auto no-scrollbar flex items-center gap-space-xs">
+<!-- Selected Chip: "Semua" -->
+<button class="h-8 px-space-md rounded-lg bg-primary-container text-on-primary font-label-md text-label-md font-medium shrink-0 flex items-center transition-colors duration-150 active:scale-95" type="button">
+        Semua
+      </button>
+<!-- Unselected Chips -->
+<button class="h-8 px-space-md rounded-lg bg-surface-container-highest text-on-surface font-label-md text-label-md font-medium shrink-0 flex items-center hover:bg-surface-container transition-colors duration-150 active:scale-95" type="button">
+        Lampu
+      </button>
+<button class="h-8 px-space-md rounded-lg bg-surface-container-highest text-on-surface font-label-md text-label-md font-medium shrink-0 flex items-center hover:bg-surface-container transition-colors duration-150 active:scale-95" type="button">
+        Kipas
+      </button>
+<button class="h-8 px-space-md rounded-lg bg-surface-container-highest text-on-surface font-label-md text-label-md font-medium shrink-0 flex items-center hover:bg-surface-container transition-colors duration-150 active:scale-95" type="button">
+        Sensor
+      </button>
+<button class="h-8 px-space-md rounded-lg bg-surface-container-highest text-on-surface font-label-md text-label-md font-medium shrink-0 flex items-center hover:bg-surface-container transition-colors duration-150 active:scale-95" type="button">
+        Alarm
+      </button>
+<button class="h-8 px-space-md rounded-lg bg-surface-container-highest text-on-surface font-label-md text-label-md font-medium shrink-0 flex items-center hover:bg-surface-container transition-colors duration-150 active:scale-95" type="button">
+        Kamera
+      </button>
+</section>
+<!-- Main Content Canvas (Flat surfaces, NO shadows, tonal division) -->
+<main class="w-full px-margin pt-space-xs flex flex-col gap-space-md">
+<!-- Room Section 1: Ruang tengah -->
+<section class="flex flex-col">
+<!-- Room Section Header -->
+<div class="py-space-xs flex items-center justify-between">
+<h2 class="font-label-md text-label-md text-secondary font-semibold uppercase tracking-wider">Ruang tengah</h2>
+<span class="font-mono-data-sm text-mono-data-sm text-secondary">3 node aktif</span>
+</div>
+<!-- Room Container Card (radius 20, #FBF9F4 / surface-container-lowest, flat, no border) -->
+<div class="w-full bg-surface-container-lowest rounded-[20px] overflow-hidden flex flex-col">
+<!-- Device Row 1: Lampu utama (Online, Controllable) -->
+<div class="px-space-md py-space-sm flex items-center justify-between min-h-[64px]">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-full bg-surface-container-highest flex items-center justify-center shrink-0 text-primary">
+<span class="material-symbols-outlined text-[22px] fill-icon">lightbulb</span>
+</div>
+<div class="flex flex-col">
+<div class="font-body-md text-body-md font-semibold text-on-surface leading-snug">Lampu utama</div>
+<div class="flex items-center gap-1.5 mt-0.5">
+<span class="w-2 h-2 rounded-full bg-[#4C7A3F] shrink-0"></span>
+<span class="font-body-sm text-body-sm text-secondary">Online</span>
+<span class="font-mono-data-sm text-mono-data-sm text-secondary">19:45</span>
+</div>
+</div>
+</div>
+<!-- Toggle switch (Active, 56x32 pill, flat) -->
+<button aria-checked="true" class="w-14 h-8 bg-primary-container rounded-full p-[3px] transition-colors duration-200 focus:outline-none shrink-0 cursor-pointer" onclick="toggleSwitch(this)" role="switch" type="button">
+<span class="block w-[26px] h-[26px] rounded-full bg-surface-container-lowest transform translate-x-6 transition-transform duration-200"></span>
+</button>
+</div>
+<!-- Divider inset 16px -->
+<div class="h-[1px] bg-surface-variant ml-16 mr-space-md"></div>
+<!-- Device Row 2: Kipas plafon (Online, Controllable) -->
+<div class="px-space-md py-space-sm flex items-center justify-between min-h-[64px]">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-full bg-surface-container-highest flex items-center justify-center shrink-0 text-primary">
+<span class="material-symbols-outlined text-[22px]">mode_fan</span>
+</div>
+<div class="flex flex-col">
+<div class="font-body-md text-body-md font-semibold text-on-surface leading-snug">Kipas plafon</div>
+<div class="flex items-center gap-1.5 mt-0.5">
+<span class="w-2 h-2 rounded-full bg-[#4C7A3F] shrink-0"></span>
+<span class="font-body-sm text-body-sm text-secondary">Online</span>
+<span class="font-mono-data-sm text-mono-data-sm text-secondary">19:40</span>
+</div>
+</div>
+</div>
+<!-- Toggle switch (Inactive, 56x32 pill, flat) -->
+<button aria-checked="false" class="w-14 h-8 bg-surface-container-highest rounded-full p-[3px] transition-colors duration-200 focus:outline-none shrink-0 cursor-pointer" onclick="toggleSwitch(this)" role="switch" type="button">
+<span class="block w-[26px] h-[26px] rounded-full bg-surface-container-lowest transform translate-x-0 transition-transform duration-200"></span>
+</button>
+</div>
+<!-- Divider inset 16px -->
+<div class="h-[1px] bg-surface-variant ml-16 mr-space-md"></div>
+<!-- Device Row 3: Sirine alarm (Online, Controllable) -->
+<div class="px-space-md py-space-sm flex items-center justify-between min-h-[64px]">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-full bg-surface-container-highest flex items-center justify-center shrink-0 text-primary">
+<span class="material-symbols-outlined text-[22px]">security</span>
+</div>
+<div class="flex flex-col">
+<div class="font-body-md text-body-md font-semibold text-on-surface leading-snug">Sirine alarm</div>
+<div class="flex items-center gap-1.5 mt-0.5">
+<span class="w-2 h-2 rounded-full bg-[#4C7A3F] shrink-0"></span>
+<span class="font-body-sm text-body-sm text-secondary">Siaga</span>
+<span class="font-mono-data-sm text-mono-data-sm text-secondary">18:02</span>
+</div>
+</div>
+</div>
+<!-- Toggle switch (Inactive, 56x32) -->
+<button aria-checked="false" class="w-14 h-8 bg-surface-container-highest rounded-full p-[3px] transition-colors duration-200 focus:outline-none shrink-0 cursor-pointer" onclick="toggleSwitch(this)" role="switch" type="button">
+<span class="block w-[26px] h-[26px] rounded-full bg-surface-container-lowest transform translate-x-0 transition-transform duration-200"></span>
+</button>
+</div>
+</div>
+</section>
+<!-- Room Section 2: Kamar tidur -->
+<section class="flex flex-col">
+<!-- Room Section Header -->
+<div class="py-space-xs flex items-center justify-between">
+<h2 class="font-label-md text-label-md text-secondary font-semibold uppercase tracking-wider">Kamar tidur</h2>
+<span class="font-mono-data-sm text-mono-data-sm text-secondary">1 node aktif</span>
+</div>
+<!-- Room Container Card -->
+<div class="w-full bg-surface-container-lowest rounded-[20px] overflow-hidden flex flex-col">
+<!-- Device Row: Lampu meja (Online) -->
+<div class="px-space-md py-space-sm flex items-center justify-between min-h-[64px]">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-full bg-surface-container-highest flex items-center justify-center shrink-0 text-primary">
+<span class="material-symbols-outlined text-[22px]">desk</span>
+</div>
+<div class="flex flex-col">
+<div class="font-body-md text-body-md font-semibold text-on-surface leading-snug">Lampu meja</div>
+<div class="flex items-center gap-1.5 mt-0.5">
+<span class="w-2 h-2 rounded-full bg-[#4C7A3F] shrink-0"></span>
+<span class="font-body-sm text-body-sm text-secondary">Online</span>
+<span class="font-mono-data-sm text-mono-data-sm text-secondary">14:10</span>
+</div>
+</div>
+</div>
+<!-- Toggle switch (Active) -->
+<button aria-checked="true" class="w-14 h-8 bg-primary-container rounded-full p-[3px] transition-colors duration-200 focus:outline-none shrink-0 cursor-pointer" onclick="toggleSwitch(this)" role="switch" type="button">
+<span class="block w-[26px] h-[26px] rounded-full bg-surface-container-lowest transform translate-x-6 transition-transform duration-200"></span>
+</button>
+</div>
+</div>
+</section>
+<!-- Room Section 3: Dapur & Halaman -->
+<section class="flex flex-col">
+<!-- Room Section Header -->
+<div class="py-space-xs flex items-center justify-between">
+<h2 class="font-label-md text-label-md text-secondary font-semibold uppercase tracking-wider">Dapur &amp; Halaman</h2>
+<span class="font-mono-data-sm text-mono-data-sm text-secondary">2 perangkat</span>
+</div>
+<!-- Room Container Card -->
+<div class="w-full bg-surface-container-lowest rounded-[20px] overflow-hidden flex flex-col">
+<!-- Device Row: Sensor gas MQ-2 (Online Telemetry / Monitoring, No toggle) -->
+<div class="px-space-md py-space-sm flex items-center justify-between min-h-[64px]">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-full bg-surface-container-highest flex items-center justify-center shrink-0 text-primary">
+<span class="material-symbols-outlined text-[22px]">detector_status</span>
+</div>
+<div class="flex flex-col">
+<div class="font-body-md text-body-md font-semibold text-on-surface leading-snug">Sensor gas MQ-2</div>
+<div class="flex items-center gap-1.5 mt-0.5">
+<span class="w-2 h-2 rounded-full bg-[#4C7A3F] shrink-0"></span>
+<span class="font-body-sm text-body-sm text-secondary">Normal</span>
+<span class="font-mono-data-sm text-mono-data-sm text-secondary">19:42</span>
+</div>
+</div>
+</div>
+<!-- Sensor Telemetry display pill -->
+<div class="px-space-sm py-1 rounded bg-surface-container-high flex items-center">
+<span class="font-mono-data-sm text-mono-data-sm text-on-surface font-medium">0.04 ppm</span>
+</div>
+</div>
+<!-- Divider inset 16px -->
+<div class="h-[1px] bg-surface-variant ml-16 mr-space-md"></div>
+<!-- Device Row: Lampu taman (Offline device, dimmed text, no toggle) -->
+<div class="px-space-md py-space-sm flex items-center justify-between min-h-[64px] opacity-60">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center shrink-0 text-secondary">
+<span class="material-symbols-outlined text-[22px]">yard</span>
+</div>
+<div class="flex flex-col">
+<div class="font-body-md text-body-md font-semibold text-secondary leading-snug">Lampu taman</div>
+<div class="flex items-center gap-1.5 mt-0.5">
+<span class="w-2 h-2 rounded-full bg-secondary shrink-0"></span>
+<span class="font-body-sm text-body-sm text-secondary">Offline</span>
+<span class="font-mono-data-sm text-mono-data-sm text-secondary">Kemarin</span>
+</div>
+</div>
+</div>
+<!-- Offline indicator text -->
+<span class="font-label-md text-label-md text-secondary">Terputus</span>
+</div>
+</div>
+</section>
+</main>
+<!-- 4. BottomNavBar (From Shared Components JSON verbatim: 4 destinations, 80px high, Lainnya active) -->
+<nav class="fixed bottom-0 left-0 w-full z-50 h-20 flex justify-around items-center px-gutter max-w-[360px] mx-auto bg-surface-container-lowest transition-colors duration-200">
+<!-- Tab 1: Beranda -->
+<button class="flex flex-col items-center justify-center gap-1 w-16 h-8 text-secondary font-body-sm text-body-sm hover:bg-surface-container transition-colors duration-200 active:scale-95" type="button">
+<span class="material-symbols-outlined text-[22px]">home</span>
+<span class="font-label-md text-[11px] leading-tight">Beranda</span>
+</button>
+<!-- Tab 2: Kamera -->
+<button class="flex flex-col items-center justify-center gap-1 w-16 h-8 text-secondary font-body-sm text-body-sm hover:bg-surface-container transition-colors duration-200 active:scale-95" type="button">
+<span class="material-symbols-outlined text-[22px]">videocam</span>
+<span class="font-label-md text-[11px] leading-tight">Kamera</span>
+</button>
+<!-- Tab 3: Asisten -->
+<button class="flex flex-col items-center justify-center gap-1 w-16 h-8 text-secondary font-body-sm text-body-sm hover:bg-surface-container transition-colors duration-200 active:scale-95" type="button">
+<span class="material-symbols-outlined text-[22px]">mic</span>
+<span class="font-label-md text-[11px] leading-tight">Asisten</span>
+</button>
+<!-- Tab 4: Lainnya (Active destination for "Semua Perangkat" deep management view) -->
+<button class="flex flex-col items-center justify-center gap-1 w-16 h-8 rounded-full bg-secondary-fixed text-primary-container font-label-md text-label-md transition-colors duration-200 active:scale-95" type="button">
+<span class="material-symbols-outlined text-[22px] fill-icon">more_horiz</span>
+<span class="font-label-md text-[11px] leading-tight font-semibold">Lainnya</span>
+</button>
+</nav>
+</div>
+<!-- Micro-interaction JS for flat toggles -->
+<script>
+    function toggleSwitch(button) {
+      const isChecked = button.getAttribute('aria-checked') === 'true';
+      const thumb = button.querySelector('span');
+      
+      if (isChecked) {
+        button.setAttribute('aria-checked', 'false');
+        button.classList.remove('bg-primary-container');
+        button.classList.add('bg-surface-container-highest');
+        thumb.classList.remove('translate-x-6');
+        thumb.classList.add('translate-x-0');
+      } else {
+        button.setAttribute('aria-checked', 'true');
+        button.classList.remove('bg-surface-container-highest');
+        button.classList.add('bg-primary-container');
+        thumb.classList.remove('translate-x-0');
+        thumb.classList.add('translate-x-6');
+      }
+    }
+  </script>
+</body></html>

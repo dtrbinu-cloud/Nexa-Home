@@ -23,9 +23,15 @@ WHITELISTED_DART_FILES = {
 }
 
 HEX_PATTERN = re.compile(r"#(?:[0-9a-fA-F]{3,4}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})\b")
+RAW_RADIUS_PATTERN = re.compile(r"border-radius\s*:\s*(?!\s*var\(--)[0-9]+px")
+RAW_FONT_SIZE_PATTERN = re.compile(r"font-size\s*:\s*(?!\s*var\(--)[0-9]+px")
 DART_COLOR_HEX = re.compile(r"Color\s*\(\s*0x[0-9a-fA-F]+\s*\)")
 DART_MATERIAL_COLORS = re.compile(r"\bColors\.[a-zA-Z0-9_]+")
-
+DART_BOX_SHADOW = re.compile(r"\bBoxShadow\b")
+DART_GRADIENT = re.compile(r"\b(?:LinearGradient|RadialGradient|SweepGradient)\b")
+DART_RAW_FONT_SIZE = re.compile(r"\bfontSize\s*:\s*(?!\s*AppTypography\.)[0-9]+")
+DART_RAW_RADIUS = re.compile(r"\b(?:BorderRadius\.circular|Radius\.circular)\s*\(\s*(?!\s*AppRadius\.)[0-9]+(?:\.[0-9]+)?\s*\)")
+DART_FORBIDDEN_BORDER = re.compile(r"\bBorder\.all\b")
 
 def check_web_tokens() -> list[tuple[str, int, str, str]]:
     violations = []
@@ -46,50 +52,100 @@ def check_web_tokens() -> list[tuple[str, int, str, str]]:
             continue
 
         for line_num, line in enumerate(content.splitlines(), start=1):
-            matches = HEX_PATTERN.findall(line)
-            if matches:
-                for match in matches:
+            stripped = line.strip()
+            # Abaikan komentar single-line
+            if stripped.startswith("//") or stripped.startswith("/*"):
+                continue
+
+            # 1. Cek warna HEX mentah
+            hex_matches = HEX_PATTERN.findall(line)
+            if hex_matches:
+                for match in hex_matches:
                     rel_path = file_path.relative_to(ROOT_DIR)
-                    violations.append((str(rel_path), line_num, match, line.strip()))
+                    violations.append((str(rel_path), line_num, f"Warna HEX mentah '{match}' (wajib pakai var(--color-...))", stripped))
+
+            # 2. Cek radius mentah di CSS / styling komponen
+            if file_path.suffix in {".css", ".tsx", ".jsx"}:
+                radius_matches = RAW_RADIUS_PATTERN.findall(line)
+                if radius_matches:
+                    for match in radius_matches:
+                        rel_path = file_path.relative_to(ROOT_DIR)
+                        violations.append((str(rel_path), line_num, f"Radius mentah '{match}' (wajib pakai var(--radius-...))", stripped))
+
+            # 3. Cek font-size mentah di CSS / styling komponen (abaikan index.css)
+            if file_path.name != "index.css" and file_path.suffix in {".css", ".tsx", ".jsx"}:
+                font_matches = RAW_FONT_SIZE_PATTERN.findall(line)
+                if font_matches:
+                    for match in font_matches:
+                        rel_path = file_path.relative_to(ROOT_DIR)
+                        violations.append((str(rel_path), line_num, f"Font-size mentah '{match}' (wajib pakai var(--text-...))", stripped))
     return violations
 
 
 def check_dart_tokens() -> list[tuple[str, int, str, str]]:
     violations = []
-    if not APP_LIB.exists():
-        return violations
+    dart_dirs = [APP_LIB]
 
-    for file_path in APP_LIB.rglob("*.dart"):
-        if not file_path.is_file():
+    for d in dart_dirs:
+        if not d.exists():
             continue
-        if file_path.name in WHITELISTED_DART_FILES:
-            continue
-
-        try:
-            content = file_path.read_text(encoding="utf-8")
-        except UnicodeDecodeError:
-            continue
-
-        for line_num, line in enumerate(content.splitlines(), start=1):
-            stripped = line.strip()
-            # Abaikan komentar single-line
-            if stripped.startswith("//"):
+        for file_path in d.rglob("*.dart"):
+            if not file_path.is_file():
+                continue
+            if file_path.name in WHITELISTED_DART_FILES:
                 continue
 
-            # Cek Color(0x...)
-            for match in DART_COLOR_HEX.findall(line):
-                rel_path = file_path.relative_to(ROOT_DIR)
-                violations.append((str(rel_path), line_num, match, stripped))
+            try:
+                content = file_path.read_text(encoding="utf-8")
+            except UnicodeDecodeError:
+                continue
 
-            # Cek Colors.xxx
-            for match in DART_MATERIAL_COLORS.findall(line):
-                rel_path = file_path.relative_to(ROOT_DIR)
-                violations.append((str(rel_path), line_num, match, stripped))
+            for line_num, line in enumerate(content.splitlines(), start=1):
+                stripped = line.strip()
+                # Abaikan komentar single-line
+                if stripped.startswith("//") or stripped.startswith("/*"):
+                    continue
 
-            # Cek #HEX
-            for match in HEX_PATTERN.findall(line):
-                rel_path = file_path.relative_to(ROOT_DIR)
-                violations.append((str(rel_path), line_num, match, stripped))
+                # 1. Cek Color(0x...)
+                for match in DART_COLOR_HEX.findall(line):
+                    rel_path = file_path.relative_to(ROOT_DIR)
+                    violations.append((str(rel_path), line_num, f"Warna Color(...) mentah '{match}' (wajib pakai AppColors.*)", stripped))
+
+                # 2. Cek Colors.xxx
+                for match in DART_MATERIAL_COLORS.findall(line):
+                    rel_path = file_path.relative_to(ROOT_DIR)
+                    violations.append((str(rel_path), line_num, f"Material Colors '{match}' (wajib pakai AppColors.*)", stripped))
+
+                # 3. Cek #HEX
+                for match in HEX_PATTERN.findall(line):
+                    rel_path = file_path.relative_to(ROOT_DIR)
+                    violations.append((str(rel_path), line_num, f"Warna HEX mentah '{match}' (wajib pakai AppColors.*)", stripped))
+
+                # 4. Cek BoxShadow (dilarang di seluruh UI)
+                if DART_BOX_SHADOW.search(line):
+                    rel_path = file_path.relative_to(ROOT_DIR)
+                    violations.append((str(rel_path), line_num, "BoxShadow dilarang di UI (desain flat tanpa bayangan)", stripped))
+
+                # 5. Cek Gradient (dilarang di seluruh UI)
+                if DART_GRADIENT.search(line):
+                    rel_path = file_path.relative_to(ROOT_DIR)
+                    violations.append((str(rel_path), line_num, "Gradient dilarang di UI (desain flat)", stripped))
+
+                # 6. Cek ukuran font mentah
+                if DART_RAW_FONT_SIZE.search(line):
+                    rel_path = file_path.relative_to(ROOT_DIR)
+                    violations.append((str(rel_path), line_num, "Ukuran font mentah (wajib pakai AppTypography.text* [13/15/18/24/32])", stripped))
+
+                # 7. Cek radius mentah (kecuali theme/tokens.dart)
+                if DART_RAW_RADIUS.search(line):
+                    rel_path = file_path.relative_to(ROOT_DIR)
+                    violations.append((str(rel_path), line_num, "Radius mentah (wajib pakai AppRadius.*)", stripped))
+
+                # 8. Cek Border.all pada komponen (diizinkan hanya outline fokus pada input)
+                if DART_FORBIDDEN_BORDER.search(line):
+                    if file_path.name != "app_input.dart":
+                        rel_path = file_path.relative_to(ROOT_DIR)
+                        violations.append((str(rel_path), line_num, "Border.all dilarang pada kartu/tile/chip/tombol", stripped))
 
     return violations
 

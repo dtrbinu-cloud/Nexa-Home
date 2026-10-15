@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+
+<html class="light" lang="id"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Rumah - Layar Asisten</title>
+<!-- Google Fonts: Public Sans & IBM Plex Mono -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&amp;family=Public+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Theme Configuration -->
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "surface-container-highest": "#dfe4df",
+            "tertiary-fixed": "#ffdad4",
+            "on-tertiary-fixed": "#370e08",
+            "on-secondary": "#ffffff",
+            "primary": "#115344",
+            "on-secondary-fixed": "#091f19",
+            "inverse-surface": "#2c322e",
+            "on-tertiary-container": "#ffd3cc",
+            "tertiary-container": "#8c5148",
+            "primary-container": "#2f6b5b",
+            "background": "#f6fbf5",
+            "on-tertiary-fixed-variant": "#6d3830",
+            "surface-container-lowest": "#ffffff",
+            "primary-fixed-dim": "#96d3bf",
+            "primary-fixed": "#b1efdb",
+            "on-surface-variant": "#404945",
+            "on-surface": "#181d1a",
+            "on-secondary-fixed-variant": "#354b44",
+            "tertiary": "#703a32",
+            "surface-tint": "#2c6859",
+            "on-secondary-container": "#536961",
+            "surface-container-low": "#f0f5f0",
+            "on-primary": "#ffffff",
+            "error-container": "#ffdad6",
+            "on-tertiary": "#ffffff",
+            "inverse-on-surface": "#edf2ed",
+            "on-error-container": "#93000a",
+            "surface-bright": "#f6fbf5",
+            "on-primary-fixed-variant": "#0d5041",
+            "surface-variant": "#dfe4df",
+            "surface-container": "#ebefea",
+            "inverse-primary": "#96d3bf",
+            "secondary-fixed": "#cfe8de",
+            "secondary": "#4d635b",
+            "surface-dim": "#d7dbd6",
+            "on-error": "#ffffff",
+            "on-primary-fixed": "#002019",
+            "on-primary-container": "#abe9d5",
+            "surface-container-high": "#e5e9e4",
+            "outline-variant": "#bfc9c4",
+            "secondary-fixed-dim": "#b4ccc2",
+            "outline": "#707975",
+            "secondary-container": "#cfe8de",
+            "error": "#ba1a1a",
+            "surface": "#f6fbf5",
+            "tertiary-fixed-dim": "#ffb4a8",
+            "on-background": "#181d1a"
+          },
+          fontFamily: {
+            "body-md": ["Public Sans", "sans-serif"],
+            "body-sm": ["Public Sans", "sans-serif"],
+            "body-lg": ["Public Sans", "sans-serif"],
+            "mono-metric": ["IBM Plex Mono", "monospace"],
+            "mono-body": ["IBM Plex Mono", "monospace"],
+            "headline-sm": ["Public Sans", "sans-serif"],
+            "mono-sm": ["IBM Plex Mono", "monospace"],
+            "headline-lg": ["Public Sans", "sans-serif"],
+            "label-md": ["Public Sans", "sans-serif"],
+            "headline-md": ["Public Sans", "sans-serif"]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    * {
+      box-shadow: none !important;
+      backdrop-filter: none !important;
+    }
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+    @keyframes soundwave {
+      0%, 100% { height: 6px; }
+      50% { height: 18px; }
+    }
+    .wave-bar-1 { animation: soundwave 1.1s ease-in-out infinite; }
+    .wave-bar-2 { animation: soundwave 0.8s ease-in-out infinite 0.15s; }
+    .wave-bar-3 { animation: soundwave 1.3s ease-in-out infinite 0.3s; }
+    .wave-bar-4 { animation: soundwave 0.9s ease-in-out infinite 0.2s; }
+    .wave-bar-5 { animation: soundwave 1.1s ease-in-out infinite 0.4s; }
+  </style>
+</head>
+<body class="bg-surface text-on-surface antialiased flex min-h-screen font-['Public_Sans']">
+<!-- Side Navigation Bar (Fixed 240px) -->
+<aside class="fixed left-0 top-0 h-screen w-[240px] bg-surface-container-low border-r border-outline-variant flex flex-col justify-between py-6 px-3 z-30 select-none">
+<div class="flex flex-col gap-6">
+<!-- Brand Header -->
+<div class="px-4 flex flex-col">
+<span class="font-headline-md text-[24px] font-semibold text-on-surface tracking-tight">Rumah</span>
+<span class="font-body-sm text-[13px] text-on-surface-variant">Sistem Rumah Tangga</span>
+</div>
+<!-- Navigation Tabs -->
+<nav class="flex flex-col gap-1">
+<!-- Beranda -->
+<a class="flex items-center gap-3 px-4 py-2.5 text-on-surface-variant font-normal hover:bg-surface-container hover:text-on-surface transition-colors duration-150 ease-linear rounded-lg" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="home">home</span>
+<span class="font-body-md text-[15px]">Beranda</span>
+</a>
+<!-- Perangkat -->
+<a class="flex items-center gap-3 px-4 py-2.5 text-on-surface-variant font-normal hover:bg-surface-container hover:text-on-surface transition-colors duration-150 ease-linear rounded-lg" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="devices">devices</span>
+<span class="font-body-md text-[15px]">Perangkat</span>
+</a>
+<!-- Asisten (Active Tab with #E4EDE9 and #2F6B5B) -->
+<a class="flex items-center gap-3 px-4 py-2.5 text-[#2F6B5B] bg-[#E4EDE9] font-medium border-l-4 border-[#2F6B5B] transition-colors duration-150 ease-linear rounded-r-lg" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="smart_toy">smart_toy</span>
+<span class="font-body-md text-[15px]">Asisten</span>
+</a>
+<!-- Kamera -->
+<a class="flex items-center gap-3 px-4 py-2.5 text-on-surface-variant font-normal hover:bg-surface-container hover:text-on-surface transition-colors duration-150 ease-linear rounded-lg" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="videocam">videocam</span>
+<span class="font-body-md text-[15px]">Kamera</span>
+</a>
+<!-- Keluarga -->
+<a class="flex items-center gap-3 px-4 py-2.5 text-on-surface-variant font-normal hover:bg-surface-container hover:text-on-surface transition-colors duration-150 ease-linear rounded-lg" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="group">group</span>
+<span class="font-body-md text-[15px]">Keluarga</span>
+</a>
+<!-- Pengaturan -->
+<a class="flex items-center gap-3 px-4 py-2.5 text-on-surface-variant font-normal hover:bg-surface-container hover:text-on-surface transition-colors duration-150 ease-linear rounded-lg" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="settings">settings</span>
+<span class="font-body-md text-[15px]">Pengaturan</span>
+</a>
+</nav>
+</div>
+<!-- SideNavBar Footer -->
+<div class="px-4 pt-4 border-t border-outline-variant flex items-center gap-2.5 text-on-surface-variant">
+<span class="material-symbols-outlined text-[#2F6B5B] text-[18px]" data-icon="check_circle">check_circle</span>
+<span class="font-['IBM_Plex_Mono'] text-[13px] text-[#2F6B5B] font-medium">Server Terhubung</span>
+</div>
+</aside>
+<!-- Main View Container -->
+<div class="flex-1 ml-[240px] flex flex-col h-screen overflow-hidden bg-surface">
+<!-- Top Navigation Bar -->
+<header class="h-16 border-b border-outline-variant bg-surface px-8 flex justify-between items-center shrink-0 z-20">
+<div class="flex items-center gap-3">
+<h1 class="font-headline-sm text-[18px] font-semibold text-on-surface tracking-tight">Asisten</h1>
+<span class="h-4 w-[1px] bg-outline-variant"></span>
+<div class="flex items-center gap-2 px-2.5 py-1 bg-surface-container rounded-lg border border-outline-variant">
+<span class="w-2 h-2 rounded-full bg-[#4C7A3F]"></span>
+<span class="font-['IBM_Plex_Mono'] text-[13px] text-on-surface-variant">Server terhubung</span>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2">
+<button class="w-10 h-10 flex items-center justify-center rounded-lg border border-outline-variant text-on-surface hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-[20px]" data-icon="notifications">notifications</span>
+</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-lg border border-outline-variant text-on-surface hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-[20px]" data-icon="shield">shield</span>
+</button>
+</div>
+<span class="h-4 w-[1px] bg-outline-variant"></span>
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-full bg-[#E4EDE9] border border-outline-variant flex items-center justify-center text-[#2F6B5B] font-['IBM_Plex_Mono'] text-[13px] font-semibold">
+          B
+        </div>
+<span class="font-body-md text-[15px] font-medium text-on-surface">Budi · Admin</span>
+</div>
+</div>
+</header>
+<!-- Chat & Interaction Canvas -->
+<main class="flex-1 overflow-y-auto px-8 py-6 flex flex-col justify-between">
+<div class="max-w-4xl w-full mx-auto flex flex-col gap-6">
+<!-- Status / Timestamp Divider (ESP32 MQTT - Year 2026) -->
+<div class="flex items-center justify-center gap-3 my-2">
+<div class="h-[1px] flex-1 bg-outline-variant"></div>
+<span class="font-['IBM_Plex_Mono'] text-[13px] text-on-surface-variant bg-surface px-2">Hari ini, 14 Mei 2026 · 19:42 WIB</span>
+<div class="h-[1px] flex-1 bg-outline-variant"></div>
+</div>
+<!-- User Message 1 (Softer shapes: radius 20px, outline 1px #2F6B5B, bg #FBF9F4) -->
+<div class="flex flex-col items-end gap-1.5 self-end max-w-lg">
+<div class="bg-[#FBF9F4] border border-[#2F6B5B] rounded-[20px] px-5 py-3 text-on-surface">
+<p class="font-body-md text-[15px]">Nyalakan lampu kamar</p>
+</div>
+<span class="font-['IBM_Plex_Mono'] text-[13px] text-on-surface-variant">19:42:10</span>
+</div>
+<!-- Assistant Response 1 (Softer shapes: radius 20px, bg #FBF9F4, NO outer border) -->
+<div class="flex items-start gap-3 max-w-lg self-start">
+<div class="w-8 h-8 rounded-full bg-[#E4EDE9] flex items-center justify-center text-[#2F6B5B] shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-[18px]" data-icon="smart_toy">smart_toy</span>
+</div>
+<div class="flex flex-col gap-1.5">
+<div class="bg-[#FBF9F4] rounded-[20px] px-5 py-3.5 text-on-surface">
+<p class="font-body-md text-[15px]">Lampu kamar dinyalakan.</p>
+<div class="mt-2.5 pt-2 border-t border-[#D9D3C6]/60 flex items-center gap-2 text-on-surface-variant">
+<span class="w-2 h-2 rounded-full bg-[#4C7A3F]"></span>
+<span class="font-['IBM_Plex_Mono'] text-[13px]">ESP32 / Relay Kamar: Aktif via MQTT</span>
+</div>
+</div>
+<span class="font-['IBM_Plex_Mono'] text-[13px] text-on-surface-variant">19:42:12</span>
+</div>
+</div>
+<!-- User Message 2 -->
+<div class="flex flex-col items-end gap-1.5 self-end max-w-lg">
+<div class="bg-[#FBF9F4] border border-[#2F6B5B] rounded-[20px] px-5 py-3 text-on-surface">
+<p class="font-body-md text-[15px]">Matikan semua saklar lantai 1</p>
+</div>
+<span class="font-['IBM_Plex_Mono'] text-[13px] text-on-surface-variant">19:43:01</span>
+</div>
+<!-- Sensitive Action Confirmation Card (radius 20px, fill #FBF9F4, NO outer border, no inset well) -->
+<div class="flex items-start gap-3 max-w-xl self-start w-full">
+<div class="w-8 h-8 rounded-full bg-[#E4EDE9] flex items-center justify-center text-[#2F6B5B] shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-[18px]" data-icon="smart_toy">smart_toy</span>
+</div>
+<div class="flex flex-col gap-1.5 flex-1">
+<div class="bg-[#FBF9F4] rounded-[20px] p-5 flex flex-col gap-4">
+<!-- Warning Banner Header -->
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-[#B7791F]"></span>
+<span class="font-headline-sm text-[16px] font-semibold text-on-surface">Konfirmasi Tindakan Sensitif</span>
+</div>
+<!-- Message -->
+<p class="font-body-md text-[15px] text-on-surface leading-relaxed">
+              Konfirmasi: Anda akan mematikan semua saklar lantai 1 (Lampu Ruang Tengah, Dapur, dan Kipas).
+            </p>
+<!-- Action Buttons (Ya: bg #2F6B5B, text white, 44px tall, radius 12px; Batal: outline 1px #D9D3C6, 44px, radius 12px) -->
+<div class="flex items-center gap-3 pt-1">
+<button class="h-[44px] px-6 rounded-[12px] bg-[#2F6B5B] text-white font-body-md text-[15px] font-medium hover:bg-[#255849] active:bg-[#1F4A3D] transition-colors duration-150 inline-flex items-center justify-center cursor-pointer" type="button">
+                Ya, lanjutkan
+              </button>
+<button class="h-[44px] px-6 rounded-[12px] bg-transparent border border-[#D9D3C6] text-on-surface font-body-md text-[15px] font-medium hover:bg-[#ECE7DC] transition-colors duration-150 inline-flex items-center justify-center cursor-pointer" type="button">
+                Batal
+              </button>
+</div>
+</div>
+<span class="font-['IBM_Plex_Mono'] text-[13px] text-on-surface-variant">19:43:03</span>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Input & Voice Console -->
+<footer class="border-t border-outline-variant bg-surface px-8 py-5 shrink-0 z-20">
+<div class="max-w-4xl mx-auto flex flex-col gap-3">
+<!-- Voice Status Banner -->
+<div class="flex items-center justify-between bg-[#FBF9F4] border border-[#D9D3C6] rounded-[16px] px-4 py-2.5">
+<div class="flex items-center gap-3">
+<!-- Listening Pill Badge -->
+<div class="flex items-center gap-2 bg-[#E4EDE9] border border-[#2F6B5B] px-3 py-1 rounded-[10px]">
+<span class="w-2 h-2 rounded-full bg-[#4C7A3F]"></span>
+<span class="font-['IBM_Plex_Mono'] text-[13px] text-[#2F6B5B] font-semibold">Mendengarkan…</span>
+</div>
+<!-- Styled & Animated Audio Bars in #2F6B5B -->
+<div class="flex items-center gap-1 h-5 px-1">
+<span class="w-1 bg-[#2F6B5B] rounded-full wave-bar-1"></span>
+<span class="w-1 bg-[#2F6B5B] rounded-full wave-bar-2"></span>
+<span class="w-1 bg-[#2F6B5B] rounded-full wave-bar-3"></span>
+<span class="w-1 bg-[#2F6B5B] rounded-full wave-bar-4"></span>
+<span class="w-1 bg-[#2F6B5B] rounded-full wave-bar-5"></span>
+</div>
+<span class="font-body-sm text-[13px] text-on-surface-variant">Mikrofon internal ESP32 aktif</span>
+</div>
+<button class="h-[44px] px-4 rounded-[12px] bg-transparent border border-[#D9D3C6] text-on-surface font-body-sm text-[13px] font-medium hover:bg-[#ECE7DC] transition-colors flex items-center gap-2 cursor-pointer" type="button">
+<span class="material-symbols-outlined text-[18px]" data-icon="mic_off">mic_off</span>
+<span>Berhenti bicara</span>
+</button>
+</div>
+<!-- Input Field Row -->
+<form class="flex items-center gap-3" onsubmit="return false;">
+<div class="relative flex-1">
+<input class="w-full h-[44px] px-4 bg-[#FBF9F4] border border-[#D9D3C6] rounded-[12px] font-body-md text-[15px] text-on-surface placeholder:text-on-surface-variant focus:outline-none focus:border-[#2F6B5B]" placeholder="Ketik perintah atau gunakan suara..." type="text"/>
+</div>
+<!-- Mic Toggle Button -->
+<button class="h-[44px] w-[44px] shrink-0 rounded-[12px] bg-[#E4EDE9] border border-[#2F6B5B] text-[#2F6B5B] flex items-center justify-center hover:bg-[#D4E3DC] transition-colors cursor-pointer" title="Bicara" type="button">
+<span class="material-symbols-outlined text-[20px]" data-icon="mic">mic</span>
+</button>
+<!-- Primary Send Button (44px tall, radius 12px, bg #2F6B5B) -->
+<button class="h-[44px] px-5 rounded-[12px] bg-[#2F6B5B] text-white font-body-md text-[15px] font-medium hover:bg-[#255849] transition-colors flex items-center gap-2 shrink-0 cursor-pointer" type="submit">
+<span>Kirim</span>
+<span class="material-symbols-outlined text-[18px]" data-icon="send">send</span>
+</button>
+</form>
+<!-- Command Prompts Guidance (ESP32 MQTT specific: no door locks, no AC, no TVs) -->
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="font-['IBM_Plex_Mono'] text-[13px] font-medium">Perintah suara cepat:</span>
+<div class="flex flex-wrap gap-2">
+<button class="font-['IBM_Plex_Mono'] text-[13px] text-[#1F2421] bg-[#ECE7DC] px-3 py-1 rounded-[8px] hover:bg-[#E4EDE9] transition-colors cursor-pointer" type="button">
+            'Status sensor gas'
+          </button>
+<button class="font-['IBM_Plex_Mono'] text-[13px] text-[#1F2421] bg-[#ECE7DC] px-3 py-1 rounded-[8px] hover:bg-[#E4EDE9] transition-colors cursor-pointer" type="button">
+            'Matikan lampu tamu'
+          </button>
+<button class="font-['IBM_Plex_Mono'] text-[13px] text-[#1F2421] bg-[#ECE7DC] px-3 py-1 rounded-[8px] hover:bg-[#E4EDE9] transition-colors cursor-pointer" type="button">
+            'Nyalakan kipas'
+          </button>
+</div>
+</div>
+</div>
+</footer>
+</div>
+</body></html>

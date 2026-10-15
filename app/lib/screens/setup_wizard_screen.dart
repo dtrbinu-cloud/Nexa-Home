@@ -236,13 +236,10 @@ class _SetupWizardScreenState extends ConsumerState<SetupWizardScreen> {
               Container(
                 padding: const EdgeInsets.all(AppSpacing.space3),
                 decoration: BoxDecoration(
+                  color: Theme.of(context).brightness == Brightness.dark
+                      ? AppColors.darkSubtle
+                      : AppColors.lightSubtle,
                   borderRadius: AppRadius.borderSm,
-                  border: Border.all(
-                    color: Theme.of(context).brightness == Brightness.dark
-                        ? AppColors.darkBorder
-                        : AppColors.lightBorder,
-                    width: AppDimensions.borderWidth,
-                  ),
                 ),
                 child: SelectableText(
                   _totpSecret ?? '-',

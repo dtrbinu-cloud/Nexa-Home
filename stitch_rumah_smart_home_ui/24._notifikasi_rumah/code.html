@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+
+<html lang="id"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>24. Notifikasi - Rumah</title>
+<!-- Google Fonts: Public Sans & Courier Prime -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&amp;family=Public+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS v3 -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-secondary-fixed-variant": "#424843",
+            "surface-container-low": "#f6f3ec",
+            "on-surface-variant": "#404945",
+            "inverse-primary": "#96d3bf",
+            "tertiary": "#26521c",
+            "surface": "#fcf9f2",
+            "on-tertiary": "#ffffff",
+            "outline": "#707975",
+            "surface-dim": "#dcdad3",
+            "on-secondary-container": "#5d645e",
+            "on-primary-container": "#abe9d5",
+            "tertiary-fixed": "#bcf1a9",
+            "primary-fixed": "#b1efdb",
+            "on-tertiary-fixed-variant": "#24501a",
+            "outline-variant": "#bfc9c4",
+            "on-primary-fixed": "#002019",
+            "on-tertiary-fixed": "#012200",
+            "surface-container-lowest": "#ffffff",
+            "surface-container-highest": "#e5e2db",
+            "error-container": "#ffdad6",
+            "surface-container": "#f1eee7",
+            "on-error": "#ffffff",
+            "primary-fixed-dim": "#96d3bf",
+            "on-primary-fixed-variant": "#0d5041",
+            "primary": "#115344",
+            "on-secondary-fixed": "#171d19",
+            "error": "#ba1a1a",
+            "surface-container-high": "#ebe8e1",
+            "secondary": "#59605a",
+            "primary-container": "#2f6b5b",
+            "on-error-container": "#93000a",
+            "on-surface": "#1c1c18",
+            "inverse-on-surface": "#f3f0e9",
+            "tertiary-container": "#3e6b32",
+            "inverse-surface": "#31312c",
+            "on-secondary": "#ffffff",
+            "background": "#fcf9f2",
+            "on-background": "#1c1c18",
+            "surface-bright": "#fcf9f2",
+            "secondary-fixed-dim": "#c1c8c1",
+            "on-primary": "#ffffff",
+            "surface-tint": "#2c6859",
+            "on-tertiary-container": "#b6eaa3",
+            "secondary-fixed": "#dde4dd",
+            "secondary-container": "#dbe1da",
+            "surface-variant": "#e5e2db",
+            "tertiary-fixed-dim": "#a1d48f"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "space-xs": "0.5rem",
+            "space-md": "1rem",
+            "space-xxs": "0.25rem",
+            "gutter-compact": "0.5rem",
+            "gutter": "0.75rem",
+            "margin": "1rem",
+            "space-sm": "0.75rem",
+            "space-xl": "1.5rem",
+            "space-lg": "1.25rem"
+          },
+          "fontFamily": {
+            "mono-data-md": ["Courier Prime", "monospace"],
+            "headline-md": ["Public Sans", "sans-serif"],
+            "body-md": ["Public Sans", "sans-serif"],
+            "mono-data-sm": ["Courier Prime", "monospace"],
+            "body-sm": ["Public Sans", "sans-serif"],
+            "label-md": ["Public Sans", "sans-serif"],
+            "headline-lg": ["Public Sans", "sans-serif"],
+            "mono-data-lg": ["Courier Prime", "monospace"],
+            "title-md": ["Public Sans", "sans-serif"]
+          },
+          "fontSize": {
+            "mono-data-md": ["15px", { "lineHeight": "20px", "fontWeight": "400" }],
+            "headline-md": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "body-md": ["15px", { "lineHeight": "22px", "fontWeight": "400" }],
+            "mono-data-sm": ["13px", { "lineHeight": "16px", "fontWeight": "400" }],
+            "body-sm": ["13px", { "lineHeight": "18px", "fontWeight": "400" }],
+            "label-md": ["13px", { "lineHeight": "16px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+            "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+            "mono-data-lg": ["24px", { "lineHeight": "28px", "fontWeight": "400" }],
+            "title-md": ["18px", { "lineHeight": "24px", "fontWeight": "600" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+    .material-symbols-outlined.fill-icon {
+      font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    /* Hide scrollbars for filter chips row */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+</head>
+<body class="bg-background text-on-surface antialiased flex justify-center min-h-screen selection:bg-secondary-fixed">
+<!-- Native Frame Container: 360px Mobile Shell (Quiet Domesticity) -->
+<main class="w-[360px] min-h-[800px] bg-background flex flex-col relative pb-8">
+<!-- Top App Bar (Task Sub-page: No Bottom Nav, leading back button, flat plane) -->
+<header class="flex items-center justify-between px-margin h-16 w-full bg-background select-none">
+<div class="flex items-center gap-space-xs">
+<button aria-label="Kembali" class="w-11 h-11 flex items-center justify-center rounded-full hover:bg-surface-container active:bg-surface-container-high transition-colors duration-150 text-on-surface" type="button">
+<span class="material-symbols-outlined text-[24px]">arrow_back</span>
+</button>
+<h1 class="text-headline-md font-headline-md text-on-surface tracking-tight">Pusat Notifikasi</h1>
+</div>
+<!-- Trailing Action: Tandai dibaca -->
+<button class="h-11 px-space-xs flex items-center gap-1.5 rounded-lg hover:bg-surface-container active:bg-surface-container-high transition-colors text-primary duration-150" type="button">
+<span class="material-symbols-outlined text-[20px]">done_all</span>
+<span class="text-label-md font-label-md text-primary">Tandai dibaca</span>
+</button>
+</header>
+<!-- Filter Chips Horizontal Scrollable Row -->
+<nav aria-label="Filter kategori notifikasi" class="px-margin mb-4 overflow-x-auto no-scrollbar flex items-center gap-2">
+<!-- Active Chip: Semua -->
+<button class="h-8 px-space-md rounded-lg bg-primary-container text-surface-container-lowest font-label-md text-label-md whitespace-nowrap transition-colors duration-150 flex items-center" type="button">
+        Semua
+      </button>
+<!-- Inactive Chips -->
+<button class="h-8 px-space-md rounded-lg bg-surface-container text-secondary font-label-md text-label-md whitespace-nowrap hover:bg-surface-container-high transition-colors duration-150 flex items-center" type="button">
+        Penting &amp; Bahaya
+      </button>
+<button class="h-8 px-space-md rounded-lg bg-surface-container text-secondary font-label-md text-label-md whitespace-nowrap hover:bg-surface-container-high transition-colors duration-150 flex items-center" type="button">
+        Kehadiran
+      </button>
+<button class="h-8 px-space-md rounded-lg bg-surface-container text-secondary font-label-md text-label-md whitespace-nowrap hover:bg-surface-container-high transition-colors duration-150 flex items-center" type="button">
+        Sistem
+      </button>
+</nav>
+<!-- Notification Feed Content -->
+<div class="px-margin flex-1 flex flex-col">
+<!-- Section: Hari Ini -->
+<section aria-labelledby="header-hari-ini" class="mb-2">
+<h2 class="text-label-md font-label-md text-secondary mb-2" id="header-hari-ini">
+          Hari Ini
+        </h2>
+<!-- Card 1: Unread Gas Leak Alarm (High Priority) -->
+<article class="bg-surface rounded-xl p-3 mb-2.5 border-l-4 border-error flex flex-col gap-2">
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-2">
+<div class="w-7 h-7 rounded-lg bg-error-container flex items-center justify-center text-error">
+<span class="material-symbols-outlined text-[18px]">warning</span>
+</div>
+<h3 class="text-label-md font-label-md text-on-surface">Peringatan Gas Dapur</h3>
+</div>
+<time class="font-mono-data-sm text-mono-data-sm text-secondary" datetime="19:44">19:44</time>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant pl-9 leading-relaxed">
+            Sensor MQ-2 mendeteksi gas 1820 ppm (batas aman 1500 ppm). Alarm berbunyi.
+          </p>
+<div class="pl-9 pt-0.5">
+<button class="inline-flex items-center gap-1 font-label-md text-body-sm text-error hover:underline transition-all duration-150" type="button">
+<span>Lihat Status Gas</span>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+</button>
+</div>
+</article>
+<!-- Card 2: Unread Presence Alert (Door Contact) -->
+<article class="bg-surface rounded-xl p-3 mb-2.5 border-l-4 border-primary-container flex flex-col gap-2">
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-2">
+<div class="w-7 h-7 rounded-lg bg-secondary-fixed flex items-center justify-center text-primary-container">
+<span class="material-symbols-outlined text-[18px]">door_front</span>
+</div>
+<h3 class="text-label-md font-label-md text-on-surface">Pintu Depan Terbuka</h3>
+</div>
+<time class="font-mono-data-sm text-mono-data-sm text-secondary" datetime="08:42">08:42</time>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant pl-9 leading-relaxed">
+            Bapak terdeteksi tiba di rumah melalui WiFi Proximity &amp; sensor magnetik.
+          </p>
+<div class="pl-9 pt-0.5">
+<button class="inline-flex items-center gap-1 font-label-md text-body-sm text-primary-container hover:underline transition-all duration-150" type="button">
+<span>Lihat Detail Kejadian</span>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+</button>
+</div>
+</article>
+<!-- Card 3: Read Motion Camera Event -->
+<article class="bg-surface/80 rounded-xl p-3 mb-2.5 flex flex-col gap-1.5">
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-2">
+<div class="w-7 h-7 rounded-lg bg-surface-container flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[18px]">videocam</span>
+</div>
+<h3 class="text-label-md font-label-md text-on-surface">Gerakan di Teras</h3>
+</div>
+<time class="font-mono-data-sm text-mono-data-sm text-secondary" datetime="02:14">02:14</time>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant pl-9 leading-relaxed">
+            Kamera Teras merekam aktivitas 1 menit. Rekaman tersimpan otomatis.
+          </p>
+</article>
+</section>
+<!-- Section: Kemarin -->
+<section aria-labelledby="header-kemarin" class="mt-3 mb-4">
+<h2 class="text-label-md font-label-md text-secondary mb-2" id="header-kemarin">
+          Kemarin
+        </h2>
+<!-- Card 4: Read System Backup -->
+<article class="bg-surface/80 rounded-xl p-3 mb-2.5 flex flex-col gap-1.5">
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-2">
+<div class="w-7 h-7 rounded-lg bg-surface-container flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[18px]">update</span>
+</div>
+<h3 class="text-label-md font-label-md text-on-surface">Backup Lokal Berhasil</h3>
+</div>
+<time class="font-mono-data-sm text-mono-data-sm text-secondary" datetime="23:00">23:00</time>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant pl-9 leading-relaxed">
+            Pencadangan database 14.8 MB tersimpan ke harddisk lokal rumah.
+          </p>
+</article>
+</section>
+<!-- Bottom Action: Hapus notifikasi lama -->
+<div class="mt-auto pt-6 pb-2 text-center">
+<button class="font-label-md text-body-sm text-secondary hover:text-on-surface transition-colors duration-150 inline-flex items-center justify-center py-2 px-space-md rounded-lg active:bg-surface-container" type="button">
+          Hapus notifikasi lama
+        </button>
+</div>
+</div>
+</main>
+</body></html>

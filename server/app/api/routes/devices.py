@@ -9,6 +9,7 @@ from sqlalchemy.orm import selectinload
 
 from server.app.api.deps import get_current_user, record_audit_log, require_role
 from server.app.core.database import get_db
+from server.app.core.device_queue import device_queue
 from server.app.core.mqtt_auth import (
     generate_device_mqtt_credentials,
     revoke_device_mqtt_credentials,
@@ -38,6 +39,34 @@ class CreateDeviceRequest(BaseModel):
     channels: Optional[List[ChannelInput]] = None
 
 
+class ClaimDeviceRequest(BaseModel):
+    device_id: Optional[str] = Field(None, max_length=50)
+    claim_token: Optional[str] = Field(None, max_length=64)
+    pair_code: Optional[str] = Field(None, max_length=10)
+    name: Optional[str] = Field(None, max_length=100)
+    room: Optional[str] = Field("Ruang Tamu", max_length=50)
+
+
+class DeviceStatusPayload(BaseModel):
+    device_id: str
+    device_key: Optional[str] = None
+    pair_code: Optional[str] = None
+    status: Dict[str, Any]
+
+
+class DevicePollPayload(BaseModel):
+    device_id: str
+    device_key: Optional[str] = None
+    limit: Optional[int] = 5
+
+
+class DeviceAckPayload(BaseModel):
+    device_id: str
+    device_key: Optional[str] = None
+    command_id: str
+    ok: Optional[bool] = True
+
+
 class CommandRequest(BaseModel):
     channel: str = Field(..., description="channel_key yang dituju")
     action: str = Field("set", description="Aksi: set, toggle, pulse")
@@ -52,7 +81,15 @@ class CreateAutomationRequest(BaseModel):
     is_enabled: bool = True
 
 
+class UpdateChannelRequest(BaseModel):
+    name: Optional[str] = None
+    alias: Optional[str] = None
+    is_sensitive: Optional[bool] = None
+    allowed_for_child: Optional[bool] = None
+
+
 # --- Endpoints Perangkat ---
+
 
 @router.get("/devices")
 async def list_devices(
@@ -180,6 +217,118 @@ async def create_device(
     }
 
 
+@router.post("/devices/claim", status_code=status.HTTP_200_OK)
+async def claim_device(
+    payload: ClaimDeviceRequest,
+    request: Request,
+    db: AsyncSession = Depends(get_db),
+    user: User = Depends(get_current_user),
+):
+    """Hubungkan / klaim perangkat baru ke akun smart home melalui 6-digit PAIR_CODE atau scan QR token."""
+    user.is_approved = True
+
+    # 1. Tentukan target device_id
+    target_device_id = payload.device_id.strip() if payload.device_id else None
+    token = (payload.claim_token or payload.pair_code or "").strip()
+
+    # Cek apakah token atau device_id merupakan 6-digit PAIR_CODE yang terdaftar
+    resolved = None
+    if token:
+        resolved = device_queue.resolve_pair_code(token)
+    if not resolved and target_device_id:
+        resolved = device_queue.resolve_pair_code(target_device_id)
+
+    if resolved:
+        target_device_id = resolved.get("device_id") or target_device_id
+
+    if not target_device_id:
+        if token and len(token) == 6 and token.isdigit():
+            # Pasangkan sementara dengan ID unik berbasis pair code jika ESP32 belum mengirim status
+            target_device_id = f"esp32_{token}"
+        else:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Perangkat atau Kode Pairing tidak ditemukan. Pastikan ESP32 telah dijalankan di Thonny dan terhubung WiFi.",
+            )
+
+    existing_res = await db.execute(
+        select(Device).options(selectinload(Device.channels)).where(Device.id == target_device_id)
+    )
+    dev = existing_res.scalar_one_or_none()
+
+    if dev:
+        if payload.name:
+            dev.name = payload.name
+        if payload.room:
+            dev.room = payload.room
+        await db.commit()
+    else:
+        creds = generate_device_mqtt_credentials(target_device_id)
+        dev = Device(
+            id=target_device_id,
+            name=payload.name or f"ESP32 ({target_device_id})",
+            room=payload.room or "Ruang Tamu",
+            device_type="esp32",
+            is_online=True,
+            mqtt_username=creds["mqtt_username"],
+            mqtt_password_hash=creds["mqtt_password"],
+        )
+        db.add(dev)
+        await db.flush()
+
+    ch_query = select(Channel).where(Channel.device_id == dev.id)
+    ch_res = await db.execute(ch_query)
+    existing_channels = {c.channel_key: c for c in ch_res.scalars().all()}
+    default_channels = [
+        ("lamp", "Semua Lampu", "switch", None),
+        ("lamp_tengah", "Lampu Tengah", "switch", None),
+        ("lamp_dapur_tamu", "Lampu Dapur & Tamu", "switch", None),
+        ("lamp_kamar", "Lampu Kamar", "switch", None),
+        ("relay", "Relay / Kipas", "relay", None),
+        ("relay_fan", "Kipas Exhaust", "relay", None),
+        ("buzzer", "Sirine Alarm", "buzzer", None),
+        ("mq2", "Sensor Gas MQ-2", "gas_sensor", "raw"),
+        ("ldr", "Sensor Cahaya LDR", "light_sensor", "raw"),
+    ]
+    for ch_key, ch_name, ch_type, ch_unit in default_channels:
+        if ch_key not in existing_channels:
+            c_obj = Channel(
+                device_id=dev.id,
+                channel_key=ch_key,
+                name=ch_name,
+                channel_type=ch_type,
+                unit=ch_unit,
+                current_value="false" if ch_type in {"switch", "relay", "buzzer"} else "0",
+            )
+            db.add(c_obj)
+
+    await db.commit()
+
+    client_ip = request.client.host if request.client else "127.0.0.1"
+    await record_audit_log(
+        db=db,
+        action="device.claim",
+        user_id=user.id,
+        username=user.username,
+        target_type="device",
+        target_id=dev.id,
+        details={"name": dev.name, "room": dev.room, "token_or_code": token[:6] if token else ""},
+        ip_address=client_ip,
+    )
+
+    return {
+        "status": "ok",
+        "message": "Sambungan telah berhasil! Perangkat siap dikontrol.",
+        "device": {
+            "id": dev.id,
+            "name": dev.name,
+            "room": dev.room,
+            "device_type": dev.device_type,
+            "is_online": dev.is_online,
+        },
+    }
+
+
 @router.delete("/devices/{device_id}")
 async def delete_device(
     device_id: str,
@@ -260,6 +409,13 @@ async def send_device_command(
     current_user: User = Depends(get_current_user),
 ):
     """Kirim perintah kontrol ke kanal perangkat via MQTT (Admin & Member)."""
+    # Periksa persetujuan admin rumah
+    if not getattr(current_user, "is_approved", True):
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Akun Anda masih menunggu persetujuan Admin Rumah.",
+        )
+
     # Child tidak diizinkan mengubah saklar utama jika dibatasi
     if current_user.role == "child":
         raise HTTPException(
@@ -268,11 +424,14 @@ async def send_device_command(
         )
 
     # Validasi kanal
-    q = select(Channel).where(Channel.device_id == device_id, Channel.channel_key == payload.channel)
-    r = await db.execute(q)
-    ch = r.scalar_one_or_none()
-    if not ch:
-        raise HTTPException(status_code=404, detail="Kanal tidak ditemukan pada perangkat ini.")
+    is_master_switch = payload.channel.strip().lower() in ("all", "semua", "seluruh", "master")
+    ch = None
+    if not is_master_switch:
+        q = select(Channel).where(Channel.device_id == device_id, Channel.channel_key == payload.channel)
+        r = await db.execute(q)
+        ch = r.scalar_one_or_none()
+        if not ch:
+            raise HTTPException(status_code=404, detail="Kanal tidak ditemukan pada perangkat ini.")
 
     cmd_id = f"cmd_{int(datetime.datetime.utcnow().timestamp() * 1000)}"
     cmd_payload = {
@@ -282,12 +441,44 @@ async def send_device_command(
         "value": payload.value,
     }
 
-    # Kirim ke MQTT
+    # 1. Enqueue ke antrean polling HTTP ESP32
+    device_queue.enqueue_command(device_id, cmd_payload)
+
+    # 2. Kirim ke MQTT
     published = mqtt_service.publish_command(device_id, cmd_payload)
 
     # Update optimis di DB lokal
     val_str = str(payload.value).lower() if isinstance(payload.value, bool) else str(payload.value)
-    ch.current_value = val_str
+    if is_master_switch:
+        all_q = select(Channel).where(
+            Channel.device_id == device_id,
+            Channel.channel_key.in_(["lamp", "lamp_tengah", "lamp_dapur_tamu", "lamp_kamar", "relay", "relay_fan"])
+        )
+        all_chans = (await db.execute(all_q)).scalars().all()
+        for sc in all_chans:
+            sc.current_value = val_str
+    elif ch:
+        ch.current_value = val_str
+
+    # Sinkronisasi channel sinonim (misal relay dan relay_fan)
+    if payload.channel in ("relay", "relay_fan"):
+        synonym_key = "relay_fan" if payload.channel == "relay" else "relay"
+        syn_q = select(Channel).where(Channel.device_id == device_id, Channel.channel_key == synonym_key)
+        syn_res = await db.execute(syn_q)
+        syn_ch = syn_res.scalar_one_or_none()
+        if syn_ch:
+            syn_ch.current_value = val_str
+
+    # Jika mematikan/menyalakan semua lampu via channel 'lamp'
+    if payload.channel == "lamp":
+        lamp_sub_q = select(Channel).where(
+            Channel.device_id == device_id,
+            Channel.channel_key.in_(["lamp_tengah", "lamp_dapur_tamu", "lamp_kamar"])
+        )
+        sub_chans = (await db.execute(lamp_sub_q)).scalars().all()
+        for sc in sub_chans:
+            sc.current_value = val_str
+
     await db.commit()
 
     # Siarkan ke WebSocket
@@ -316,6 +507,236 @@ async def send_device_command(
         "published_to_mqtt": published,
         "current_value": val_str,
     }
+
+
+# --- Endpoints ESP32 Thonny Bridge (HTTP & Cloudflare Tunnel) ---
+
+@router.post("/device/status")
+@router.post("/devices/status")
+async def device_status_report(
+    payload: DeviceStatusPayload,
+    db: AsyncSession = Depends(get_db),
+):
+    """
+    Menerima laporan status realtime dari esp32_thonny.py (MicroPython).
+    Mendukung pendaftaran otomatis perangkat, sinkronisasi kanal, pencatatan telemetri,
+    peringatan bahaya kebocoran gas MQ-2, dan broadcast WebSocket ke Web & Flutter.
+    """
+    device_id = payload.device_id.strip()
+    status_data = payload.status or {}
+    now = datetime.datetime.utcnow()
+
+    # 1. Daftarkan / perbarui kode pairing 6-digit di memori
+    pair_code_str = str(payload.pair_code).strip() if payload.pair_code else None
+    if pair_code_str:
+        device_queue.register_pair_code(
+            pair_code=pair_code_str,
+            device_id=device_id,
+            device_key=payload.device_key,
+            status=status_data,
+        )
+
+    # 2. Cari atau buat entitas Device di DB
+    dev_query = select(Device).options(selectinload(Device.channels)).where(Device.id == device_id)
+    dev_res = await db.execute(dev_query)
+    dev = dev_res.scalar_one_or_none()
+
+    if not dev:
+        creds = generate_device_mqtt_credentials(device_id)
+        dev = Device(
+            id=device_id,
+            name=f"ESP32 ({device_id})",
+            room="Ruang Tamu",
+            device_type="esp32",
+            is_online=True,
+            last_seen_at=now,
+            ip_address=status_data.get("ip"),
+            mqtt_username=creds["mqtt_username"],
+            mqtt_password_hash=creds["mqtt_password"],
+        )
+        db.add(dev)
+        await db.flush()
+    else:
+        dev.is_online = True
+        dev.last_seen_at = now
+        if status_data.get("ip"):
+            dev.ip_address = status_data.get("ip")
+
+    # 3. Pastikan ke-8 kanal standar ESP32 tersedia di DB
+    ch_query = select(Channel).where(Channel.device_id == dev.id)
+    ch_res = await db.execute(ch_query)
+    existing_channels = {c.channel_key: c for c in ch_res.scalars().all()}
+    default_channels = [
+        ("lamp", "Semua Lampu", "switch", None),
+        ("lamp_tengah", "Lampu Tengah", "switch", None),
+        ("lamp_dapur_tamu", "Lampu Dapur & Tamu", "switch", None),
+        ("lamp_kamar", "Lampu Kamar", "switch", None),
+        ("relay", "Relay / Kipas", "relay", None),
+        ("relay_fan", "Kipas Exhaust", "relay", None),
+        ("buzzer", "Sirine Alarm", "buzzer", None),
+        ("mq2", "Sensor Gas MQ-2", "gas_sensor", "raw"),
+        ("ldr", "Sensor Cahaya LDR", "light_sensor", "raw"),
+    ]
+    for ch_key, ch_name, ch_type, ch_unit in default_channels:
+        if ch_key not in existing_channels:
+            c_obj = Channel(
+                device_id=dev.id,
+                channel_key=ch_key,
+                name=ch_name,
+                channel_type=ch_type,
+                unit=ch_unit,
+                current_value="false" if ch_type in {"switch", "relay", "buzzer"} else "0",
+            )
+            db.add(c_obj)
+            existing_channels[ch_key] = c_obj
+
+    # 4. Sinkronkan nilai aktuator lampu & relay
+    if "lamp" in status_data and "lamp" in existing_channels:
+        existing_channels["lamp"].current_value = "true" if status_data["lamp"] else "false"
+        existing_channels["lamp"].updated_at = now
+    if "lamp_tengah" in status_data and "lamp_tengah" in existing_channels:
+        existing_channels["lamp_tengah"].current_value = "true" if status_data["lamp_tengah"] else "false"
+        existing_channels["lamp_tengah"].updated_at = now
+    if "lamp_dapur_tamu" in status_data and "lamp_dapur_tamu" in existing_channels:
+        existing_channels["lamp_dapur_tamu"].current_value = "true" if status_data["lamp_dapur_tamu"] else "false"
+        existing_channels["lamp_dapur_tamu"].updated_at = now
+    if "lamp_kamar" in status_data and "lamp_kamar" in existing_channels:
+        existing_channels["lamp_kamar"].current_value = "true" if status_data["lamp_kamar"] else "false"
+        existing_channels["lamp_kamar"].updated_at = now
+    if "relay" in status_data:
+        val_str = "true" if status_data["relay"] else "false"
+        if "relay" in existing_channels:
+            existing_channels["relay"].current_value = val_str
+            existing_channels["relay"].updated_at = now
+        if "relay_fan" in existing_channels:
+            existing_channels["relay_fan"].current_value = val_str
+            existing_channels["relay_fan"].updated_at = now
+
+    # 5. Sinkronkan nilai sensor MQ-2 dan LDR
+    gas_raw = status_data.get("gas_raw")
+    gas_alarm = status_data.get("gas_alarm", 0)
+    if gas_raw is not None and "mq2" in existing_channels:
+        existing_channels["mq2"].current_value = str(gas_raw)
+        existing_channels["mq2"].updated_at = now
+        try:
+            db.add(TelemetryLog(
+                device_id=device_id,
+                channel_key="mq2",
+                value_num=float(gas_raw),
+                created_at=now,
+            ))
+        except Exception:
+            pass
+
+    ldr_val = status_data.get("ldr")
+    if ldr_val is not None and "ldr" in existing_channels:
+        existing_channels["ldr"].current_value = str(ldr_val)
+        existing_channels["ldr"].updated_at = now
+        try:
+            db.add(TelemetryLog(
+                device_id=device_id,
+                channel_key="ldr",
+                value_num=float(ldr_val),
+                created_at=now,
+            ))
+        except Exception:
+            pass
+
+    # 6. Deteksi bahaya kebocoran gas (gas_alarm == 1 atau gas_raw >= 1500)
+    if gas_alarm == 1 or (gas_raw is not None and float(gas_raw) >= 1500):
+        recent_notif = await db.execute(
+            select(NotificationLog)
+            .where(
+                NotificationLog.device_id == device_id,
+                NotificationLog.event_type == "gas_leak_alarm",
+                NotificationLog.created_at >= now - datetime.timedelta(seconds=60),
+            )
+        )
+        if not recent_notif.scalars().first():
+            notif = NotificationLog(
+                device_id=device_id,
+                event_type="gas_leak_alarm",
+                message=f"BAHAYA! Kebocoran gas terdeteksi pada {dev.name} (MQ-2: {gas_raw}). Sirine alarm berbunyi!",
+                severity="critical",
+                is_read=False,
+                created_at=now,
+            )
+            db.add(notif)
+            await ws_manager.broadcast({
+                "type": "event",
+                "device_id": device_id,
+                "event": "gas_leak_alarm",
+                "severity": "critical",
+                "message": notif.message,
+                "value": gas_raw,
+                "timestamp": now.isoformat(),
+            })
+
+    await db.commit()
+
+    # 7. Broadcast perubahan ke WebSocket klien Web & Flutter
+    ws_channels = {}
+    for k, ch in existing_channels.items():
+        if ch.channel_type in ("switch", "relay", "buzzer"):
+            ws_channels[k] = ch.current_value == "true"
+        else:
+            try:
+                ws_channels[k] = float(ch.current_value) if ch.current_value else 0
+            except ValueError:
+                ws_channels[k] = ch.current_value
+
+    ws_payload = {
+        "type": "state",
+        "device_id": device_id,
+        "channels": ws_channels,
+        "sensors": {
+            "mq2": gas_raw,
+            "ldr": ldr_val,
+            "gas_pct": status_data.get("gas_pct"),
+            "gas_alarm": gas_alarm,
+            "ldr_pct": status_data.get("ldr_pct"),
+            "is_dark": status_data.get("is_dark"),
+        },
+        "device_info": {
+            "ip": status_data.get("ip"),
+            "uptime_s": status_data.get("uptime_s"),
+            "is_online": True,
+        },
+        "timestamp": now.isoformat(),
+    }
+    await ws_manager.broadcast(ws_payload)
+
+    return {"ok": True}
+
+
+@router.post("/device/poll")
+@router.post("/devices/poll")
+async def device_poll_commands(payload: DevicePollPayload):
+    """
+    Diambil oleh esp32_thonny.py untuk menarik antrean perintah tertunda.
+    """
+    device_id = payload.device_id.strip()
+    limit = payload.limit or 5
+    commands = device_queue.get_pending_commands(device_id, limit=limit)
+    return {"ok": True, "commands": commands}
+
+
+@router.post("/device/ack")
+@router.post("/devices/ack")
+async def device_ack_command(payload: DeviceAckPayload):
+    """
+    Konfirmasi dari esp32_thonny.py bahwa perintah command_id telah selesai dieksekusi.
+    """
+    device_id = payload.device_id.strip()
+    command_id = payload.command_id.strip()
+    success = device_queue.ack_command(device_id, command_id, ok=payload.ok is not False)
+    await ws_manager.broadcast({
+        "type": "ack",
+        "device_id": device_id,
+        "command_id": command_id,
+        "ok": payload.ok is not False,
+    })
+    return {"ok": True, "acknowledged": success}
 
 
 @router.get("/devices/{device_id}/telemetry")
@@ -413,7 +834,90 @@ async def delete_automation(
     return {"status": "ok", "message": f"Otomasi {automation_id} dihapus."}
 
 
+# --- Endpoints Pengaturan Kanal & Hak Akses ---
+
+@router.get("/channels")
+async def list_all_channels(
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    """Mendapatkan seluruh kanal perangkat beserta alias, status sensitif, dan izin anak."""
+    stmt = select(Channel).options(selectinload(Channel.device))
+    res = await db.execute(stmt)
+    chans = res.scalars().all()
+    items = []
+    for c in chans:
+        items.append({
+            "id": c.id,
+            "device_id": c.device_id,
+            "device_name": c.device.name if c.device else c.device_id,
+            "channel_key": c.channel_key,
+            "name": c.name,
+            "alias": c.alias,
+            "channel_type": c.channel_type,
+            "current_value": c.current_value,
+            "unit": c.unit,
+            "is_sensitive": c.is_sensitive,
+            "allowed_for_child": c.allowed_for_child,
+        })
+    return {"status": "ok", "channels": items}
+
+
+@router.patch("/channels/{channel_id}")
+async def update_channel_settings(
+    channel_id: int,
+    payload: UpdateChannelRequest,
+    db: AsyncSession = Depends(get_db),
+    admin: User = Depends(require_role("admin")),
+):
+    """Memperbarui alias, penanda sensitif, dan izin anak pada suatu kanal (Hanya Admin)."""
+    stmt = select(Channel).where(Channel.id == channel_id)
+    res = await db.execute(stmt)
+    ch = res.scalar_one_or_none()
+    if not ch:
+        raise HTTPException(status_code=404, detail="Kanal tidak ditemukan.")
+
+    old_state = {
+        "name": ch.name,
+        "alias": ch.alias,
+        "is_sensitive": ch.is_sensitive,
+        "allowed_for_child": ch.allowed_for_child,
+    }
+
+    if payload.name is not None:
+        ch.name = payload.name.strip()
+    if payload.alias is not None:
+        ch.alias = payload.alias.strip() if payload.alias.strip() else None
+    if payload.is_sensitive is not None:
+        ch.is_sensitive = payload.is_sensitive
+    if payload.allowed_for_child is not None:
+        ch.allowed_for_child = payload.allowed_for_child
+
+    await record_audit_log(
+        db,
+        user_id=admin.id,
+        action="channel.update_settings",
+        target_type="channel",
+        target_id=str(channel_id),
+        details={"before": old_state, "after": payload.model_dump(exclude_unset=True)},
+    )
+    await db.commit()
+
+    return {
+        "status": "ok",
+        "message": "Pengaturan kanal berhasil disimpan.",
+        "channel": {
+            "id": ch.id,
+            "name": ch.name,
+            "alias": ch.alias,
+            "is_sensitive": ch.is_sensitive,
+            "allowed_for_child": ch.allowed_for_child,
+        },
+    }
+
+
 # --- Endpoints Notifikasi ---
+
 
 @router.get("/notifications")
 async def list_notifications(
@@ -441,11 +945,33 @@ async def list_notifications(
     return {"status": "ok", "notifications": items}
 
 
-# --- WebSocket Endpoint ---
+# --- WebSocket Endpoints ---
+
+from server.app.core.security import decode_token
 
 @router.websocket("/ws")
-async def websocket_endpoint(websocket: WebSocket):
-    """Kanal WebSocket untuk pembaruan status realtime di aplikasi Flutter."""
+@router.websocket("/devices/{device_id}/ws")
+async def websocket_endpoint(
+    websocket: WebSocket,
+    device_id: Optional[str] = None,
+    token: Optional[str] = Query(None),
+):
+    """Kanal WebSocket untuk pembaruan status realtime di aplikasi Flutter & Web.
+    Wajib menyertakan token autentikasi JWT (?token=...) agar tidak terbuka untuk umum."""
+    # Verifikasi token autentikasi
+    if not token:
+        await websocket.close(code=status.WS_1008_POLICY_VIOLATION)
+        return
+
+    try:
+        payload = decode_token(token)
+        if payload.get("type") != "access":
+            await websocket.close(code=status.WS_1008_POLICY_VIOLATION)
+            return
+    except Exception:
+        await websocket.close(code=status.WS_1008_POLICY_VIOLATION)
+        return
+
     await ws_manager.connect(websocket)
     try:
         while True:
@@ -457,3 +983,4 @@ async def websocket_endpoint(websocket: WebSocket):
         await ws_manager.disconnect(websocket)
     except Exception:
         await ws_manager.disconnect(websocket)
+

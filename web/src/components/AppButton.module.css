@@ -1,0 +1,65 @@
+.btn {
+  height: var(--control-height);
+  padding: 0 var(--space-4);
+  border-radius: var(--radius-button);
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  cursor: pointer;
+  box-sizing: border-box;
+  text-decoration: none;
+  border: none;
+  transition: background-color 150ms ease;
+  user-select: none;
+}
+
+.btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.primary {
+  background-color: var(--color-accent);
+  color: var(--color-accent-text);
+}
+
+.primary:hover:not(:disabled) {
+  background-color: var(--color-accent-hover);
+}
+
+.outline {
+  background-color: transparent;
+  border: var(--border-width) solid var(--color-border);
+  color: var(--color-text);
+}
+
+.outline:hover:not(:disabled) {
+  background-color: var(--color-subtle);
+}
+
+.danger {
+  background-color: var(--color-status-danger);
+  color: var(--color-accent-text);
+}
+
+.danger:hover:not(:disabled) {
+  opacity: 0.9;
+}
+
+.ghost {
+  background-color: transparent;
+  color: var(--color-text);
+}
+
+.ghost:hover:not(:disabled) {
+  background-color: var(--color-subtle);
+}
+
+.iconOnly {
+  width: var(--control-height);
+  padding: 0;
+}

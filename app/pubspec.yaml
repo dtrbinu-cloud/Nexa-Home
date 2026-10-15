@@ -40,6 +40,9 @@ dependencies:
   flutter_secure_storage: ^11.2.0
   local_auth: ^3.0.2
   phosphor_flutter: ^2.1.0
+  speech_to_text: ^7.4.0
+  just_audio: ^0.10.6
+  flutter_webrtc: ^1.6.2+hotfix.4
 
 dev_dependencies:
   flutter_test:
@@ -70,6 +73,9 @@ flutter:
     - family: Public Sans
       fonts:
         - asset: assets/fonts/PublicSans-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/PublicSans-SemiBold.ttf
+          weight: 600
     - family: IBM Plex Mono
       fonts:
         - asset: assets/fonts/IBMPlexMono-Regular.ttf

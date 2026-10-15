@@ -1,0 +1,264 @@
+<!DOCTYPE html><html class="light" lang="id"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>13. Berhasil - Rumah</title>
+<!-- Google Fonts: Public Sans & Courier Prime -->
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&amp;family=Public+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "surface-container-low": "#f6f3ec",
+            "on-tertiary": "#ffffff",
+            "inverse-primary": "#96d3bf",
+            "on-error": "#ffffff",
+            "on-surface": "#1c1c18",
+            "outline": "#707975",
+            "surface-bright": "#fcf9f2",
+            "secondary-container": "#dbe1da",
+            "primary-fixed-dim": "#96d3bf",
+            "surface-container-highest": "#e5e2db",
+            "background": "#fcf9f2",
+            "on-secondary-container": "#5d645e",
+            "on-primary-container": "#abe9d5",
+            "primary-container": "#2f6b5b",
+            "surface": "#fcf9f2",
+            "tertiary-container": "#3e6b32",
+            "surface-container-lowest": "#ffffff",
+            "surface-dim": "#dcdad3",
+            "tertiary-fixed-dim": "#a1d48f",
+            "error": "#ba1a1a",
+            "on-background": "#1c1c18",
+            "surface-container-high": "#ebe8e1",
+            "surface-tint": "#2c6859",
+            "surface-variant": "#e5e2db",
+            "on-primary-fixed-variant": "#0d5041",
+            "on-tertiary-fixed-variant": "#24501a",
+            "on-secondary": "#ffffff",
+            "error-container": "#ffdad6",
+            "on-secondary-fixed-variant": "#424843",
+            "tertiary": "#26521c",
+            "on-tertiary-fixed": "#012200",
+            "on-primary-fixed": "#002019",
+            "on-tertiary-container": "#b6eaa3",
+            "on-secondary-fixed": "#171d19",
+            "inverse-surface": "#31312c",
+            "secondary": "#59605a",
+            "inverse-on-surface": "#f3f0e9",
+            "primary": "#115344",
+            "on-surface-variant": "#404945",
+            "on-error-container": "#93000a",
+            "primary-fixed": "#b1efdb",
+            "tertiary-fixed": "#bcf1a9",
+            "surface-container": "#f1eee7",
+            "secondary-fixed-dim": "#c1c8c1",
+            "secondary-fixed": "#dde4dd",
+            "outline-variant": "#bfc9c4",
+            "on-primary": "#ffffff"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "2xl": "1rem",
+            "3xl": "1.5rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "gutter-compact": "0.5rem",
+            "space-md": "1rem",
+            "space-sm": "0.75rem",
+            "space-xl": "1.5rem",
+            "margin": "1rem",
+            "gutter": "0.75rem",
+            "space-xs": "0.5rem",
+            "space-lg": "1.25rem",
+            "space-xxs": "0.25rem"
+          },
+          "fontFamily": {
+            "body-md": ["Public Sans"],
+            "title-md": ["Public Sans"],
+            "headline-lg": ["Public Sans"],
+            "mono-data-lg": ["Courier Prime"],
+            "headline-md": ["Public Sans"],
+            "label-md": ["Public Sans"],
+            "mono-data-md": ["Courier Prime"],
+            "mono-data-sm": ["Courier Prime"],
+            "body-sm": ["Public Sans"]
+          },
+          "fontSize": {
+            "body-md": [
+              "15px",
+              {
+                "lineHeight": "22px",
+                "fontWeight": "400"
+              }
+            ],
+            "title-md": [
+              "18px",
+              {
+                "lineHeight": "24px",
+                "fontWeight": "600"
+              }
+            ],
+            "headline-lg": [
+              "32px",
+              {
+                "lineHeight": "40px",
+                "letterSpacing": "-0.02em",
+                "fontWeight": "600"
+              }
+            ],
+            "mono-data-lg": [
+              "24px",
+              {
+                "lineHeight": "28px",
+                "fontWeight": "400"
+              }
+            ],
+            "headline-md": [
+              "24px",
+              {
+                "lineHeight": "32px",
+                "letterSpacing": "-0.01em",
+                "fontWeight": "600"
+              }
+            ],
+            "label-md": [
+              "13px",
+              {
+                "lineHeight": "16px",
+                "letterSpacing": "0.01em",
+                "fontWeight": "600"
+              }
+            ],
+            "mono-data-md": [
+              "15px",
+              {
+                "lineHeight": "20px",
+                "fontWeight": "400"
+              }
+            ],
+            "mono-data-sm": [
+              "13px",
+              {
+                "lineHeight": "16px",
+                "fontWeight": "400"
+              }
+            ],
+            "body-sm": [
+              "13px",
+              {
+                "lineHeight": "18px",
+                "fontWeight": "400"
+              }
+            ]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 500, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+    .material-symbols-fill {
+      font-variation-settings: 'FILL' 1, 'wght' 600, 'GRAD' 0, 'opsz' 24;
+    }
+  </style>
+</head>
+<body class="bg-[#151816] flex justify-center items-center min-h-screen p-0 m-0 font-body-md text-on-surface antialiased select-none">
+<!-- Native Flutter Android Frame: 360px x 800px -->
+<main class="relative w-[360px] h-[800px] overflow-hidden bg-[#151816] flex flex-col justify-end">
+<!-- Scrim / Dimmed Pairing Wizard Screen in Background -->
+<div class="absolute inset-0 z-0 flex flex-col justify-between opacity-30 pointer-events-none select-none bg-background p-margin">
+<!-- Faint Wizard Header -->
+<div class="flex items-center justify-between h-16 pt-2">
+<span class="material-symbols-outlined text-secondary text-2xl">arrow_back</span>
+<span class="font-title-md text-title-md text-on-surface">Penyambungan</span>
+<span class="material-symbols-outlined text-secondary text-2xl">close</span>
+</div>
+<!-- Faint Pairing Status Steps / Graphic -->
+<div class="flex flex-col items-center justify-center space-y-6 my-auto">
+<div class="w-24 h-24 rounded-full border border-secondary flex items-center justify-center">
+<span class="material-symbols-outlined text-4xl text-secondary">wifi</span>
+</div>
+<div class="space-y-2 text-center w-full px-4">
+<div class="h-4 bg-surface-container-highest rounded w-3/4 mx-auto"></div>
+<div class="h-3 bg-surface-container rounded w-1/2 mx-auto"></div>
+</div>
+<!-- Simulated Progress Tiles -->
+<div class="w-full space-y-3 px-2">
+<div class="h-14 bg-surface-container-low rounded-xl"></div>
+<div class="h-14 bg-surface-container-low rounded-xl"></div>
+</div>
+</div>
+<div class="h-12 bg-surface-container rounded-xl w-full mb-4"></div>
+</div>
+<!-- Scrim Tint Overlay -->
+<div class="absolute inset-0 bg-[#151816]/75 z-10 backdrop-blur-[0.5px]"></div>
+<!-- Modal Bottom Sheet Surface: Floor 1 Card (#FBF9F4 / surface-container-lowest) -->
+<div class="relative z-20 w-full bg-surface-bright rounded-t-3xl pt-3 pb-6 px-margin flex flex-col items-center shadow-none border-0">
+<!-- Drag Handle (36x4px, #D9D3C6, rounded-full) -->
+<div aria-hidden="true" class="w-9 h-1 bg-surface-dim rounded-full mb-5"></div>
+<!-- Centered Top Illustration / Icon Badge -->
+<div class="w-14 h-14 rounded-full bg-secondary-fixed flex items-center justify-center mb-4 text-primary-container">
+<span class="material-symbols-outlined material-symbols-fill text-[32px] text-primary-container">check</span>
+</div>
+<!-- Title & Subtitle: Quiet Domestic Tone -->
+<h1 class="font-headline-md text-headline-md text-on-surface text-center font-semibold mb-1">
+        Perangkat terhubung
+      </h1>
+<p class="font-body-md text-body-md text-secondary text-center px-2 mb-6">
+        Modul Rumah (ESP32) berhasil dikonfigurasi dan siap digunakan.
+      </p>
+<!-- Form Inputs Container -->
+<div class="w-full space-y-3 mb-4">
+<!-- Field 1: Nama perangkat -->
+<div class="w-full h-14 bg-surface-container rounded-xl px-4 flex flex-col justify-center focus-within:ring-1 focus-within:ring-primary-container transition-all">
+<label class="font-label-md text-[11px] leading-tight text-secondary font-medium" for="device-name">
+            Nama perangkat
+          </label>
+<input class="w-full bg-transparent p-0 m-0 border-0 outline-none focus:ring-0 font-title-md text-body-md font-semibold text-on-surface" id="device-name" type="text" value="Lampu ruang tengah">
+</div>
+<!-- Field 2: Ruangan Selector (Dropdown) -->
+<button class="w-full h-14 bg-surface-container rounded-xl px-4 flex items-center justify-between text-left active:bg-surface-container-highest transition-colors cursor-pointer" type="button">
+<div class="flex flex-col justify-center">
+<span class="font-label-md text-[11px] leading-tight text-secondary font-medium">Ruangan</span>
+<span class="font-title-md text-body-md font-semibold text-on-surface">Ruang tengah</span>
+</div>
+<span class="material-symbols-outlined text-secondary text-2xl">keyboard_arrow_down</span>
+</button>
+</div>
+<!-- Device Summary Chip / Telemetry Spec: Floor 2 Recess (#ECE7DC) -->
+<div class="w-full bg-surface-container rounded-lg p-2.5 mb-6 flex items-center justify-between">
+<div class="flex items-center space-x-2">
+<span class="material-symbols-outlined text-secondary text-base">memory</span>
+<span class="font-mono-data-sm text-mono-data-sm text-on-surface">ID: esp32-ruang-01</span>
+</div>
+<div class="flex items-center space-x-1.5 border-l border-surface-dim pl-3">
+<span class="material-symbols-outlined text-secondary text-base">router</span>
+<span class="font-mono-data-sm text-mono-data-sm text-secondary">IP: 192.168.1.42</span>
+</div>
+</div>
+<!-- Action Button: Primary Button (48px, #2F6B5B) -->
+<button class="w-full h-12 bg-primary-container hover:bg-surface-tint active:bg-primary text-surface-bright rounded-xl font-body-md text-body-md font-semibold flex items-center justify-center transition-colors shadow-none" type="button">
+        Selesai
+      </button>
+<!-- Android Home Bar Area Cushion -->
+<div aria-hidden="true" class="h-3 w-full"></div>
+</div>
+</main>
+</body></html>

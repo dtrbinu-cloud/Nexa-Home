@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+
+<html class="light" lang="id"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Rumah - Wawasan Keluarga</title>
+<!-- Google Fonts: Public Sans & IBM Plex Mono -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=Public+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "surface-container-highest": "#dfe4df",
+            "tertiary-fixed": "#ffdad4",
+            "on-tertiary-fixed": "#370e08",
+            "on-secondary": "#ffffff",
+            "primary": "#115344",
+            "primary-dark": "#2F6B5B",
+            "on-secondary-fixed": "#091f19",
+            "inverse-surface": "#2c322e",
+            "on-tertiary-container": "#ffd3cc",
+            "tertiary-container": "#8c5148",
+            "primary-container": "#2f6b5b",
+            "background": "#f6fbf5",
+            "on-tertiary-fixed-variant": "#6d3830",
+            "surface-container-lowest": "#ffffff",
+            "primary-fixed-dim": "#96d3bf",
+            "primary-fixed": "#b1efdb",
+            "on-surface-variant": "#404945",
+            "on-surface": "#181d1a",
+            "on-secondary-fixed-variant": "#354b44",
+            "tertiary": "#703a32",
+            "surface-tint": "#2c6859",
+            "on-secondary-container": "#536961",
+            "surface-container-low": "#f0f5f0",
+            "on-primary": "#ffffff",
+            "error-container": "#ffdad6",
+            "on-tertiary": "#ffffff",
+            "inverse-on-surface": "#edf2ed",
+            "on-error-container": "#93000a",
+            "surface-bright": "#f6fbf5",
+            "on-primary-fixed-variant": "#0d5041",
+            "surface-variant": "#dfe4df",
+            "surface-container": "#ebefea",
+            "inverse-primary": "#96d3bf",
+            "secondary-fixed": "#cfe8de",
+            "secondary": "#4d635b",
+            "surface-dim": "#d7dbd6",
+            "on-error": "#ffffff",
+            "on-primary-fixed": "#002019",
+            "on-primary-container": "#abe9d5",
+            "surface-container-high": "#e5e9e4",
+            "outline-variant": "#bfc9c4",
+            "secondary-fixed-dim": "#b4ccc2",
+            "outline": "#707975",
+            "secondary-container": "#E4EDE9",
+            "error": "#ba1a1a",
+            "surface": "#f6fbf5",
+            "tertiary-fixed-dim": "#ffb4a8",
+            "on-background": "#181d1a"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "card": "20px",
+            "full": "9999px"
+          },
+          "spacing": {
+            "space-xl": "32px",
+            "gutter-desktop": "24px",
+            "margin": "16px",
+            "space-xs": "4px",
+            "space-md": "16px",
+            "space-lg": "24px",
+            "gutter": "16px",
+            "space-sm": "8px",
+            "margin-desktop": "32px"
+          },
+          "fontFamily": {
+            "body-md": ["Public Sans", "sans-serif"],
+            "body-sm": ["Public Sans", "sans-serif"],
+            "body-lg": ["Public Sans", "sans-serif"],
+            "mono-metric": ["IBM Plex Mono", "monospace"],
+            "mono-body": ["IBM Plex Mono", "monospace"],
+            "headline-sm": ["Public Sans", "sans-serif"],
+            "mono-sm": ["IBM Plex Mono", "monospace"],
+            "headline-lg": ["Public Sans", "sans-serif"],
+            "label-md": ["Public Sans", "sans-serif"],
+            "headline-md": ["Public Sans", "sans-serif"],
+            "headline-lg-mobile": ["Public Sans", "sans-serif"]
+          },
+          "fontSize": {
+            "body-md": ["15px", { "lineHeight": "22px", "fontWeight": "400" }],
+            "body-sm": ["13px", { "lineHeight": "18px", "fontWeight": "400" }],
+            "body-lg": ["18px", { "lineHeight": "26px", "fontWeight": "400" }],
+            "mono-metric": ["24px", { "lineHeight": "28px", "fontWeight": "600" }],
+            "mono-body": ["15px", { "lineHeight": "20px", "fontWeight": "400" }],
+            "headline-sm": ["18px", { "lineHeight": "24px", "fontWeight": "600" }],
+            "mono-sm": ["13px", { "lineHeight": "16px", "fontWeight": "400" }],
+            "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "600" }],
+            "label-md": ["13px", { "lineHeight": "16px", "fontWeight": "500" }],
+            "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+            "headline-lg-mobile": ["24px", { "lineHeight": "32px", "fontWeight": "600" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    * {
+      box-shadow: none !important;
+      backdrop-filter: none !important;
+    }
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+    /* 56x32 Toggle Pill */
+    .toggle-switch {
+      width: 56px;
+      height: 32px;
+      position: relative;
+      display: inline-block;
+    }
+    .toggle-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    .toggle-slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-color: #c4cdc8;
+      border-radius: 9999px;
+      transition: .25s ease;
+    }
+    .toggle-slider:before {
+      position: absolute;
+      content: "";
+      height: 24px;
+      width: 24px;
+      left: 4px;
+      bottom: 4px;
+      background-color: #ffffff;
+      border-radius: 50%;
+      transition: .25s ease;
+    }
+    .toggle-switch input:checked + .toggle-slider {
+      background-color: #2F6B5B;
+    }
+    .toggle-switch input:checked + .toggle-slider:before {
+      transform: translateX(24px);
+    }
+  </style>
+</head>
+<body class="bg-background text-on-surface antialiased font-body-md text-body-md min-h-screen">
+<!-- Side Navigation Bar (240px wide) -->
+<aside class="fixed left-0 top-0 h-screen w-[240px] bg-surface-container-low border-r border-outline-variant z-30 select-none">
+<div class="flex flex-col justify-between h-full w-[240px] py-6 px-3">
+<!-- Header / Logo -->
+<div class="flex flex-col gap-1 px-3 mb-6">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-2xl" data-icon="home">home</span>
+<span class="font-headline-md text-headline-md font-semibold text-on-surface tracking-tight">Rumah</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Sistem Rumah Tangga</p>
+</div>
+<!-- Navigation Tabs -->
+<nav class="flex flex-col gap-1.5 flex-1">
+<!-- 1. Beranda -->
+<a class="flex items-center gap-3 px-4 py-2.5 text-on-surface-variant font-normal hover:bg-surface-container hover:text-on-surface transition-colors duration-150 ease-linear rounded-lg" href="#">
+<span class="material-symbols-outlined text-xl" data-icon="home">home</span>
+<span class="font-body-md text-body-md">Beranda</span>
+</a>
+<!-- 2. Perangkat -->
+<a class="flex items-center gap-3 px-4 py-2.5 text-on-surface-variant font-normal hover:bg-surface-container hover:text-on-surface transition-colors duration-150 ease-linear rounded-lg" href="#">
+<span class="material-symbols-outlined text-xl" data-icon="devices">devices</span>
+<span class="font-body-md text-body-md">Perangkat</span>
+</a>
+<!-- 3. Asisten -->
+<a class="flex items-center gap-3 px-4 py-2.5 text-on-surface-variant font-normal hover:bg-surface-container hover:text-on-surface transition-colors duration-150 ease-linear rounded-lg" href="#">
+<span class="material-symbols-outlined text-xl" data-icon="smart_toy">smart_toy</span>
+<span class="font-body-md text-body-md">Asisten</span>
+</a>
+<!-- 4. Kamera -->
+<a class="flex items-center gap-3 px-4 py-2.5 text-on-surface-variant font-normal hover:bg-surface-container hover:text-on-surface transition-colors duration-150 ease-linear rounded-lg" href="#">
+<span class="material-symbols-outlined text-xl" data-icon="videocam">videocam</span>
+<span class="font-body-md text-body-md">Kamera</span>
+</a>
+<!-- 5. Keluarga (ACTIVE TAB: #E4EDE9 and #2F6B5B) -->
+<a class="flex items-center gap-3 px-4 py-2.5 text-[#2F6B5B] bg-[#E4EDE9] font-medium border-l-4 border-[#2F6B5B] transition-colors duration-150 ease-linear" href="#">
+<span class="material-symbols-outlined text-xl text-[#2F6B5B]" data-icon="group">group</span>
+<span class="font-body-md text-body-md font-medium text-[#2F6B5B]">Keluarga</span>
+</a>
+<!-- 6. Pengaturan -->
+<a class="flex items-center gap-3 px-4 py-2.5 text-on-surface-variant font-normal hover:bg-surface-container hover:text-on-surface transition-colors duration-150 ease-linear rounded-lg" href="#">
+<span class="material-symbols-outlined text-xl" data-icon="settings">settings</span>
+<span class="font-body-md text-body-md">Pengaturan</span>
+</a>
+</nav>
+<!-- Footer / System Status -->
+<div class="pt-4 border-t border-outline-variant px-3">
+<div class="flex items-center gap-2.5 text-on-surface-variant font-body-sm text-body-sm">
+<span class="material-symbols-outlined text-primary text-base" data-icon="check_circle">check_circle</span>
+<span class="font-mono-sm text-mono-sm text-on-surface">Server Terhubung</span>
+</div>
+</div>
+</div>
+</aside>
+<!-- Top App Bar -->
+<header class="docked full-width top ml-[240px] fixed top-0 right-0 left-0 h-16 bg-surface border-b border-outline-variant z-20 flex justify-between items-center px-8 w-[calc(100%-240px)]">
+<div class="flex items-center gap-3">
+<h1 class="font-headline-sm text-headline-sm font-semibold text-on-surface tracking-tight">Keluarga</h1>
+<span class="h-4 w-px bg-outline-variant"></span>
+<span class="font-mono-sm text-mono-sm px-2 py-0.5 bg-surface-container border border-outline-variant rounded text-on-surface-variant">Admin / Pengawas</span>
+</div>
+<!-- Trailing Action Cluster -->
+<div class="flex items-center gap-4">
+<!-- Server Terhubung Badge -->
+<div class="flex items-center gap-2 px-2.5 py-1 rounded-full bg-surface-container-low border border-outline-variant">
+<span class="w-2 h-2 rounded-full bg-[#4C7A3F]"></span>
+<span class="font-mono-sm text-mono-sm text-on-surface">Server Terhubung</span>
+</div>
+<!-- Action Icons -->
+<div class="flex items-center gap-1">
+<button aria-label="Notifikasi" class="w-10 h-10 flex items-center justify-center rounded text-on-surface-variant hover:bg-surface-container transition-colors duration-150">
+<span class="material-symbols-outlined text-xl" data-icon="notifications">notifications</span>
+</button>
+<button aria-label="Perisai Keamanan" class="w-10 h-10 flex items-center justify-center rounded text-on-surface-variant hover:bg-surface-container transition-colors duration-150">
+<span class="material-symbols-outlined text-xl" data-icon="shield">shield</span>
+</button>
+</div>
+<!-- User Profile Badge: Budi · Admin with round "B" -->
+<div class="flex items-center gap-2.5 pl-3 border-l border-outline-variant">
+<div class="w-8 h-8 rounded-full bg-[#2F6B5B] text-white flex items-center justify-center font-semibold text-sm">
+          B
+        </div>
+<div class="flex items-center gap-1.5 text-left">
+<span class="font-label-md text-label-md text-on-surface font-semibold">Budi</span>
+<span class="text-on-surface-variant text-xs">·</span>
+<span class="font-mono-sm text-mono-sm text-on-surface-variant text-xs">Admin</span>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Workspace / Content Area -->
+<main class="ml-[240px] pt-24 px-8 pb-16 max-w-[1240px] flex flex-col gap-6">
+<!-- Section Header & Subtitle -->
+<div class="flex flex-col gap-1">
+<div class="flex items-center justify-between">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface font-semibold tracking-tight">Wawasan &amp; Pantauan Rumah Tangga</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">Data agregat telemetri kamera ruang umum (Ruang Tamu, Dapur, Teras) tanpa menyimpan rekaman video · Tahun 2026.</p>
+</div>
+<div class="flex items-center gap-2">
+<button class="h-10 px-4 bg-transparent border border-outline-variant rounded text-on-surface font-body-sm text-body-sm font-medium hover:bg-surface-container transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-base" data-icon="sync">sync</span>
+            Sinkronisasi Data
+          </button>
+<button class="h-10 px-4 bg-[#2F6B5B] text-white rounded font-body-sm text-body-sm font-medium hover:bg-[#255849] active:bg-[#1F4A3D] transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-base" data-icon="tune">tune</span>
+            Atur Kebijakan Sensor
+          </button>
+</div>
+</div>
+</div>
+<!-- Banner Peringatan: Radius 20px, Fill #FBF9F4, NO border, verbatim text -->
+<div class="bg-[#FBF9F4] rounded-[20px] p-5 flex items-start gap-4">
+<div class="p-1.5 rounded-full bg-[#B7791F]/15 text-[#B7791F] mt-0.5 shrink-0 flex items-center justify-center">
+<span class="material-symbols-outlined text-xl" data-icon="info">info</span>
+</div>
+<div class="flex-1">
+<p class="font-body-md text-body-md text-on-surface font-medium leading-relaxed">
+        Bukan alat medis. Hanya angka dan kejadian dari kamera ruang umum, tanpa menyimpan video.
+      </p>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">
+        Sensor visual hanya mendeteksi keberadaan dan durasi objek secara anonim di Ruang Tamu, Dapur, dan Teras. Privasi kamar tidur dan kamar mandi terjaga sepenuhnya.
+      </p>
+</div>
+<button aria-label="Tutup Peringatan" class="text-on-surface-variant hover:text-on-surface p-1 shrink-0">
+<span class="material-symbols-outlined text-base" data-icon="close">close</span>
+</button>
+</div>
+<!-- Grid of Approved Household Insights: Radius 20px, fill #FBF9F4, NO outer borders, NO inset wells -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+<!-- Feature 1: Waktu Belajar Anak Hari Ini & Pekan Ini (Span 7 cols) -->
+<section class="lg:col-span-7 bg-[#FBF9F4] rounded-[20px] p-6 flex flex-col justify-between">
+<div>
+<!-- Header & 56x32 Toggle -->
+<div class="flex items-center justify-between pb-4 border-b border-[#EBE6DC]">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-[#2F6B5B]/10 flex items-center justify-center text-[#2F6B5B]">
+<span class="material-symbols-outlined text-xl" data-icon="auto_stories">auto_stories</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Waktu Belajar Anak Hari Ini &amp; Pekan Ini</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Kamera area meja belajar ruang keluarga (area bersama)</p>
+</div>
+</div>
+<!-- 56x32px Pill Toggle -->
+<label class="toggle-switch" title="Aktifkan/Nonaktifkan Fitur">
+<input checked="" type="checkbox"/>
+<span class="toggle-slider"></span>
+</label>
+</div>
+<!-- Metrics Overview (IBM Plex Mono for numbers, grouped with whitespace) -->
+<div class="grid grid-cols-3 gap-6 py-5 border-b border-[#EBE6DC]">
+<div>
+<span class="font-body-sm text-body-sm text-on-surface-variant block mb-1">Hari Ini</span>
+<div class="flex items-baseline gap-1">
+<span class="font-mono-metric text-mono-metric text-on-surface font-semibold">3.5</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant font-medium">jam</span>
+</div>
+<span class="font-mono-sm text-mono-sm text-[#4C7A3F] flex items-center gap-1 mt-1 font-medium">
+<span class="material-symbols-outlined text-xs" data-icon="arrow_upward">arrow_upward</span> +20m dari rerata
+            </span>
+</div>
+<div>
+<span class="font-body-sm text-body-sm text-on-surface-variant block mb-1">Total Pekan Ini</span>
+<div class="flex items-baseline gap-1">
+<span class="font-mono-metric text-mono-metric text-on-surface font-semibold">18.2</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant font-medium">jam</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant mt-1 block">Target: 20 jam</span>
+</div>
+<div>
+<span class="font-body-sm text-body-sm text-on-surface-variant block mb-1">Sesi Terpanjang</span>
+<div class="flex items-baseline gap-1">
+<span class="font-mono-metric text-mono-metric text-on-surface font-semibold">1.8</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant font-medium">jam</span>
+</div>
+<span class="font-mono-sm text-mono-sm text-on-surface-variant mt-1 block">15:40 - 17:28 WIB</span>
+</div>
+</div>
+<!-- Bar Chart: Sen s/d Min (Clean, whitespace & thin divider) -->
+<div class="pt-5 flex flex-col gap-3">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md font-semibold text-on-surface">Distribusi Jam Belajar Harian (Pekan Ini)</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Meja Belajar Ruang Tamu</span>
+</div>
+<div class="grid grid-cols-7 gap-3 items-end h-32 pt-4 px-2 border-b border-[#EBE6DC]">
+<!-- Sen (2.8 jam) -->
+<div class="flex flex-col items-center gap-1 h-full justify-end">
+<span class="font-mono-sm text-mono-sm text-on-surface-variant">2.8</span>
+<div class="w-full max-w-[28px] bg-secondary rounded-t h-[60%]"></div>
+<span class="font-body-sm text-body-sm text-on-surface-variant mt-1">Sen</span>
+</div>
+<!-- Sel (3.1 jam) -->
+<div class="flex flex-col items-center gap-1 h-full justify-end">
+<span class="font-mono-sm text-mono-sm text-on-surface-variant">3.1</span>
+<div class="w-full max-w-[28px] bg-secondary rounded-t h-[68%]"></div>
+<span class="font-body-sm text-body-sm text-on-surface-variant mt-1">Sel</span>
+</div>
+<!-- Rab (4.0 jam) -->
+<div class="flex flex-col items-center gap-1 h-full justify-end">
+<span class="font-mono-sm text-mono-sm text-on-surface-variant">4.0</span>
+<div class="w-full max-w-[28px] bg-secondary rounded-t h-[88%]"></div>
+<span class="font-body-sm text-body-sm text-on-surface-variant mt-1">Rab</span>
+</div>
+<!-- Kam (3.5 jam - Hari Berjalan) -->
+<div class="flex flex-col items-center gap-1 h-full justify-end">
+<span class="font-mono-sm text-mono-sm font-semibold text-[#2F6B5B]">3.5</span>
+<div class="w-full max-w-[28px] bg-[#2F6B5B] rounded-t h-[76%]"></div>
+<span class="font-body-sm text-body-sm font-semibold text-[#2F6B5B] mt-1">Kam*</span>
+</div>
+<!-- Jum (1.5 jam) -->
+<div class="flex flex-col items-center gap-1 h-full justify-end">
+<span class="font-mono-sm text-mono-sm text-on-surface-variant">1.5</span>
+<div class="w-full max-w-[28px] bg-secondary/35 rounded-t h-[32%]"></div>
+<span class="font-body-sm text-body-sm text-on-surface-variant mt-1">Jum</span>
+</div>
+<!-- Sab (2.0 jam) -->
+<div class="flex flex-col items-center gap-1 h-full justify-end">
+<span class="font-mono-sm text-mono-sm text-on-surface-variant">2.0</span>
+<div class="w-full max-w-[28px] bg-secondary/35 rounded-t h-[44%]"></div>
+<span class="font-body-sm text-body-sm text-on-surface-variant mt-1">Sab</span>
+</div>
+<!-- Min (1.3 jam) -->
+<div class="flex flex-col items-center gap-1 h-full justify-end">
+<span class="font-mono-sm text-mono-sm text-on-surface-variant">1.3</span>
+<div class="w-full max-w-[28px] bg-secondary/35 rounded-t h-[28%]"></div>
+<span class="font-body-sm text-body-sm text-on-surface-variant mt-1">Min</span>
+</div>
+</div>
+<div class="flex items-center justify-between pt-1">
+<span class="flex items-center gap-1.5 font-body-sm text-body-sm text-on-surface-variant">
+<span class="w-2.5 h-2.5 bg-[#2F6B5B] rounded-sm"></span> Hari Berjalan (Kamis)
+              </span>
+<span class="font-mono-sm text-mono-sm text-on-surface-variant">Rata-rata: 2.6 jam/hari</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Feature 2: Durasi Berada di Rumah (Span 5 cols) -->
+<section class="lg:col-span-5 bg-[#FBF9F4] rounded-[20px] p-6 flex flex-col justify-between">
+<div>
+<!-- Header & 56x32 Toggle -->
+<div class="flex items-center justify-between pb-4 border-b border-[#EBE6DC]">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-[#2F6B5B]/10 flex items-center justify-center text-[#2F6B5B]">
+<span class="material-symbols-outlined text-xl" data-icon="directions_walk">directions_walk</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Durasi Berada di Rumah</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Sensor kamera teras &amp; gerbang masuk</p>
+</div>
+</div>
+<!-- 56x32px Pill Toggle -->
+<label class="toggle-switch" title="Aktifkan/Nonaktifkan Fitur">
+<input checked="" type="checkbox"/>
+<span class="toggle-slider"></span>
+</label>
+</div>
+<!-- Main Indicator (Clean whitespace, no inset wells) -->
+<div class="py-5 border-b border-[#EBE6DC]">
+<div class="flex items-center justify-between mb-2">
+<span class="font-body-sm text-body-sm text-on-surface-variant">Estimasi Terakhir</span>
+<span class="w-2.5 h-2.5 rounded-full bg-[#B7791F]" title="Perlu variasi aktivitas luar"></span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="font-mono-metric text-mono-metric text-on-surface text-4xl font-semibold">4</span>
+<span class="font-headline-sm text-headline-sm text-on-surface font-semibold">hari berturut-turut di rumah</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-2 leading-relaxed">
+              Berdasarkan deteksi kejadian keluar pada kamera teras luar, tidak terdeteksi riwayat keberangkatan &gt;1 jam sejak hari Senin pagi.
+            </p>
+</div>
+</div>
+<!-- Gentle Suggestion Card (Kartu Saran Lembut) -->
+<div class="pt-5 flex flex-col gap-3">
+<div class="flex items-start gap-3">
+<div class="w-8 h-8 rounded-full bg-[#2F6B5B]/15 text-[#2F6B5B] flex items-center justify-center shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-lg" data-icon="nature_people">nature_people</span>
+</div>
+<div class="flex-1">
+<h4 class="font-label-md text-label-md font-semibold text-on-surface">Saran Ramah Keluarga</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1 leading-relaxed">
+                Saran: keluar rumah atau olahraga ringan bersama sore ini di taman komplek untuk menyegarkan pikiran.
+              </p>
+</div>
+</div>
+<div class="flex items-center gap-3 mt-1">
+<button class="h-[44px] px-5 bg-[#2F6B5B] text-white rounded-[12px] font-body-sm text-body-sm font-medium hover:bg-[#255849] active:bg-[#1F4A3D] transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="send">send</span>
+              Kirim Pengingat Santai
+            </button>
+<button class="h-[44px] px-4 border border-outline-variant rounded-[12px] font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors">
+              Abaikan
+            </button>
+</div>
+</div>
+</section>
+<!-- Feature 3: Peringatan Penggunaan Ponsel Larut Malam (Span 12 cols full width) -->
+<section class="lg:col-span-12 bg-[#FBF9F4] rounded-[20px] p-6 flex flex-col justify-between">
+<div>
+<!-- Header & 56x32 Toggle -->
+<div class="flex items-center justify-between pb-4 border-b border-[#EBE6DC]">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-[#B23A2E]/10 flex items-center justify-center text-[#B23A2E]">
+<span class="material-symbols-outlined text-xl" data-icon="bedtime">bedtime</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Peringatan Penggunaan Ponsel Larut Malam</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Deteksi layar gawai menyala di area bersama setelah pukul 23:00</p>
+</div>
+</div>
+<!-- 56x32px Pill Toggle -->
+<label class="toggle-switch" title="Aktifkan/Nonaktifkan Fitur">
+<input checked="" type="checkbox"/>
+<span class="toggle-slider"></span>
+</label>
+</div>
+<!-- Event List from Common Area Cameras Only (Ruang Tamu & Dapur) -->
+<div class="py-4 flex flex-col gap-3">
+<!-- Event Item 1: Ruang Tamu -->
+<div class="py-3 px-4 rounded-[12px] bg-white/70 border-l-4 border-[#B23A2E] flex items-center justify-between">
+<div class="flex items-start gap-3.5">
+<span class="material-symbols-outlined text-[#B23A2E] text-xl mt-0.5" data-icon="living">living</span>
+<div>
+<div class="flex items-center gap-2">
+<span class="font-label-md text-label-md font-semibold text-on-surface">Ruang Tamu: Terdeteksi aktivitas gawai larut malam</span>
+<span class="font-mono-sm text-mono-sm px-2 py-0.5 bg-[#B23A2E]/10 rounded text-[#B23A2E] font-medium">Kamera Area Umum</span>
+</div>
+<div class="flex items-center gap-4 mt-1">
+<span class="font-mono-sm text-mono-sm text-on-surface-variant flex items-center gap-1.5">
+<span class="material-symbols-outlined text-sm" data-icon="schedule">schedule</span> 01:24 WIB
+                    </span>
+<span class="font-mono-sm text-mono-sm text-on-surface-variant flex items-center gap-1.5">
+<span class="material-symbols-outlined text-sm" data-icon="timer">timer</span> Durasi: 42 menit
+                    </span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Objek: 1 orang di sofa ruang tamu</span>
+</div>
+</div>
+</div>
+<span class="font-mono-sm text-mono-sm px-2.5 py-1 rounded bg-[#B23A2E]/10 text-[#B23A2E] font-medium">Perlu Perhatian</span>
+</div>
+<!-- Event Item 2: Dapur / Area Makan -->
+<div class="py-3 px-4 rounded-[12px] bg-white/70 border-l-4 border-[#B7791F] flex items-center justify-between">
+<div class="flex items-start gap-3.5">
+<span class="material-symbols-outlined text-[#B7791F] text-xl mt-0.5" data-icon="countertops">countertops</span>
+<div>
+<div class="flex items-center gap-2">
+<span class="font-label-md text-label-md font-semibold text-on-surface">Dapur: Aktivitas gawai terdeteksi di meja bar</span>
+<span class="font-mono-sm text-mono-sm px-2 py-0.5 bg-[#B7791F]/10 rounded text-[#B7791F] font-medium">Kamera Area Umum</span>
+</div>
+<div class="flex items-center gap-4 mt-1">
+<span class="font-mono-sm text-mono-sm text-on-surface-variant flex items-center gap-1.5">
+<span class="material-symbols-outlined text-sm" data-icon="schedule">schedule</span> Kemarin, 23:45 WIB
+                    </span>
+<span class="font-mono-sm text-mono-sm text-on-surface-variant flex items-center gap-1.5">
+<span class="material-symbols-outlined text-sm" data-icon="timer">timer</span> Durasi: 18 menit
+                    </span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Objek: 1 orang mengambil air minum</span>
+</div>
+</div>
+</div>
+<span class="font-mono-sm text-mono-sm text-on-surface-variant">Terselesaikan</span>
+</div>
+</div>
+</div>
+<div class="pt-3 border-t border-[#EBE6DC] flex items-center justify-between text-xs text-on-surface-variant">
+<span class="font-body-sm text-body-sm">Pemberitahuan dikirimkan secara berkala ke admin bila terdeteksi penggunaan melebihi 30 menit.</span>
+<span class="font-mono-sm text-mono-sm">Audit Privasi: Bebas Rekaman Video</span>
+</div>
+</section>
+</div>
+<!-- Arsip & Demonstrasi State Sistem -->
+<div class="mt-2 border-t border-outline-variant pt-6 flex flex-col gap-4">
+<div class="flex items-center justify-between">
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Arsip Mingguan &amp; Status Sinkronisasi</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Pemrosesan inferensi lokal perangkat (On-Device AI Edge) di ruang bersama tanpa koneksi awan.</p>
+</div>
+<span class="font-mono-sm text-mono-sm px-2.5 py-1 bg-surface-container border border-outline-variant rounded text-on-surface-variant">
+          Node ID: HUB-LOKAL-01 · 2026
+        </span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<!-- Demonstrasi State: Skeleton Loading -->
+<div class="bg-[#FBF9F4] rounded-[20px] p-5 flex flex-col gap-4">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-on-surface-variant text-lg" data-icon="hourglass_top">hourglass_top</span>
+<span class="font-label-md text-label-md font-semibold text-on-surface">Memuat Arsip Sensor Pekan Lalu</span>
+</div>
+<span class="font-mono-sm text-mono-sm text-on-surface-variant">Memproses...</span>
+</div>
+<!-- Skeleton UI Elements -->
+<div class="space-y-3">
+<div class="h-4 bg-[#EBE6DC] rounded w-3/4 animate-pulse"></div>
+<div class="h-16 bg-[#EBE6DC] rounded w-full animate-pulse"></div>
+<div class="grid grid-cols-3 gap-2">
+<div class="h-8 bg-[#EBE6DC] rounded animate-pulse"></div>
+<div class="h-8 bg-[#EBE6DC] rounded animate-pulse"></div>
+<div class="h-8 bg-[#EBE6DC] rounded animate-pulse"></div>
+</div>
+</div>
+<div class="pt-3 border-t border-[#EBE6DC] flex items-center justify-between text-xs text-on-surface-variant">
+<span>Mengambil data dari SSD lokal penyimpanan rumah</span>
+<span class="font-mono-sm text-mono-sm">68% selesai</span>
+</div>
+</div>
+<!-- Demonstrasi State: Empty State -->
+<div class="bg-[#FBF9F4] rounded-[20px] p-5 flex flex-col items-center justify-center text-center">
+<div class="w-12 h-12 rounded-full bg-[#EBE6DC] flex items-center justify-center text-on-surface-variant mb-2">
+<span class="material-symbols-outlined text-2xl" data-icon="inventory_2">inventory_2</span>
+</div>
+<h4 class="font-label-md text-label-md font-semibold text-on-surface">Tidak Ada Insiden Tercatat</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant max-w-sm mt-1">
+            Kamera ruang umum tidak mendeteksi anomali atau aktivitas mencurigakan di luar jam wajar dalam 30 hari terakhir.
+          </p>
+<div class="mt-3">
+<button class="h-8 px-3 border border-outline-variant rounded text-xs font-medium text-on-surface hover:bg-surface-container transition-colors">
+              Lihat Log Normal
+            </button>
+</div>
+</div>
+</div>
+</div>
+</main>
+<script>
+    // Micro-interactions for toggles
+    document.querySelectorAll('.toggle-switch input[type="checkbox"]').forEach(toggle => {
+      toggle.addEventListener('change', function() {
+        const card = this.closest('section');
+        if (card) {
+          if (!this.checked) {
+            card.classList.add('opacity-40');
+          } else {
+            card.classList.remove('opacity-40');
+          }
+        }
+      });
+    });
+  </script>
+</body></html>

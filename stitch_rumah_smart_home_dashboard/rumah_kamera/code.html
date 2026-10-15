@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+
+<html lang="id"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Rumah - Kamera &amp; Live Monitoring</title>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts: Public Sans & IBM Plex Mono -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=Public+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "surface-container-highest": "#dfe4df",
+            "tertiary-fixed": "#ffdad4",
+            "on-tertiary-fixed": "#370e08",
+            "on-secondary": "#ffffff",
+            "primary": "#115344",
+            "on-secondary-fixed": "#091f19",
+            "inverse-surface": "#2c322e",
+            "on-tertiary-container": "#ffd3cc",
+            "tertiary-container": "#8c5148",
+            "primary-container": "#2f6b5b",
+            "background": "#f6fbf5",
+            "on-tertiary-fixed-variant": "#6d3830",
+            "surface-container-lowest": "#ffffff",
+            "primary-fixed-dim": "#96d3bf",
+            "primary-fixed": "#b1efdb",
+            "on-surface-variant": "#404945",
+            "on-surface": "#181d1a",
+            "on-secondary-fixed-variant": "#354b44",
+            "tertiary": "#703a32",
+            "surface-tint": "#2c6859",
+            "on-secondary-container": "#536961",
+            "surface-container-low": "#f0f5f0",
+            "on-primary": "#ffffff",
+            "error-container": "#ffdad6",
+            "on-tertiary": "#ffffff",
+            "inverse-on-surface": "#edf2ed",
+            "on-error-container": "#93000a",
+            "surface-bright": "#f6fbf5",
+            "on-primary-fixed-variant": "#0d5041",
+            "surface-variant": "#dfe4df",
+            "surface-container": "#ebefea",
+            "inverse-primary": "#96d3bf",
+            "secondary-fixed": "#cfe8de",
+            "secondary": "#4d635b",
+            "surface-dim": "#d7dbd6",
+            "on-error": "#ffffff",
+            "on-primary-fixed": "#002019",
+            "on-primary-container": "#abe9d5",
+            "surface-container-high": "#e5e9e4",
+            "outline-variant": "#bfc9c4",
+            "secondary-fixed-dim": "#b4ccc2",
+            "outline": "#707975",
+            "secondary-container": "#cfe8de",
+            "error": "#ba1a1a",
+            "surface": "#f6fbf5",
+            "tertiary-fixed-dim": "#ffb4a8",
+            "on-background": "#181d1a"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          "spacing": {
+            "space-xl": "32px",
+            "gutter-desktop": "24px",
+            "margin": "16px",
+            "space-xs": "4px",
+            "space-md": "16px",
+            "space-lg": "24px",
+            "gutter": "16px",
+            "space-sm": "8px",
+            "margin-desktop": "32px"
+          },
+          "fontFamily": {
+            "body-md": ["Public Sans", "sans-serif"],
+            "body-sm": ["Public Sans", "sans-serif"],
+            "body-lg": ["Public Sans", "sans-serif"],
+            "mono-metric": ["IBM Plex Mono", "monospace"],
+            "mono-body": ["IBM Plex Mono", "monospace"],
+            "headline-sm": ["Public Sans", "sans-serif"],
+            "mono-sm": ["IBM Plex Mono", "monospace"],
+            "headline-lg": ["Public Sans", "sans-serif"],
+            "label-md": ["Public Sans", "sans-serif"],
+            "headline-md": ["Public Sans", "sans-serif"],
+            "headline-lg-mobile": ["Public Sans", "sans-serif"]
+          },
+          "fontSize": {
+            "body-md": ["15px", { "lineHeight": "22px", "fontWeight": "400" }],
+            "body-sm": ["13px", { "lineHeight": "18px", "fontWeight": "400" }],
+            "body-lg": ["18px", { "lineHeight": "26px", "fontWeight": "400" }],
+            "mono-metric": ["24px", { "lineHeight": "28px", "fontWeight": "600" }],
+            "mono-body": ["15px", { "lineHeight": "20px", "fontWeight": "400" }],
+            "headline-sm": ["18px", { "lineHeight": "24px", "fontWeight": "600" }],
+            "mono-sm": ["13px", { "lineHeight": "16px", "fontWeight": "400" }],
+            "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "600" }],
+            "label-md": ["13px", { "lineHeight": "16px", "fontWeight": "500" }],
+            "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+            "headline-lg-mobile": ["24px", { "lineHeight": "32px", "fontWeight": "600" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    * {
+      box-shadow: none !important;
+      backdrop-filter: none !important;
+    }
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+  </style>
+</head>
+<body class="bg-background text-on-surface antialiased flex min-h-screen">
+<!-- SIDEBAR NAVIGATION (240px, "Rumah", "Rumah Tangga", Kamera active with #E4EDE9 and #2F6B5B) -->
+<aside class="fixed left-0 top-0 h-screen w-60 bg-surface-container-low border-r border-outline-variant z-30 flex flex-col justify-between py-6 px-3">
+<div>
+<!-- Brand Header -->
+<div class="px-4 mb-6">
+<h1 class="font-headline-md text-headline-md font-semibold text-on-surface tracking-tight">Rumah</h1>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Rumah Tangga</p>
+</div>
+<!-- Navigation Links -->
+<nav class="space-y-1">
+<!-- 1. Beranda -->
+<a class="flex items-center gap-3 px-4 py-2.5 text-on-surface-variant font-normal hover:bg-surface-container hover:text-on-surface transition-colors duration-150 ease-linear font-body-md text-body-md rounded-lg" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="home">home</span>
+<span>Beranda</span>
+</a>
+<!-- 2. Perangkat -->
+<a class="flex items-center gap-3 px-4 py-2.5 text-on-surface-variant font-normal hover:bg-surface-container hover:text-on-surface transition-colors duration-150 ease-linear font-body-md text-body-md rounded-lg" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="devices">devices</span>
+<span>Perangkat</span>
+</a>
+<!-- 3. Asisten -->
+<a class="flex items-center gap-3 px-4 py-2.5 text-on-surface-variant font-normal hover:bg-surface-container hover:text-on-surface transition-colors duration-150 ease-linear font-body-md text-body-md rounded-lg" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="smart_toy">smart_toy</span>
+<span>Asisten</span>
+</a>
+<!-- 4. Kamera (ACTIVE DESTINATION: #E4EDE9 background & #2F6B5B text/border) -->
+<a class="flex items-center gap-3 px-4 py-2.5 text-[#2F6B5B] bg-[#E4EDE9] font-medium border-l-4 border-[#2F6B5B] transition-colors duration-150 ease-linear font-body-md text-body-md rounded-r-lg" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="videocam">videocam</span>
+<span>Kamera</span>
+</a>
+<!-- 5. Keluarga -->
+<a class="flex items-center gap-3 px-4 py-2.5 text-on-surface-variant font-normal hover:bg-surface-container hover:text-on-surface transition-colors duration-150 ease-linear font-body-md text-body-md rounded-lg" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="group">group</span>
+<span>Keluarga</span>
+</a>
+<!-- 6. Pengaturan -->
+<a class="flex items-center gap-3 px-4 py-2.5 text-on-surface-variant font-normal hover:bg-surface-container hover:text-on-surface transition-colors duration-150 ease-linear font-body-md text-body-md rounded-lg" href="#">
+<span class="material-symbols-outlined text-[20px]" data-icon="settings">settings</span>
+<span>Pengaturan</span>
+</a>
+</nav>
+</div>
+<!-- Footer System Status -->
+<div class="px-3 pt-4 border-t border-outline-variant">
+<div class="flex items-center gap-2.5 px-2 py-2 text-primary font-body-sm text-body-sm">
+<span class="material-symbols-outlined text-[18px]" data-icon="check_circle">check_circle</span>
+<span class="font-medium text-on-surface">Server Terhubung</span>
+</div>
+<div class="px-2 font-mono-sm text-mono-sm text-on-surface-variant">
+        LAN 192.168.1.104
+      </div>
+</div>
+</aside>
+<!-- MAIN WRAPPER (Shifted right by 240px / w-60) -->
+<div class="flex-1 ml-60 flex flex-col min-w-0">
+<!-- TOP NAV BAR ("Kamera", "Server terhubung" badge, "Budi · Admin" with round "B") -->
+<header class="h-16 px-8 bg-surface border-b border-outline-variant flex justify-between items-center sticky top-0 z-20">
+<div class="flex items-center gap-4">
+<h2 class="font-headline-sm text-headline-sm font-semibold text-on-surface tracking-tight">Kamera</h2>
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-mono-sm bg-surface-container-high text-on-surface-variant border border-outline-variant">3 Perangkat Aktif</span>
+</div>
+<div class="flex items-center gap-5">
+<div class="flex items-center gap-2 text-on-surface-variant font-body-sm text-body-sm bg-surface-container-low px-2.5 py-1 rounded-full border border-outline-variant">
+<span class="w-2 h-2 rounded-full bg-[#4C7A3F]"></span>
+<span class="font-medium text-on-surface">Server terhubung</span>
+</div>
+<div class="h-4 w-px bg-outline-variant"></div>
+<div class="flex items-center gap-2">
+<button aria-label="Notifikasi" class="p-2 text-on-surface-variant hover:text-on-surface transition-colors duration-150">
+<span class="material-symbols-outlined text-[20px]" data-icon="notifications">notifications</span>
+</button>
+<button aria-label="Keamanan" class="p-2 text-on-surface-variant hover:text-on-surface transition-colors duration-150">
+<span class="material-symbols-outlined text-[20px]" data-icon="shield">shield</span>
+</button>
+</div>
+<div class="flex items-center gap-2.5 pl-2">
+<div class="w-7 h-7 rounded-full bg-[#cfe8de] flex items-center justify-center font-label-md text-label-md text-[#115344] font-semibold">
+            B
+          </div>
+<span class="font-body-sm text-body-sm font-medium text-on-surface">Budi · Admin</span>
+</div>
+</div>
+</header>
+<!-- CONTENT BODY CANVAS -->
+<main class="p-8 max-w-[1200px] w-full flex flex-col gap-6">
+<!-- BANNER LAN (Radius 20px, fill #FBF9F4, NO outer border) -->
+<section class="bg-[#FBF9F4] rounded-[20px] p-5 flex items-center justify-between">
+<div class="flex items-center gap-3.5">
+<span class="material-symbols-outlined text-[#2F6B5B] text-[24px]" data-icon="lock">lock</span>
+<p class="font-body-md text-body-md text-on-surface leading-normal">
+          Live view hanya tersedia di dalam jaringan rumah (LAN). Semua feed streaming diproses secara lokal tanpa server cloud pihak ketiga.
+        </p>
+</div>
+<div class="flex items-center gap-3 shrink-0 ml-4 font-mono-sm text-mono-sm text-on-surface-variant">
+<span>Bandwidth Lokal: 4.8 Mbps</span>
+<span class="w-2 h-2 rounded-full bg-[#4C7A3F]"></span>
+</div>
+</section>
+<!-- SECTION: LIVE MONITORING FEED (3 Camera Tiles, Radius 24px, fill #FBF9F4, NO outer border) -->
+<section class="flex flex-col gap-3.5">
+<div class="flex justify-between items-center">
+<div class="flex items-center gap-2">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Kamera Langsung</h3>
+<span class="font-mono-sm text-mono-sm text-on-surface-variant">(Ponsel Bekas / RTSP Node)</span>
+</div>
+<span class="font-mono-sm text-mono-sm text-on-surface-variant">Sinkronisasi: Real-time</span>
+</div>
+<!-- 3-Column Camera Grid -->
+<div class="grid grid-cols-3 gap-6">
+<!-- CAMERA 1: Ruang Tamu -->
+<div class="bg-[#FBF9F4] rounded-[24px] p-5 flex flex-col justify-between">
+<!-- Header Tile -->
+<div class="flex items-center justify-between mb-3.5">
+<div class="flex items-center gap-2">
+<span class="font-headline-sm text-headline-sm font-semibold text-on-surface">Ruang Tamu</span>
+<span class="inline-flex items-center gap-1.5 h-6 px-2.5 bg-[#ECE7DC] rounded-full font-body-sm text-[12px] font-medium text-on-surface">
+<span class="w-2 h-2 rounded-full bg-[#4C7A3F]"></span>
+                ONLINE
+              </span>
+</div>
+<div class="flex items-center gap-1.5 font-mono-sm text-mono-sm text-[#B23A2E] font-medium">
+<span class="w-2 h-2 rounded-full bg-[#B23A2E] animate-pulse"></span>
+<span>REC</span>
+</div>
+</div>
+<!-- Video Frame Placeholder Canvas (#ECE7DC, Neutral grey placeholder with camera icon & title) -->
+<div class="relative w-full aspect-video bg-[#ECE7DC] rounded-[14px] overflow-hidden flex flex-col justify-between p-3.5">
+<!-- Top Overlay Feed Info -->
+<div class="relative z-10 flex justify-between items-center">
+<span class="font-mono-sm text-[11px] bg-[#181D1A]/70 text-[#EDF2ED] px-2 py-0.5 rounded">CAM-01 • LIVING</span>
+<span class="font-mono-sm text-[11px] bg-[#181D1A]/70 text-[#EDF2ED] px-2 py-0.5 rounded">1080p @ 24fps</span>
+</div>
+<!-- Center Camera Placeholder Glyph & Label -->
+<div class="relative z-10 flex flex-col items-center justify-center my-auto text-on-surface-variant">
+<span class="material-symbols-outlined text-[36px] text-on-surface-variant/80 mb-1" data-icon="videocam">videocam</span>
+<span class="font-body-sm text-body-sm font-medium text-on-surface">Feed Aktif: Ruang Tamu</span>
+</div>
+<!-- Bottom Overlay Timestamp -->
+<div class="relative z-10 flex justify-between items-end">
+<span class="font-mono-sm text-[11px] bg-[#181D1A]/70 text-[#EDF2ED] px-2 py-0.5 rounded">18:42:05 WIB</span>
+<span class="font-mono-sm text-[11px] bg-[#181D1A]/70 text-[#EDF2ED] px-2 py-0.5 rounded">1.8 MB/s</span>
+</div>
+</div>
+<!-- Divider -->
+<div class="h-px bg-[#E5E0D5] w-full my-4"></div>
+<!-- Footer Relay / Privacy Control (Toggle 56x32px, 24px knob) -->
+<div class="flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-body-sm text-body-sm font-medium text-on-surface">Mode Privasi</span>
+<span class="font-mono-sm text-mono-sm text-on-surface-variant">Lensa aktif &amp; merekam</span>
+</div>
+<!-- Privacy Toggle Off (56x32px pill, 24px knob) -->
+<button aria-pressed="false" class="w-[56px] h-[32px] rounded-full bg-[#E5E0D5] relative transition-colors duration-200 cursor-pointer flex items-center p-1" type="button">
+<span class="w-[24px] h-[24px] rounded-full bg-[#FBF9F4] block"></span>
+</button>
+</div>
+</div>
+<!-- CAMERA 2: Dapur -->
+<div class="bg-[#FBF9F4] rounded-[24px] p-5 flex flex-col justify-between">
+<!-- Header Tile -->
+<div class="flex items-center justify-between mb-3.5">
+<div class="flex items-center gap-2">
+<span class="font-headline-sm text-headline-sm font-semibold text-on-surface">Dapur</span>
+<span class="inline-flex items-center gap-1.5 h-6 px-2.5 bg-[#ECE7DC] rounded-full font-body-sm text-[12px] font-medium text-on-surface">
+<span class="w-2 h-2 rounded-full bg-[#4C7A3F]"></span>
+                ONLINE
+              </span>
+</div>
+<div class="flex items-center gap-1.5 font-mono-sm text-mono-sm text-[#B23A2E] font-medium">
+<span class="w-2 h-2 rounded-full bg-[#B23A2E] animate-pulse"></span>
+<span>REC</span>
+</div>
+</div>
+<!-- Video Frame Placeholder Canvas (#ECE7DC, Neutral grey placeholder with camera icon & title) -->
+<div class="relative w-full aspect-video bg-[#ECE7DC] rounded-[14px] overflow-hidden flex flex-col justify-between p-3.5">
+<!-- Top Overlay Feed Info -->
+<div class="relative z-10 flex justify-between items-center">
+<span class="font-mono-sm text-[11px] bg-[#181D1A]/70 text-[#EDF2ED] px-2 py-0.5 rounded">CAM-02 • KTCHN</span>
+<span class="font-mono-sm text-[11px] bg-[#181D1A]/70 text-[#EDF2ED] px-2 py-0.5 rounded">720p @ 30fps</span>
+</div>
+<!-- Center Camera Placeholder Glyph & Label -->
+<div class="relative z-10 flex flex-col items-center justify-center my-auto text-on-surface-variant">
+<span class="material-symbols-outlined text-[36px] text-on-surface-variant/80 mb-1" data-icon="kitchen">kitchen</span>
+<span class="font-body-sm text-body-sm font-medium text-on-surface">Feed Aktif: Dapur</span>
+</div>
+<!-- Bottom Overlay Timestamp -->
+<div class="relative z-10 flex justify-between items-end">
+<span class="font-mono-sm text-[11px] bg-[#181D1A]/70 text-[#EDF2ED] px-2 py-0.5 rounded">18:42:05 WIB</span>
+<span class="font-mono-sm text-[11px] bg-[#181D1A]/70 text-[#EDF2ED] px-2 py-0.5 rounded">1.4 MB/s</span>
+</div>
+</div>
+<!-- Divider -->
+<div class="h-px bg-[#E5E0D5] w-full my-4"></div>
+<!-- Footer Relay / Privacy Control (Toggle 56x32px, 24px knob) -->
+<div class="flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-body-sm text-body-sm font-medium text-on-surface">Mode Privasi</span>
+<span class="font-mono-sm text-mono-sm text-on-surface-variant">Lensa aktif &amp; merekam</span>
+</div>
+<!-- Privacy Toggle Off -->
+<button aria-pressed="false" class="w-[56px] h-[32px] rounded-full bg-[#E5E0D5] relative transition-colors duration-200 cursor-pointer flex items-center p-1" type="button">
+<span class="w-[24px] h-[24px] rounded-full bg-[#FBF9F4] block"></span>
+</button>
+</div>
+</div>
+<!-- CAMERA 3: Teras (Privacy Mode Active) -->
+<div class="bg-[#FBF9F4] rounded-[24px] p-5 flex flex-col justify-between">
+<!-- Header Tile -->
+<div class="flex items-center justify-between mb-3.5">
+<div class="flex items-center gap-2">
+<span class="font-headline-sm text-headline-sm font-semibold text-on-surface">Teras</span>
+<span class="inline-flex items-center gap-1.5 h-6 px-2.5 bg-[#ECE7DC] rounded-full font-body-sm text-[12px] font-medium text-on-surface">
+<span class="w-2 h-2 rounded-full bg-[#4C7A3F]"></span>
+                ONLINE
+              </span>
+</div>
+<div class="flex items-center gap-1.5 font-mono-sm text-mono-sm text-on-surface-variant font-medium">
+<span class="w-2 h-2 rounded-full bg-outline"></span>
+<span>HENTI</span>
+</div>
+</div>
+<!-- Video Frame Inactive / Gentle Privacy Message -->
+<div class="relative w-full aspect-video bg-[#ECE7DC] rounded-[14px] flex flex-col items-center justify-center p-4 text-center">
+<div class="w-10 h-10 rounded-full bg-[#DFE4DF] flex items-center justify-center mb-2">
+<span class="material-symbols-outlined text-[24px] text-on-surface-variant" data-icon="visibility_off">visibility_off</span>
+</div>
+<p class="font-body-sm text-body-sm font-semibold text-on-surface mb-0.5">Mode privasi aktif</p>
+<p class="font-body-sm text-[12px] text-on-surface-variant max-w-[210px] leading-relaxed text-center">
+              Feed kamera dimatikan oleh pemilik rumah untuk menjaga privasi.
+            </p>
+</div>
+<!-- Divider -->
+<div class="h-px bg-[#E5E0D5] w-full my-4"></div>
+<!-- Footer Relay / Privacy Control (Toggle 56x32px, 24px knob ON) -->
+<div class="flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-body-sm text-body-sm font-medium text-on-surface">Mode Privasi</span>
+<span class="font-mono-sm text-mono-sm text-[#2F6B5B] font-medium">Feed terselubung</span>
+</div>
+<!-- Privacy Toggle On (#2F6B5B fill, knob justified right) -->
+<button aria-pressed="true" class="w-[56px] h-[32px] rounded-full bg-[#2F6B5B] relative transition-colors duration-200 cursor-pointer flex items-center justify-end p-1" type="button">
+<span class="w-[24px] h-[24px] rounded-full bg-[#FBF9F4] block"></span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- SECTION: MOTION EVENTS & PLAYBACK PLAYER -->
+<section class="flex flex-col gap-3.5 pt-2">
+<div class="flex justify-between items-center">
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Kejadian Gerakan (Motion Events)</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Deteksi lokal berbasis sensor frame 24 jam terakhir</p>
+</div>
+<button class="h-[40px] px-4 bg-[#FBF9F4] text-on-surface font-body-sm text-body-sm rounded-[10px] hover:bg-[#ECE7DC] transition-colors duration-150 flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]" data-icon="filter_list">filter_list</span>
+<span>Filter Tanggal</span>
+</button>
+</div>
+<!-- Bento Layout: Left Clip Player (Radius 20px, fill #FBF9F4), Right Motion Logs (Radius 20px, fill #FBF9F4) -->
+<div class="grid grid-cols-12 gap-6">
+<!-- Left Column: Mini Clip Player Panel (7 Cols, radius 20px, fill #FBF9F4, NO outer border) -->
+<div class="col-span-7 bg-[#FBF9F4] rounded-[20px] p-5 flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-3.5">
+<div class="flex items-center gap-2">
+<span class="font-headline-sm text-headline-sm font-semibold text-on-surface">Klip Terpilih</span>
+<span class="font-mono-sm text-mono-sm text-on-surface-variant">Teras • 18:41:12</span>
+</div>
+<span class="inline-flex items-center px-2.5 py-1 rounded-full font-mono-sm text-mono-sm bg-[#ECE7DC] text-on-surface">
+                Durasi 00:24
+              </span>
+</div>
+<!-- Player Neutral Placeholder Screen -->
+<div class="relative w-full aspect-video bg-[#ECE7DC] rounded-[14px] overflow-hidden flex flex-col justify-between p-3.5">
+<!-- Video Controls HUD Overlay -->
+<div class="relative z-10 flex justify-between items-center">
+<span class="font-mono-sm text-[11px] bg-[#181D1A]/70 text-[#EDF2ED] px-2 py-0.5 rounded">EVENT #1042-TERAS</span>
+<span class="font-mono-sm text-[11px] bg-[#181D1A]/70 text-[#EDF2ED] px-2 py-0.5 rounded">H.264 / 1080p</span>
+</div>
+<!-- Center Play Button Overlay -->
+<div class="relative z-10 flex flex-col items-center justify-center my-auto">
+<button aria-label="Putar" class="w-14 h-14 rounded-full bg-[#FBF9F4] text-[#181D1A] flex items-center justify-center hover:scale-105 transition-transform duration-150">
+<span class="material-symbols-outlined text-[32px] ml-1 text-[#2F6B5B]" data-icon="play_arrow">play_arrow</span>
+</button>
+<span class="font-body-sm text-[12px] text-on-surface-variant font-medium mt-2">Klip Teras • 18:41:12</span>
+</div>
+<!-- Timeline Scrubber -->
+<div class="relative z-10 flex flex-col gap-1 w-full bg-[#181D1A]/75 p-2 rounded-lg text-white">
+<div class="w-full bg-[#404945] h-1.5 rounded-full overflow-hidden">
+<div class="bg-[#2F6B5B] h-full w-[35%]"></div>
+</div>
+<div class="flex justify-between items-center font-mono-sm text-[11px]">
+<span>00:08</span>
+<span>00:24</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Divider -->
+<div class="h-px bg-[#E5E0D5] w-full my-4"></div>
+<!-- Action Controls Group (44px height, radius 12px) -->
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<button class="h-[44px] px-5 bg-[#2F6B5B] text-[#FBF9F4] font-body-sm text-body-sm rounded-[12px] hover:bg-[#255849] active:bg-[#1F4A3D] transition-colors duration-150 flex items-center gap-2 font-medium">
+<span class="material-symbols-outlined text-[18px]" data-icon="play_arrow">play_arrow</span>
+<span>Putar Klip</span>
+</button>
+<button class="h-[44px] px-5 bg-[#ECE7DC] text-[#181D1A] font-body-sm text-body-sm rounded-[12px] hover:bg-[#DFE4DF] transition-colors duration-150 flex items-center gap-2 font-medium">
+<span class="material-symbols-outlined text-[18px]" data-icon="download">download</span>
+<span>Unduh File</span>
+</button>
+</div>
+<button class="h-[44px] px-4 bg-transparent text-[#BA1A1A] hover:bg-error-container/50 font-body-sm text-body-sm rounded-[12px] transition-colors duration-150 flex items-center gap-1.5" title="Hapus klip">
+<span class="material-symbols-outlined text-[18px]" data-icon="delete">delete</span>
+<span>Hapus</span>
+</button>
+</div>
+</div>
+<!-- Right Column: Motion Events Stream (5 Cols, radius 20px, fill #FBF9F4, NO outer border) -->
+<div class="col-span-5 bg-[#FBF9F4] rounded-[20px] p-5 flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between pb-3.5 border-b border-[#E5E0D5]">
+<span class="font-headline-sm text-headline-sm font-semibold text-on-surface">Riwayat Kejadian</span>
+<span class="font-mono-sm text-mono-sm text-on-surface-variant">Hari Ini</span>
+</div>
+<!-- Event Items Stack with Clean Placeholder Thumbnails and Timestamps -->
+<div class="divide-y divide-[#E5E0D5] flex flex-col">
+<!-- Item 1 (Selected) -->
+<div class="py-3 flex items-center gap-3 bg-[#E4EDE9] -mx-5 px-5 border-l-4 border-[#2F6B5B] cursor-pointer">
+<div class="w-14 h-11 bg-[#DFE4DF] rounded-[8px] flex items-center justify-center shrink-0 text-on-surface-variant">
+<span class="material-symbols-outlined text-[20px]" data-icon="deck">deck</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-baseline">
+<p class="font-body-sm text-body-sm font-semibold text-on-surface truncate">Gerakan di Teras</p>
+<span class="font-mono-sm text-mono-sm text-[#2F6B5B] font-semibold">18:41:12</span>
+</div>
+<div class="flex justify-between items-center text-on-surface-variant font-mono-sm text-mono-sm text-[12px] mt-0.5">
+<span>Kamera Ponsel 03</span>
+<span>Durasi 00:24</span>
+</div>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="py-3 flex items-center gap-3 hover:bg-[#ECE7DC]/60 -mx-5 px-5 transition-colors duration-150 cursor-pointer">
+<div class="w-14 h-11 bg-[#ECE7DC] rounded-[8px] flex items-center justify-center shrink-0 text-on-surface-variant">
+<span class="material-symbols-outlined text-[20px]" data-icon="weekend">weekend</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-baseline">
+<p class="font-body-sm text-body-sm font-medium text-on-surface truncate">Gerakan di Ruang Tamu</p>
+<span class="font-mono-sm text-mono-sm text-on-surface-variant">17:15:04</span>
+</div>
+<div class="flex justify-between items-center text-on-surface-variant font-mono-sm text-mono-sm text-[12px] mt-0.5">
+<span>Kamera Ponsel 01</span>
+<span>Durasi 00:18</span>
+</div>
+</div>
+</div>
+<!-- Item 3 -->
+<div class="py-3 flex items-center gap-3 hover:bg-[#ECE7DC]/60 -mx-5 px-5 transition-colors duration-150 cursor-pointer">
+<div class="w-14 h-11 bg-[#ECE7DC] rounded-[8px] flex items-center justify-center shrink-0 text-on-surface-variant">
+<span class="material-symbols-outlined text-[20px]" data-icon="restaurant">restaurant</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-baseline">
+<p class="font-body-sm text-body-sm font-medium text-on-surface truncate">Gerakan di Dapur</p>
+<span class="font-mono-sm text-mono-sm text-on-surface-variant">14:02:40</span>
+</div>
+<div class="flex justify-between items-center text-on-surface-variant font-mono-sm text-mono-sm text-[12px] mt-0.5">
+<span>Kamera Ponsel 02</span>
+<span>Durasi 00:32</span>
+</div>
+</div>
+</div>
+<!-- Item 4 -->
+<div class="py-3 flex items-center gap-3 hover:bg-[#ECE7DC]/60 -mx-5 px-5 transition-colors duration-150 cursor-pointer">
+<div class="w-14 h-11 bg-[#ECE7DC] rounded-[8px] flex items-center justify-center shrink-0 text-on-surface-variant">
+<span class="material-symbols-outlined text-[20px]" data-icon="deck">deck</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-baseline">
+<p class="font-body-sm text-body-sm font-medium text-on-surface truncate">Gerakan di Teras</p>
+<span class="font-mono-sm text-mono-sm text-on-surface-variant">11:20:19</span>
+</div>
+<div class="flex justify-between items-center text-on-surface-variant font-mono-sm text-mono-sm text-[12px] mt-0.5">
+<span>Kamera Ponsel 03</span>
+<span>Durasi 00:15</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer Pagination / Archive Info -->
+<div class="pt-3.5 border-t border-[#E5E0D5] flex items-center justify-between">
+<span class="font-mono-sm text-mono-sm text-on-surface-variant">Total: 12 Klip (1.2 GB)</span>
+<a class="font-body-sm text-body-sm text-primary font-medium hover:underline flex items-center gap-1" href="#">
+              Lihat Semua
+              <span class="material-symbols-outlined text-[16px]" data-icon="arrow_forward">arrow_forward</span>
+</a>
+</div>
+</div>
+</div>
+</section>
+<!-- SYSTEM STORAGE METADATA FOOTNOTE (Penyimpanan lokal SSD · Hapus otomatis klip > 14 hari, Year 2026, IBM Plex Mono for numbers, Public Sans for text) -->
+<footer class="bg-[#FBF9F4] rounded-[16px] px-5 py-3.5 flex justify-between items-center">
+<div class="flex items-center gap-2.5">
+<span class="material-symbols-outlined text-[20px] text-[#2F6B5B]" data-icon="hard_drive">hard_drive</span>
+<span class="font-body-sm text-body-sm text-on-surface">
+          Penyimpanan lokal SSD: <span class="font-mono-sm font-medium">182.4 GB</span> / <span class="font-mono-sm font-medium">500 GB</span> terpakai · Hapus otomatis klip &gt; <span class="font-mono-sm font-medium">14</span> hari (Sistem 2026)
+        </span>
+</div>
+<div class="flex items-center gap-4 font-mono-sm text-mono-sm text-on-surface-variant">
+<span>Enkripsi: AES-256 LAN</span>
+<span class="inline-block w-2 h-2 rounded-full bg-[#4C7A3F]"></span>
+</div>
+</footer>
+</main>
+</div>
+</body></html>

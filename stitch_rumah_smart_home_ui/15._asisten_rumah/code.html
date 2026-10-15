@@ -1,0 +1,262 @@
+<!DOCTYPE html><html class="light" lang="id"><head>
+<meta charset="utf-8">
+<meta content="width=360, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+<title>Asisten - Rumah</title>
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600&amp;family=Courier+Prime:wght@400;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-surface-variant": "#404945",
+            "on-primary-fixed-variant": "#0d5041",
+            "surface-container": "#f1eee7",
+            "inverse-surface": "#31312c",
+            "primary-container": "#2f6b5b",
+            "on-tertiary-fixed-variant": "#24501a",
+            "tertiary": "#26521c",
+            "tertiary-container": "#3e6b32",
+            "on-error-container": "#93000a",
+            "on-primary-fixed": "#002019",
+            "surface-container-lowest": "#ffffff",
+            "surface-tint": "#2c6859",
+            "primary-fixed": "#b1efdb",
+            "secondary-container": "#dbe1da",
+            "surface-dim": "#dcdad3",
+            "on-tertiary-fixed": "#012200",
+            "surface-variant": "#e5e2db",
+            "on-secondary-container": "#5d645e",
+            "tertiary-fixed-dim": "#a1d48f",
+            "inverse-on-surface": "#f3f0e9",
+            "surface-container-highest": "#e5e2db",
+            "on-secondary-fixed-variant": "#424843",
+            "surface-container-low": "#f6f3ec",
+            "background": "#fcf9f2",
+            "on-background": "#1c1c18",
+            "error": "#ba1a1a",
+            "tertiary-fixed": "#bcf1a9",
+            "on-secondary": "#ffffff",
+            "secondary-fixed": "#dde4dd",
+            "primary": "#115344",
+            "surface-bright": "#fcf9f2",
+            "on-tertiary": "#ffffff",
+            "primary-fixed-dim": "#96d3bf",
+            "on-primary": "#ffffff",
+            "outline-variant": "#bfc9c4",
+            "inverse-primary": "#96d3bf",
+            "on-secondary-fixed": "#171d19",
+            "outline": "#707975",
+            "secondary-fixed-dim": "#c1c8c1",
+            "on-surface": "#1c1c18",
+            "on-primary-container": "#abe9d5",
+            "error-container": "#ffdad6",
+            "on-error": "#ffffff",
+            "secondary": "#59605a",
+            "surface": "#fcf9f2",
+            "surface-container-high": "#ebe8e1",
+            "on-tertiary-container": "#b6eaa3"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "2xl": "1.25rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "gutter-compact": "0.5rem",
+            "margin": "1rem",
+            "space-md": "1rem",
+            "space-sm": "0.75rem",
+            "gutter": "0.75rem",
+            "space-xxs": "0.25rem",
+            "space-lg": "1.25rem",
+            "space-xl": "1.5rem",
+            "space-xs": "0.5rem"
+          },
+          "fontFamily": {
+            "headline-lg": ["Public Sans"],
+            "label-md": ["Public Sans"],
+            "title-md": ["Public Sans"],
+            "headline-md": ["Public Sans"],
+            "mono-data-lg": ["Courier Prime"],
+            "body-sm": ["Public Sans"],
+            "mono-data-md": ["Courier Prime"],
+            "body-md": ["Public Sans"],
+            "mono-data-sm": ["Courier Prime"]
+          },
+          "fontSize": {
+            "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+            "label-md": ["13px", { "lineHeight": "16px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+            "title-md": ["18px", { "lineHeight": "24px", "fontWeight": "600" }],
+            "headline-md": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "mono-data-lg": ["24px", { "lineHeight": "28px", "fontWeight": "400" }],
+            "body-sm": ["13px", { "lineHeight": "18px", "fontWeight": "400" }],
+            "mono-data-md": ["15px", { "lineHeight": "20px", "fontWeight": "400" }],
+            "body-md": ["15px", { "lineHeight": "22px", "fontWeight": "400" }],
+            "mono-data-sm": ["13px", { "lineHeight": "16px", "fontWeight": "400" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    body {
+      background-color: #F4F1EA;
+      color: #1F2421;
+      font-family: 'Public Sans', sans-serif;
+      margin: 0;
+      padding: 0;
+      -webkit-font-smoothing: antialiased;
+    }
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+    .material-symbols-outlined.fill {
+      font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    /* Hide scrollbars cleanly */
+    ::-webkit-scrollbar {
+      display: none;
+    }
+  </style>
+</head>
+<body class="bg-[#F4F1EA] text-[#1F2421] flex justify-center">
+<!-- Mobile Native Container (360x800 Baseline) -->
+<div class="w-[360px] h-[800px] flex flex-col justify-between overflow-hidden relative bg-[#F4F1EA] select-none">
+<!-- 1. Top Android Status Bar -->
+<header class="w-full h-8 pt-1 px-4 flex justify-between items-center text-[#1F2421] z-20 shrink-0">
+<span class="font-mono-data-sm text-mono-data-sm font-semibold tracking-tight">09:41</span>
+<div class="flex items-center gap-1.5 text-secondary">
+<span class="material-symbols-outlined text-[15px]" data-icon="signal_cellular_alt">signal_cellular_alt</span>
+<span class="material-symbols-outlined text-[15px]" data-icon="wifi">wifi</span>
+<span class="material-symbols-outlined text-[15px]" data-icon="battery_full">battery_full</span>
+</div>
+</header>
+<!-- 2. Top App Bar (Shared Components Specs: 56px, page title Asisten) -->
+<nav class="h-14 px-4 flex justify-between items-center bg-[#F4F1EA] shrink-0 z-20">
+<h1 class="font-headline-lg text-headline-lg text-[#1F2421] tracking-tight">Asisten</h1>
+<button aria-label="Pengaturan" class="w-12 h-12 flex items-center justify-end text-secondary active:opacity-70 transition-colors" type="button">
+<span class="material-symbols-outlined text-[24px]" data-icon="settings">settings</span>
+</button>
+</nav>
+<!-- 3. Chat Message Stream (Scrollable Vertical Flow) -->
+<main class="flex-1 overflow-y-auto px-4 py-2 space-y-4">
+<!-- User message 1 -->
+<div class="flex flex-col items-end">
+<div class="max-w-[272px] bg-[#E4EDE9] text-[#1F2421] px-4 py-3 rounded-[20px] rounded-br-[4px]">
+<p class="font-body-md text-body-md leading-relaxed">Nyalakan lampu ruang tengah</p>
+</div>
+<span class="font-mono-data-sm text-mono-data-sm text-secondary mt-1 mr-1">19:30</span>
+</div>
+<!-- Assistant message 1 -->
+<div class="flex flex-col items-start">
+<div class="max-w-[272px] bg-[#FBF9F4] text-[#1F2421] px-4 py-3 rounded-[20px] rounded-bl-[4px]">
+<p class="font-body-md text-body-md leading-relaxed">Lampu ruang tengah dinyalakan.</p>
+</div>
+<span class="font-mono-data-sm text-mono-data-sm text-secondary mt-1 ml-1">19:30</span>
+</div>
+<!-- User message 2 -->
+<div class="flex flex-col items-end">
+<div class="max-w-[272px] bg-[#E4EDE9] text-[#1F2421] px-4 py-3 rounded-[20px] rounded-br-[4px]">
+<p class="font-body-md text-body-md leading-relaxed">Di mana HP-ku?</p>
+</div>
+<span class="font-mono-data-sm text-mono-data-sm text-secondary mt-1 mr-1">19:35</span>
+</div>
+<!-- Assistant message 2 with Camera Thumbnail and Text Link -->
+<div class="flex flex-col items-start">
+<div class="max-w-[280px] bg-[#FBF9F4] text-[#1F2421] p-4 rounded-[20px] rounded-bl-[4px] space-y-3">
+<p class="font-body-md text-body-md leading-relaxed">HP terakhir terlihat di Ruang tamu, meja dekat sofa, pukul 18:20.</p>
+<div class="flex items-center gap-3 pt-1">
+<div aria-hidden="true" class="w-16 h-10 bg-[#ECE7DC] rounded-lg flex items-center justify-center shrink-0 text-secondary">
+<span class="material-symbols-outlined text-[20px]" data-icon="videocam">videocam</span>
+</div>
+<button class="text-primary-container font-label-md text-label-md text-left active:opacity-75 transition-opacity" type="button">
+              Lihat rekaman
+            </button>
+</div>
+</div>
+<span class="font-mono-data-sm text-mono-data-sm text-secondary mt-1 ml-1">19:35</span>
+</div>
+<!-- Confirmation Card in Chat Flow -->
+<div class="w-full bg-[#FBF9F4] p-4 rounded-[20px] space-y-3.5">
+<p class="font-label-md text-title-md text-[#1F2421]">Matikan semua lampu?</p>
+<div class="flex gap-2">
+<button class="flex-1 h-10 bg-[#ECE7DC] text-[#1F2421] font-label-md text-label-md rounded-xl active:bg-surface-variant transition-colors flex items-center justify-center" type="button">
+            Batal
+          </button>
+<button class="flex-1 h-10 bg-[#2F6B5B] text-[#FBF9F4] font-label-md text-label-md rounded-xl active:bg-primary transition-colors flex items-center justify-center" type="button">
+            Ya, matikan
+          </button>
+</div>
+</div>
+</main>
+<!-- Bottom Interactive Section: Suggestions & Input -->
+<footer class="shrink-0 bg-[#F4F1EA]">
+<!-- 4. Quick Suggestion Chips -->
+<div class="flex gap-2 px-4 pb-3 overflow-x-auto no-scrollbar">
+<button class="shrink-0 bg-[#FBF9F4] text-[#1F2421] font-label-md text-label-md px-3 py-2 rounded-lg active:bg-[#ECE7DC] transition-colors" type="button">
+          Matikan semua lampu
+        </button>
+<button class="shrink-0 bg-[#FBF9F4] text-[#1F2421] font-label-md text-label-md px-3 py-2 rounded-lg active:bg-[#ECE7DC] transition-colors" type="button">
+          Status gas
+        </button>
+<button class="shrink-0 bg-[#FBF9F4] text-[#1F2421] font-label-md text-label-md px-3 py-2 rounded-lg active:bg-[#ECE7DC] transition-colors" type="button">
+          Siapa di rumah
+        </button>
+</div>
+<!-- 5. Bottom Input Area -->
+<div class="px-4 pb-3 flex items-center gap-2">
+<div class="flex-1 h-12 bg-[#ECE7DC] rounded-xl px-3.5 flex items-center justify-between">
+<input class="bg-transparent border-none text-[#1F2421] placeholder-secondary text-body-md font-body-md w-full focus:outline-none focus:ring-0 p-0" placeholder="Ketik pesan atau perintah..." type="text">
+<button aria-label="Kirim" class="text-secondary w-8 h-8 flex items-center justify-center active:text-primary transition-colors" type="button">
+<span class="material-symbols-outlined text-[20px]" data-icon="send">send</span>
+</button>
+</div>
+<button aria-label="Input Suara" class="w-12 h-12 rounded-full bg-[#2F6B5B] text-[#FBF9F4] flex items-center justify-center shrink-0 active:bg-primary transition-transform active:scale-95" type="button">
+<span class="material-symbols-outlined text-[24px]" data-icon="mic" data-weight="fill" style="font-variation-settings: 'FILL' 1;">mic</span>
+</button>
+</div>
+<!-- 6. Bottom Navigation Bar (Material 3 standard, 80px, Flat #FBF9F4, No Top Line, No Shadows) -->
+<nav aria-label="Menu Utama" class="h-20 bg-[#FBF9F4] flex justify-around items-center px-3 z-30">
+<!-- Tab 1: Beranda -->
+<a class="flex flex-col items-center justify-center gap-1 w-16 h-12 text-secondary active:scale-95 transition-all" href="#">
+<div class="w-16 h-8 flex items-center justify-center rounded-full">
+<span class="material-symbols-outlined text-[24px]" data-icon="home">home</span>
+</div>
+<span class="font-body-sm text-body-sm text-secondary leading-none">Beranda</span>
+</a>
+<!-- Tab 2: Kamera -->
+<a class="flex flex-col items-center justify-center gap-1 w-16 h-12 text-secondary active:scale-95 transition-all" href="#">
+<div class="w-16 h-8 flex items-center justify-center rounded-full">
+<span class="material-symbols-outlined text-[24px]" data-icon="videocam">videocam</span>
+</div>
+<span class="font-body-sm text-body-sm text-secondary leading-none">Kamera</span>
+</a>
+<!-- Tab 3: Asisten (ACTIVE: Pill 64x32 filled with #E4EDE9, Accent #2F6B5B) -->
+<a aria-current="page" class="flex flex-col items-center justify-center gap-1 w-16 h-12 active:scale-95 transition-all" href="#">
+<div class="w-16 h-8 rounded-full bg-[#E4EDE9] flex items-center justify-center text-[#2F6B5B]">
+<span class="material-symbols-outlined text-[24px] fill" data-icon="mic" data-weight="fill" style="font-variation-settings: 'FILL' 1;">mic</span>
+</div>
+<span class="font-label-md text-label-md text-[#2F6B5B] leading-none">Asisten</span>
+</a>
+<!-- Tab 4: Lainnya -->
+<a class="flex flex-col items-center justify-center gap-1 w-16 h-12 text-secondary active:scale-95 transition-all" href="#">
+<div class="w-16 h-8 flex items-center justify-center rounded-full">
+<span class="material-symbols-outlined text-[24px]" data-icon="more_horiz">more_horiz</span>
+</div>
+<span class="font-body-sm text-body-sm text-secondary leading-none">Lainnya</span>
+</a>
+</nav>
+</footer>
+</div>
+</body></html>

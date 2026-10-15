@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:app/theme/tokens.dart';
 
-enum AppButtonVariant { primary, secondary, danger }
+enum AppButtonVariant { primary, secondary, danger, ghost }
 
 class AppButton extends StatelessWidget {
   final String label;
@@ -10,6 +10,7 @@ class AppButton extends StatelessWidget {
   final bool isLoading;
   final Widget? icon;
   final bool isFullWidth;
+  final double height;
 
   const AppButton({
     super.key,
@@ -19,6 +20,7 @@ class AppButton extends StatelessWidget {
     this.isLoading = false,
     this.icon,
     this.isFullWidth = true,
+    this.height = AppDimensions.controlHeight,
   });
 
   @override
@@ -26,24 +28,24 @@ class AppButton extends StatelessWidget {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     Color bg;
-    Color border;
     Color textColor;
 
     switch (variant) {
       case AppButtonVariant.primary:
         bg = isDark ? AppColors.darkAccent : AppColors.lightAccent;
-        border = bg;
         textColor = isDark ? AppColors.darkAccentText : AppColors.lightAccentText;
         break;
       case AppButtonVariant.secondary:
-        bg = isDark ? AppColors.darkSurface : AppColors.lightSurface;
-        border = isDark ? AppColors.darkBorder : AppColors.lightBorder;
+        bg = isDark ? AppColors.darkSubtle : AppColors.lightSubtle;
         textColor = isDark ? AppColors.darkText : AppColors.lightText;
         break;
       case AppButtonVariant.danger:
         bg = AppColors.statusDanger;
-        border = AppColors.statusDanger;
         textColor = AppColors.lightSurface;
+        break;
+      case AppButtonVariant.ghost:
+        bg = AppColors.transparent;
+        textColor = isDark ? AppColors.darkAccent : AppColors.lightAccent;
         break;
     }
 
@@ -70,35 +72,32 @@ class AppButton extends StatelessWidget {
             label,
             style: AppTypography.body(
               textColor,
-              weight: FontWeight.w600,
               size: AppTypography.textSm,
+              weight: FontWeight.w600,
             ),
           ),
         ],
       );
     }
 
-    final btn = Material(
-      color: bg,
-      shape: RoundedRectangleBorder(
+    final buttonWidget = Container(
+      height: height,
+      decoration: BoxDecoration(
+        color: bg,
         borderRadius: AppRadius.borderSm,
-        side: BorderSide(color: border, width: AppDimensions.borderWidth),
       ),
+      alignment: Alignment.center,
+      child: content,
+    );
+
+    return Material(
+      color: AppColors.transparent,
+      borderRadius: AppRadius.borderSm,
       child: InkWell(
         onTap: isLoading ? null : onPressed,
         borderRadius: AppRadius.borderSm,
-        child: Container(
-          height: AppDimensions.controlHeight,
-          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.space4),
-          alignment: Alignment.center,
-          child: content,
-        ),
+        child: isFullWidth ? SizedBox(width: double.infinity, child: buttonWidget) : buttonWidget,
       ),
     );
-
-    if (isFullWidth) {
-      return SizedBox(width: double.infinity, child: btn);
-    }
-    return btn;
   }
 }

@@ -1,0 +1,5 @@
+user device_a
+topic readwrite home/device_a/#
+
+user device_b
+topic readwrite home/device_b/#

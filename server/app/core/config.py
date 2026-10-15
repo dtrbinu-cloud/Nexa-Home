@@ -1,4 +1,6 @@
 from pathlib import Path
+from typing import Optional
+from pydantic import field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 # Base directory repo
@@ -27,6 +29,19 @@ class Settings(BaseSettings):
 
     DATABASE_URL: str = f"sqlite+aiosqlite:///{DEFAULT_DB_PATH.as_posix()}"
 
+    # Google OAuth2 & Public Domain
+    BASE_PUBLIC_URL: str = "https://aujasena.my.id"
+    GOOGLE_CLIENT_ID: str = ""
+    GOOGLE_CLIENT_SECRET: str = ""
+
+    # SMTP Email Service
+    SMTP_HOST: str = ""
+    SMTP_PORT: int = 587
+    SMTP_USER: str = ""
+    SMTP_PASSWORD: str = ""
+    SMTP_FROM: str = "Nexa Home <noreply@aujasena.my.id>"
+    SMTP_USE_TLS: bool = True
+
     # MQTT
     MQTT_BROKER_HOST: str = "127.0.0.1"
     MQTT_BROKER_PORT: int = 1883
@@ -43,19 +58,119 @@ class Settings(BaseSettings):
     # DeepSeek LLM
     DEEPSEEK_API_KEY: str = ""
     DEEPSEEK_BASE_URL: str = "https://api.deepseek.com"
+    DEEPSEEK_KNOWN_MODELS: list[str] = ["deepseek-chat", "deepseek-reasoner"]
     DEEPSEEK_MODEL: str = "deepseek-chat"
+
+    @field_validator("DEEPSEEK_MODEL")
+    @classmethod
+    def validate_deepseek_model(cls, v: str) -> str:
+        import logging
+        logger = logging.getLogger("server.config")
+        known = getattr(cls, "DEEPSEEK_KNOWN_MODELS", ["deepseek-chat", "deepseek-reasoner"])
+        if v and v not in known:
+            logger.warning(
+                f"[Config] Model DeepSeek '{v}' tidak terdaftar di DEEPSEEK_KNOWN_MODELS ({known}). "
+                f"Model tidak dikenal tetap diizinkan untuk digunakan."
+            )
+        return v
+
+    # Camera & Recording (Tahap 4 & 5)
+    MEDIA_ENCRYPTION_KEY: str = "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+    RECORDING_ENCRYPTION_KEY: Optional[str] = None
+    CAMERA_ENCRYPTION_KEY: Optional[str] = None
+    CAMERA_PAIRING_CODE_EXPIRE_MINUTES: int = 10
+    CAMERA_MOTION_MAX_ACTIVE: int = 3
+    CAMERA_MOTION_FPS: int = 2
+    CAMERA_MOTION_WIDTH: int = 320
+    CAMERA_MOTION_THRESHOLD: int = 25
+    CAMERA_MOTION_MIN_AREA: int = 500
+    CAMERA_PRE_ROLL_SECONDS: int = 3
+    CAMERA_POST_ROLL_SECONDS: int = 3
+    CAMERA_MAX_CLIP_SECONDS: int = 60
+    RECORDING_STORAGE_DIR: str = str(DATA_DIR / "recordings")
+    RECORDING_RETENTION_DAYS: int = 7
+    RECORDING_MAX_DISK_MB: int = 10240
+    RECORDING_MIN_FREE_DISK_MB: int = 500
+    MEDIAMTX_BIN_PATH: str = "./tools/mediamtx/mediamtx.exe"
+    FFMPEG_BIN_PATH: str = "ffmpeg"
+
+    # Assistant & Cost Controls
+    ASSISTANT_RATE_LIMIT_PER_MINUTE: int = 15
+    ASSISTANT_MAX_TOKENS: int = 500
+    ASSISTANT_DAILY_BUDGET_CENTS: float = 100.0
+    ASSISTANT_DAILY_REQUEST_LIMIT: int = 200
+    ASSISTANT_MAX_HISTORY_MESSAGES: int = 10
 
     # TTS
     TTS_PROVIDER: str = "edge-tts"
     EDGE_TTS_VOICE: str = "id-ID-ArdiNeural"
-    PIPER_MODEL_PATH: str = "./models/piper/id_ID-indotts-medium.onnx"
+    PIPER_BIN_PATH: str = "./tools/piper/piper.exe"
+    PIPER_MODEL_PATH: str = "server/data/models/piper/id_ID-news_tts-medium.onnx"
+    PIPER_CONFIG_PATH: str = "server/data/models/piper/id_ID-news_tts-medium.onnx.json"
+    TTS_CACHE_DIR: str = str(DATA_DIR / "tts_cache")
+    TTS_MAX_TEXT_LENGTH: int = 500
 
-    # AI Vision
-    VISION_ENABLED: bool = False
-    VISION_MAX_CAMERAS: int = 2
-    VISION_TARGET_FPS: int = 3
-    VISION_INPUT_WIDTH: int = 640
-    VISION_INPUT_HEIGHT: int = 640
+    # AI Vision (Tahap 5)
+    VISION_ENABLED: bool = True
+    VISION_WORKER_ENABLED: bool = True
+    VISION_MODEL_PATH: str = "server/data/models/yolo/yolo11n.onnx"
+    VISION_POSE_MODEL_PATH: str = "server/data/models/yolo/yolo11n-pose.onnx"
+    VISION_ONNX_THREADS: int = 2
+    VISION_INPUT_SIZE: int = 640
+    VISION_TARGET_FPS: int = 2
+    VISION_CONFIDENCE_THRESHOLD: float = 0.35
+    VISION_CLASS_THRESHOLDS: dict[str, float] = {
+        "person": 0.35,
+        "laptop": 0.35,
+        "bottle": 0.20,
+        "remote": 0.15,
+        "cup": 0.15,
+        "cell phone": 0.15,
+        "backpack": 0.15,
+        "handbag": 0.15,
+        "book": 0.15,
+    }
+    VISION_TRACKABLE_CLASSES: list[str] = [
+        "cell phone",
+        "remote",
+        "handbag",
+        "backpack",
+        "suitcase",
+        "bottle",
+        "cup",
+        "laptop",
+        "mouse",
+        "keyboard",
+        "book",
+        "umbrella",
+    ]
+    VISION_ITEM_RETENTION_DAYS: int = 7
+    VISION_MAX_ITEM_RECORDS: int = 50000
+    VISION_HEARTBEAT_TIMEOUT_SECONDS: int = 15
+    VISION_MOTION_TRIGGER_COOLDOWN_SECONDS: int = 5
+
+    # Deteksi Benda Pasca-Gerakan (Tahap 5 Perbaikan 4)
+    VISION_POST_MOTION_ENABLED: bool = True
+    VISION_POST_MOTION_IDLE_SECONDS: int = 5
+    VISION_POST_MOTION_MODEL_PATH: str = "server/data/models/yolo/yolo11s_640.onnx"
+    VISION_POST_MOTION_CONFIDENCE: float = 0.15
+
+    # Insight Keluarga / Family Analytics (Tahap 6) - Semua default MATI
+    FAMILY_ENABLED: bool = False
+    FAMILY_STUDY_GAP_MINUTES: int = 5
+    FAMILY_LATE_NIGHT_START: str = "23:00"
+    FAMILY_LATE_NIGHT_END: str = "04:30"
+    FAMILY_LATE_NIGHT_MIN_MINUTES: int = 15
+    FAMILY_FALL_STATIONARY_SECONDS: int = 30
+    FAMILY_INACTIVITY_MINUTES: int = 120
+    FAMILY_INACTIVITY_START: str = "08:00"
+    FAMILY_INACTIVITY_END: str = "21:00"
+    FAMILY_STATS_RETENTION_DAYS: int = 90
+    FAMILY_EVENTS_RETENTION_DAYS: int = 30
+    FAMILY_ALLOW_ASSISTANT_SUMMARY: bool = False
+    NOTIFICATION_PROVIDER: str = "inapp"
+    FCM_CREDENTIALS_PATH: Optional[str] = None
 
 
 settings = Settings()
+

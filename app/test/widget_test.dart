@@ -7,7 +7,8 @@ import 'package:app/components/app_button.dart';
 import 'package:app/components/app_card.dart';
 import 'package:app/components/app_switch.dart';
 import 'package:app/components/empty_state.dart';
-import 'package:app/screens/add_device_screen.dart';
+import 'package:app/screens/add_device/choose_type_screen.dart';
+import 'package:app/screens/tabs/cameras_tab.dart';
 import 'package:app/main.dart';
 
 void main() {
@@ -93,17 +94,31 @@ void main() {
     expect(find.byType(RumahApp), findsOneWidget);
   });
 
-  testWidgets('Layar AddDeviceScreen merender form input', (WidgetTester tester) async {
+  testWidgets('Layar ChooseDeviceTypeScreen merender pilihan jenis perangkat', (WidgetTester tester) async {
     await tester.pumpWidget(
       const ProviderScope(
         child: MaterialApp(
-          home: AddDeviceScreen(),
+          home: ChooseDeviceTypeScreen(),
         ),
       ),
     );
 
     await tester.pump();
-    expect(find.text('Tambah Perangkat'), findsOneWidget);
-    expect(find.text('Daftarkan Perangkat'), findsOneWidget);
+    expect(find.text('Tambah perangkat'), findsOneWidget);
+    expect(find.text('Kamera dari HP bekas'), findsOneWidget);
+    expect(find.text('Modul Rumah (ESP32)'), findsOneWidget);
+  });
+
+  testWidgets('CamerasTab merender tampilan kamera pengawas', (WidgetTester tester) async {
+    await tester.pumpWidget(
+      const ProviderScope(
+        child: MaterialApp(
+          home: CamerasTab(),
+        ),
+      ),
+    );
+
+    await tester.pump();
+    expect(find.text('Kamera'), findsOneWidget);
   });
 }

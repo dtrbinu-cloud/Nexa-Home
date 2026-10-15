@@ -1,6 +1,6 @@
 /* ==============================================================================
    DESIGN TOKENS — SMART HOME "RUMAH"
-   PERHATIAN: Dilarang hardcode warna HEX di komponen atau file CSS lain.
+   PERHATIAN: Dilarang hardcode warna HEX, radius, atau ukuran font langsung di komponen.
    Gunakan variabel CSS di bawah ini di seluruh antarmuka.
    ============================================================================== */
 
@@ -15,33 +15,51 @@
   --text-lg: 24px;
   --text-xl: 32px;
 
-  /* Spacing (kelipatan 4) */
+  /* Spacing */
   --space-1: 4px;
   --space-2: 8px;
   --space-3: 12px;
   --space-4: 16px;
+  --space-5: 20px;
   --space-6: 24px;
   --space-8: 32px;
 
-  /* Radii */
-  --radius-sm: 6px;
-  --radius-md: 10px;
+  /* Shapes & Radii */
+  --radius-chip: 8px;
+  --radius-input: 12px;
+  --radius-button: 12px;
+  --radius-card: 20px;
+  --radius-tile: 24px;
+  --radius-pill: 9999px;
+  --radius-sm: 12px;
+  --radius-md: 20px;
+  --radius-lg: 24px;
 
-  /* Control dimension */
-  --control-height: 40px;
+  /* Controls & Dimensions */
+  --control-height: 44px;
   --border-width: 1px;
+  --sidebar-width: 240px;
+  --topbar-height: 64px;
+
+  /* Toggle Switch Dimensions */
+  --switch-width: 56px;
+  --switch-height: 32px;
+  --switch-knob: 24px;
 
   /* Theme: Terang (Light Default) */
   --color-bg: #F4F1EA;
   --color-surface: #FBF9F4;
+  --color-subtle: #ECE7DC;
   --color-border: #D9D3C6;
+  --color-border-subtle: #E5E0D5;
   --color-text: #1F2421;
   --color-text-secondary: #5E655F;
   --color-accent: #2F6B5B;
   --color-accent-hover: #255849;
-  --color-accent-text: #FBF9F4;
+  --color-accent-light: #E4EDE9;
+  --color-accent-text: #FFFFFF;
 
-  /* Status */
+  /* Status Colors */
   --color-status-ok: #4C7A3F;
   --color-status-warn: #B7791F;
   --color-status-danger: #B23A2E;
@@ -51,13 +69,17 @@
 [data-theme="dark"] {
   --color-bg: #151816;
   --color-surface: #1D211E;
+  --color-subtle: #232824;
   --color-border: #2D332F;
+  --color-border-subtle: #242A26;
   --color-text: #E8E6DF;
-  --color-text-secondary: #8E948F;
+  --color-text-secondary: #8A938C;
   --color-accent: #5FA08E;
-  --color-accent-hover: #4D8575;
+  --color-accent-hover: #71B4A1;
+  --color-accent-light: #1F2C27;
   --color-accent-text: #151816;
 
+  /* Status Colors */
   --color-status-ok: #4C7A3F;
   --color-status-warn: #B7791F;
   --color-status-danger: #B23A2E;

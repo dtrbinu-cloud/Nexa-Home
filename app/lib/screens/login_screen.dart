@@ -4,7 +4,6 @@ import 'package:go_router/go_router.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:app/components/app_button.dart';
-import 'package:app/components/app_card.dart';
 import 'package:app/components/app_input.dart';
 import 'package:app/components/app_toast.dart';
 import 'package:app/core/auth_state.dart';
@@ -21,6 +20,10 @@ class LoginScreen extends ConsumerStatefulWidget {
 class _LoginScreenState extends ConsumerState<LoginScreen> {
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
+  final _serverUrlController = TextEditingController();
+
+  bool _obscurePassword = true;
+  bool _showServerConfig = false;
   final _localAuth = LocalAuthentication();
   bool _canCheckBiometrics = false;
 
@@ -29,10 +32,21 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     super.initState();
     _checkBiometrics();
     StorageService.getUsername().then((saved) {
-      if (saved != null && saved.isNotEmpty) {
+      if (saved != null && saved.isNotEmpty && mounted) {
         _usernameController.text = saved;
       }
     });
+    StorageService.getServerUrl().then((url) {
+      if (mounted) _serverUrlController.text = url;
+    });
+  }
+
+  @override
+  void dispose() {
+    _usernameController.dispose();
+    _passwordController.dispose();
+    _serverUrlController.dispose();
+    super.dispose();
   }
 
   Future<void> _checkBiometrics() async {
@@ -40,27 +54,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       final isEnabled = await StorageService.isBiometricEnabled();
       if (isEnabled) {
         final canCheck = await _localAuth.canCheckBiometrics;
-        setState(() => _canCheckBiometrics = canCheck);
+        if (mounted) setState(() => _canCheckBiometrics = canCheck);
       }
     } catch (_) {}
-  }
-
-  Future<void> _handleBiometricAuth() async {
-    try {
-      final authenticated = await _localAuth.authenticate(
-        localizedReason: 'Pindai sidik jari atau wajah untuk masuk ke Rumah',
-      );
-      if (authenticated) {
-        final savedUser = await StorageService.getUsername();
-        if (savedUser != null && mounted) {
-          AppToast.show(context, 'Biometrik terverifikasi.');
-        }
-      }
-    } catch (_) {
-      if (mounted) {
-        AppToast.show(context, 'Gagal memverifikasi biometrik.', isError: true);
-      }
-    }
   }
 
   Future<void> _handleLogin() async {
@@ -70,6 +66,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     if (username.isEmpty || password.isEmpty) {
       AppToast.show(context, 'Masukkan nama pengguna dan kata sandi.', isError: true);
       return;
+    }
+
+    if (_showServerConfig && _serverUrlController.text.trim().isNotEmpty) {
+      await StorageService.setServerUrl(_serverUrlController.text.trim());
     }
 
     final success = await ref.read(authProvider.notifier).login(username, password);
@@ -87,119 +87,153 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     }
   }
 
-  @override
-  void dispose() {
-    _usernameController.dispose();
-    _passwordController.dispose();
-    super.dispose();
+  Future<void> _handleBiometricLogin() async {
+    try {
+      final didAuth = await _localAuth.authenticate(
+        localizedReason: 'Pindai sidik jari untuk masuk ke Rumah',
+      );
+      if (didAuth && mounted) {
+        final token = await StorageService.getAccessToken();
+        if (token != null && token.isNotEmpty) {
+          ref.read(authProvider.notifier).init();
+        }
+      }
+    } catch (_) {}
   }
 
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final bg = isDark ? AppColors.darkBg : AppColors.lightBg;
     final text = isDark ? AppColors.darkText : AppColors.lightText;
     final textSec = isDark ? AppColors.darkTextSecondary : AppColors.lightTextSecondary;
+    final accent = isDark ? AppColors.darkAccent : AppColors.lightAccent;
+
     final auth = ref.watch(authProvider);
+    final isLoading = auth.isLoading;
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Masuk ke Rumah'),
-        actions: [
-          IconButton(
-            icon: Icon(
-              PhosphorIcons.gear(),
-              size: AppDimensions.iconSizeSm,
-              color: text,
-            ),
-            onPressed: () => context.push('/settings'),
-            tooltip: 'Pengaturan Server',
-          ),
-        ],
-      ),
+      backgroundColor: bg,
       body: SafeArea(
-        child: Center(
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.all(AppSpacing.space4),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Icon(
-                  PhosphorIcons.house(),
-                  size: AppDimensions.iconSizeMd * 2,
-                  color: isDark ? AppColors.darkAccent : AppColors.lightAccent,
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(horizontal: AppDimensions.screenMarginAuth), // 24px
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: AppSpacing.space6),
+
+              // House icon + "Rumah"
+              Row(
+                children: [
+                  PhosphorIcon(
+                    PhosphorIcons.house(PhosphorIconsStyle.fill),
+                    size: AppDimensions.iconSizeMd,
+                    color: accent,
+                  ),
+                  const SizedBox(width: AppSpacing.space2),
+                  Text(
+                    'Rumah',
+                    style: AppTypography.body(
+                      text,
+                      size: AppTypography.textMd,
+                      weight: FontWeight.w600,
+                    ),
+                  ),
+                ],
+              ),
+
+              const SizedBox(height: AppSpacing.space8),
+
+              // Title "Masuk" 32/600
+              Text(
+                'Masuk',
+                style: AppTypography.body(
+                  text,
+                  size: AppTypography.textXl, // 32px
+                  weight: FontWeight.w600,
                 ),
+              ),
+              const SizedBox(height: AppSpacing.space2),
+              Text(
+                'Gunakan akun dari admin rumah.',
+                style: AppTypography.body(textSec, size: AppTypography.textSm),
+              ),
+
+              const SizedBox(height: AppDimensions.sectionGap),
+
+              // Form Input Nama Pengguna
+              AppInput(
+                hint: 'Nama pengguna',
+                controller: _usernameController,
+              ),
+
+              const SizedBox(height: AppDimensions.cardGap),
+
+              // Form Input Kata Sandi
+              AppInput(
+                hint: 'Kata sandi',
+                controller: _passwordController,
+                obscureText: _obscurePassword,
+                suffixIcon: IconButton(
+                  icon: PhosphorIcon(
+                    _obscurePassword ? PhosphorIcons.eye() : PhosphorIcons.eyeSlash(),
+                    size: AppDimensions.iconSizeSm,
+                    color: textSec,
+                  ),
+                  onPressed: () => setState(() => _obscurePassword = !_obscurePassword),
+                ),
+              ),
+
+              const SizedBox(height: AppSpacing.space3),
+
+              // Subtext: Lupa kata sandi? Minta admin mengatur ulang.
+              Text(
+                'Lupa kata sandi? Minta admin mengatur ulang.',
+                style: AppTypography.body(textSec, size: AppTypography.textXs),
+              ),
+
+              const SizedBox(height: AppDimensions.sectionGap),
+
+              // Tombol Masuk (Accent, 48px, radius 12)
+              AppButton(
+                label: 'Masuk',
+                isLoading: isLoading,
+                onPressed: _handleLogin,
+              ),
+
+              if (_canCheckBiometrics) ...[
                 const SizedBox(height: AppSpacing.space3),
-                Text(
-                  'Rumah',
-                  style: AppTypography.body(
-                    text,
-                    size: AppTypography.textXl,
-                    weight: FontWeight.w700,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: AppSpacing.space1),
-                Text(
-                  'Sistem Smart Home & Pengawasan Keluarga',
-                  style: AppTypography.body(textSec, size: AppTypography.textSm),
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: AppSpacing.space6),
-                AppCard(
-                  child: Column(
-                    children: [
-                      AppInput(
-                        label: 'Nama Pengguna',
-                        hint: 'admin / member / child',
-                        controller: _usernameController,
-                        prefixIcon: Icon(
-                          PhosphorIcons.user(),
-                          size: AppDimensions.iconSizeSm,
-                          color: textSec,
-                        ),
-                      ),
-                      const SizedBox(height: AppSpacing.space3),
-                      AppInput(
-                        label: 'Kata Sandi',
-                        hint: '••••••••',
-                        obscureText: true,
-                        controller: _passwordController,
-                        prefixIcon: Icon(
-                          PhosphorIcons.lock(),
-                          size: AppDimensions.iconSizeSm,
-                          color: textSec,
-                        ),
-                      ),
-                      const SizedBox(height: AppSpacing.space4),
-                      AppButton(
-                        label: 'Masuk',
-                        onPressed: _handleLogin,
-                        isLoading: auth.isLoading,
-                        icon: Icon(
-                          PhosphorIcons.signIn(),
-                          size: AppDimensions.iconSizeSm,
-                          color: AppColors.lightSurface,
-                        ),
-                      ),
-                      if (_canCheckBiometrics) ...[
-                        const SizedBox(height: AppSpacing.space3),
-                        AppButton(
-                          label: 'Masuk dengan Biometrik',
-                          variant: AppButtonVariant.secondary,
-                          onPressed: _handleBiometricAuth,
-                          icon: Icon(
-                            PhosphorIcons.fingerprint(),
-                            size: AppDimensions.iconSizeSm,
-                            color: text,
-                          ),
-                        ),
-                      ],
-                    ],
-                  ),
+                AppButton(
+                  label: 'Masuk dengan Sidik Jari',
+                  variant: AppButtonVariant.secondary,
+                  onPressed: _handleBiometricLogin,
                 ),
               ],
-            ),
+
+              const SizedBox(height: AppSpacing.space4),
+
+              // Server URL Config Toggle (Opsional / Terbuka jika diperlukan)
+              Center(
+                child: TextButton(
+                  onPressed: () => setState(() => _showServerConfig = !_showServerConfig),
+                  child: Text(
+                    _showServerConfig ? 'Sembunyikan Pengaturan Server' : 'Atur Alamat Server',
+                    style: AppTypography.body(textSec, size: AppTypography.textXs),
+                  ),
+                ),
+              ),
+
+              if (_showServerConfig) ...[
+                const SizedBox(height: AppSpacing.space2),
+                AppInput(
+                  label: 'Alamat Server',
+                  controller: _serverUrlController,
+                  hint: 'https://aujasena.my.id',
+                ),
+              ],
+
+              const SizedBox(height: AppSpacing.space6),
+            ],
           ),
         ),
       ),

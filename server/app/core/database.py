@@ -38,6 +38,7 @@ AsyncSessionLocal = async_sessionmaker(
     expire_on_commit=False,
     autoflush=False,
 )
+async_session_factory = AsyncSessionLocal
 
 Base = declarative_base()
 
@@ -49,6 +50,34 @@ async def init_sqlite_wal() -> None:
             await conn.execute(text("PRAGMA journal_mode = WAL;"))
             await conn.execute(text("PRAGMA synchronous = NORMAL;"))
             await conn.execute(text("PRAGMA foreign_keys = ON;"))
+
+
+async def check_and_migrate_db() -> None:
+    """Ensure newly added columns exist in SQLite users table for backward compatibility."""
+    if "sqlite" in settings.DATABASE_URL:
+        async with engine.begin() as conn:
+            result = await conn.execute(text("PRAGMA table_info(users);"))
+            columns = [row[1] for row in result.fetchall()]
+            if columns:
+                if "email" not in columns:
+                    await conn.execute(text("ALTER TABLE users ADD COLUMN email VARCHAR(100);"))
+                if "full_name" not in columns:
+                    await conn.execute(text("ALTER TABLE users ADD COLUMN full_name VARCHAR(100);"))
+                if "google_id" not in columns:
+                    await conn.execute(text("ALTER TABLE users ADD COLUMN google_id VARCHAR(100);"))
+                if "email_verified" not in columns:
+                    await conn.execute(text("ALTER TABLE users ADD COLUMN email_verified BOOLEAN DEFAULT 0 NOT NULL;"))
+                if "is_approved" not in columns:
+                    await conn.execute(text("ALTER TABLE users ADD COLUMN is_approved BOOLEAN DEFAULT 1 NOT NULL;"))
+                if "failed_login_attempts" not in columns:
+                    await conn.execute(text("ALTER TABLE users ADD COLUMN failed_login_attempts INTEGER DEFAULT 0 NOT NULL;"))
+                if "locked_until" not in columns:
+                    await conn.execute(text("ALTER TABLE users ADD COLUMN locked_until DATETIME;"))
+                if "last_login_at" not in columns:
+                    await conn.execute(text("ALTER TABLE users ADD COLUMN last_login_at DATETIME;"))
+                if "last_login_ip" not in columns:
+                    await conn.execute(text("ALTER TABLE users ADD COLUMN last_login_ip VARCHAR(50);"))
+
 
 
 async def get_db() -> AsyncGenerator[AsyncSession, None]:

@@ -1,0 +1,274 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+/* 4 Summary Cards Grid */
+.summaryGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-5);
+}
+
+.summaryCard {
+  background-color: var(--color-surface);
+  border-radius: var(--radius-card);
+  padding: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 120px;
+}
+
+.summaryTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.summaryLabel {
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--color-text-secondary);
+}
+
+.summaryIcon {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-pill);
+  background-color: var(--color-accent-light);
+  color: var(--color-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.summaryBottom {
+  margin-top: var(--space-4);
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.metricValue {
+  font-family: var(--font-mono);
+  font-size: var(--text-lg);
+  font-weight: 600;
+  color: var(--color-text);
+  letter-spacing: -0.02em;
+}
+
+.metricBadge {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: var(--color-accent);
+}
+
+.metricBadgeWarn {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: var(--color-status-warn);
+}
+
+.metricBadgeDanger {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: var(--color-status-danger);
+}
+
+/* Section Header */
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.sectionTitle {
+  font-size: var(--text-md);
+  font-weight: 700;
+  color: var(--color-text);
+  margin: 0;
+}
+
+.sectionSubtitle {
+  font-size: var(--text-xs);
+  color: var(--color-text-secondary);
+  margin: var(--space-1) 0 0 0;
+}
+
+/* 2-Column Relay Switchboard */
+.switchboardGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-5);
+}
+
+.tile {
+  background-color: var(--color-surface);
+  border-radius: var(--radius-tile);
+  padding: var(--space-6);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: background-color 150ms ease;
+}
+
+.tileOn {
+  background-color: var(--color-accent-light);
+}
+
+.tileInfo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.tileIcon {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-pill);
+  background-color: var(--color-subtle);
+  color: var(--color-text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tileIconOn {
+  background-color: var(--color-accent);
+  color: var(--color-accent-text);
+}
+
+.tileName {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.tileSub {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-text-secondary);
+  margin-top: var(--space-1);
+}
+
+/* Recent Activity Card */
+.activityCard {
+  background-color: var(--color-surface);
+  border-radius: var(--radius-card);
+  padding: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.activityList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.activityItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-3) 0;
+  border-bottom: var(--border-width) solid var(--color-border-subtle);
+}
+
+.activityItem:last-child {
+  border-bottom: none;
+}
+
+.activityLeft {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.activityDot {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-pill);
+  background-color: var(--color-accent);
+}
+
+.activityText {
+  font-size: var(--text-sm);
+  color: var(--color-text);
+}
+
+.activityActor {
+  font-weight: 600;
+}
+
+.activityTime {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-text-secondary);
+}
+
+@media (max-width: 1024px) {
+  .summaryGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .switchboardGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .summaryGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Modal Claim Perangkat */
+.modalBackdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(21, 24, 22, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  padding: var(--space-4);
+}
+
+.modalCard {
+  width: 100%;
+  max-width: 520px;
+  background-color: var(--color-surface);
+  border-radius: var(--radius-card);
+  padding: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.3);
+}
+
+.guideBox {
+  background-color: var(--color-subtle);
+  border-radius: var(--radius-button);
+  padding: var(--space-3);
+  font-size: var(--text-xs);
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+}
+
+.successBox {
+  background-color: var(--color-accent-light);
+  border-radius: var(--radius-card);
+  padding: var(--space-6);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+}
+

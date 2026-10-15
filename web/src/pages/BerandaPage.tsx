@@ -1,0 +1,581 @@
+import React, { useState, useEffect } from 'react';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import {
+  Lightbulb,
+  Fan,
+  Power,
+  Flame,
+  Sun,
+  VideoCamera,
+  Clock,
+  Plus,
+  CheckCircle,
+  QrCode,
+  X,
+} from '@phosphor-icons/react';
+import { devicesApi, type DeviceItem, type ChannelItem } from '../api/devices';
+import { camerasApi, type CameraItem } from '../api/cameras';
+import { auditApi, type AuditLogItem } from '../api/audit';
+import { deviceWs, type WebSocketMessage } from '../api/websocket';
+import { AppSwitch } from '../components/AppSwitch';
+import { AppButton } from '../components/AppButton';
+import { AppInput } from '../components/AppInput';
+import { ConfirmDialog } from '../components/ConfirmDialog';
+import { EmptyState } from '../components/EmptyState';
+import styles from './BerandaPage.module.css';
+
+export const BerandaPage: React.FC = () => {
+  const queryClient = useQueryClient();
+  const [confirmTurnOffAll, setConfirmTurnOffAll] = useState(false);
+  const [turnOffLoading, setTurnOffLoading] = useState(false);
+
+  // Claim Device Modal State
+  const [showClaimModal, setShowClaimModal] = useState(false);
+  const [qrRawInput, setQrRawInput] = useState('');
+  const [claimDeviceId, setClaimDeviceId] = useState('');
+  const [claimToken, setClaimToken] = useState('');
+  const [claimName, setClaimName] = useState('');
+  const [claimRoom, setClaimRoom] = useState('Ruang Tamu');
+  const [claimLoading, setClaimLoading] = useState(false);
+  const [claimSuccess, setClaimSuccess] = useState(false);
+  const [claimError, setClaimError] = useState('');
+
+  const handleParseQr = (raw: string) => {
+    setQrRawInput(raw);
+    const text = raw.trim();
+    if (!text) return;
+
+    // Format JSON: {"id": "esp32_xxxx", "token": "NEXA-xxxx"}
+    if (text.startsWith('{') && text.endsWith('}')) {
+      try {
+        const parsed = JSON.parse(text);
+        if (parsed.id) setClaimDeviceId(parsed.id);
+        if (parsed.token) setClaimToken(parsed.token);
+        return;
+      } catch (_) {}
+    }
+
+    // Format URI: rumah://claim?id=esp32_xxxx&token=NEXA-xxxx
+    if (text.includes('id=') && text.includes('token=')) {
+      try {
+        const url = new URL(text.replace('rumah://', 'http://dummy.com/'));
+        const id = url.searchParams.get('id');
+        const token = url.searchParams.get('token');
+        if (id) setClaimDeviceId(id);
+        if (token) setClaimToken(token);
+        return;
+      } catch (_) {}
+    }
+
+    // Format ID:TOKEN
+    if (text.includes(':')) {
+      const [id, token] = text.split(':');
+      if (id && token) {
+        setClaimDeviceId(id.trim());
+        setClaimToken(token.trim());
+        return;
+      }
+    }
+
+    // Format 6 digit pair code murni (dari Serial Monitor Thonny)
+    if (/^\d{6}$/.test(text)) {
+      setClaimToken(text);
+      if (!claimDeviceId) {
+        setClaimDeviceId(`esp32_${text}`);
+      }
+      return;
+    }
+
+    setClaimDeviceId(text);
+  };
+
+  const handleClaimDevice = async (e: React.FormEvent) => {
+    e.preventDefault();
+    let devId = claimDeviceId.trim();
+    const token = claimToken.trim();
+
+    if (!token && !devId) {
+      setClaimError('Masukkan 6-digit Kode Pairing atau Device ID.');
+      return;
+    }
+
+    // Jika user hanya memasukkan kode 6 digit di salah satu kolom
+    if (!devId && /^\d{6}$/.test(token)) {
+      devId = `esp32_${token}`;
+    }
+    if (!token && /^\d{6}$/.test(devId)) {
+      setClaimToken(devId);
+    }
+
+    setClaimLoading(true);
+    setClaimError('');
+    try {
+      await devicesApi.claimDevice({
+        device_id: claimDeviceId.trim(),
+        claim_token: claimToken.trim(),
+        name: claimName.trim() || `Perangkat ${claimDeviceId.trim()}`,
+        room: claimRoom.trim() || 'Ruang Tamu',
+      });
+      setClaimLoading(false);
+      setClaimSuccess(true);
+      queryClient.invalidateQueries({ queryKey: ['devices'] });
+    } catch (err: any) {
+      setClaimLoading(false);
+      setClaimError(err?.message || 'Gagal menghubungkan perangkat. Pastikan kode pairing benar.');
+    }
+  };
+
+  // 1. Fetch devices & channels
+  const { data: devices = [], isLoading: devicesLoading } = useQuery<DeviceItem[]>({
+    queryKey: ['devices'],
+    queryFn: devicesApi.getDevices,
+    refetchInterval: 5000,
+  });
+
+  // 2. Fetch cameras
+  const { data: cameras = [] } = useQuery<CameraItem[]>({
+    queryKey: ['cameras'],
+    queryFn: camerasApi.getCameras,
+    refetchInterval: 10000,
+  });
+
+  // 3. Fetch audit logs
+  const { data: auditLogs = [] } = useQuery<AuditLogItem[]>({
+    queryKey: ['audit-logs'],
+    queryFn: () => auditApi.getLogs(10),
+    refetchInterval: 10000,
+  });
+
+  // WebSocket listener for real-time state changes
+  useEffect(() => {
+    const unsub = deviceWs.subscribe((msg: WebSocketMessage) => {
+      if (msg.type === 'state' || msg.type === 'telemetry') {
+        queryClient.invalidateQueries({ queryKey: ['devices'] });
+      }
+    });
+    return () => unsub();
+  }, [queryClient]);
+
+  // Aggregate switch and relay channels
+  const switchChannels: { deviceId: string; channel: ChannelItem }[] = [];
+  let gasValue = 0;
+  let gasThreshold = 1500;
+  let lightRawValue = 0;
+  let lightIsDark = false;
+  let totalActuators = 0;
+  let activeActuators = 0;
+
+  devices.forEach((dev) => {
+    dev.channels.forEach((ch) => {
+      if (ch.channel_type === 'switch' || ch.channel_type === 'relay') {
+        totalActuators++;
+        const isCurrentOn = ch.current_value === 'true' || ch.current_value === '1';
+        if (isCurrentOn) activeActuators++;
+        switchChannels.push({ deviceId: dev.id, channel: ch });
+      } else if (ch.channel_type === 'gas_sensor') {
+        const val = parseFloat(ch.current_value || '0');
+        if (!isNaN(val)) gasValue = val;
+      } else if (ch.channel_type === 'light_sensor') {
+        const val = parseFloat(ch.current_value || '0');
+        if (!isNaN(val)) lightRawValue = val;
+        lightIsDark = ch.current_value === '0' || lightRawValue < 500;
+      }
+    });
+  });
+
+  const activeCamerasCount = cameras.filter((c) => c.status === 'online' && !c.privacy_mode).length;
+
+  // Toggle single channel mutation
+  const toggleMutation = useMutation({
+    mutationFn: async ({
+      deviceId,
+      channelKey,
+      nextVal,
+    }: {
+      deviceId: string;
+      channelKey: string;
+      nextVal: boolean;
+    }) => {
+      await devicesApi.sendCommand(deviceId, channelKey, nextVal);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['devices'] });
+    },
+  });
+
+  const handleToggle = (deviceId: string, channel: ChannelItem) => {
+    const isCurrentOn = channel.current_value === 'true' || channel.current_value === '1';
+    toggleMutation.mutate({
+      deviceId,
+      channelKey: channel.channel_key,
+      nextVal: !isCurrentOn,
+    });
+  };
+
+  const handleTurnOffAll = async () => {
+    setTurnOffLoading(true);
+    try {
+      const activeSwitches = switchChannels.filter(
+        (sc) => sc.channel.current_value === 'true' || sc.channel.current_value === '1'
+      );
+      await Promise.all(
+        activeSwitches.map((sc) =>
+          devicesApi.sendCommand(sc.deviceId, sc.channel.channel_key, false)
+        )
+      );
+      queryClient.invalidateQueries({ queryKey: ['devices'] });
+    } finally {
+      setTurnOffLoading(false);
+      setConfirmTurnOffAll(false);
+    }
+  };
+
+  const getGasStatusBadge = (val: number, th: number) => {
+    if (val >= th) {
+      return <span className={styles.metricBadgeDanger}>Bahaya</span>;
+    }
+    if (val >= th * 0.7) {
+      return <span className={styles.metricBadgeWarn}>Waspada</span>;
+    }
+    return <span className={styles.metricBadge}>Aman</span>;
+  };
+
+  return (
+    <div className={styles.container}>
+      {/* 1. 4 Summary Cards */}
+      <section aria-label="Ringkasan Status Rumah" className={styles.summaryGrid}>
+        {/* Card 1: Perangkat Menyala */}
+        <div className={styles.summaryCard}>
+          <div className={styles.summaryTop}>
+            <span className={styles.summaryLabel}>Perangkat menyala</span>
+            <div className={styles.summaryIcon}>
+              <Power size={22} />
+            </div>
+          </div>
+          <div className={styles.summaryBottom}>
+            <div className={styles.metricValue}>
+              {activeActuators} dari {totalActuators}
+            </div>
+            <span className={styles.metricBadge}>
+              {activeActuators > 0 ? 'Aktif' : 'Semua Mati'}
+            </span>
+          </div>
+        </div>
+
+        {/* Card 2: Sensor Gas (Wajib: Gas {val} (ambang 1500) tanpa terpotong) */}
+        <div className={styles.summaryCard}>
+          <div className={styles.summaryTop}>
+            <span className={styles.summaryLabel}>Sensor gas</span>
+            <div className={styles.summaryIcon}>
+              <Flame size={22} />
+            </div>
+          </div>
+          <div className={styles.summaryBottom}>
+            <div className={styles.metricValue} style={{ fontSize: 'var(--text-md)' }}>
+              Gas {gasValue} (ambang {gasThreshold})
+            </div>
+            {getGasStatusBadge(gasValue, gasThreshold)}
+          </div>
+        </div>
+
+        {/* Card 3: Cahaya (Gelap/Terang + raw, bukan lux) */}
+        <div className={styles.summaryCard}>
+          <div className={styles.summaryTop}>
+            <span className={styles.summaryLabel}>Cahaya ruangan</span>
+            <div className={styles.summaryIcon}>
+              <Sun size={22} />
+            </div>
+          </div>
+          <div className={styles.summaryBottom}>
+            <div className={styles.metricValue}>
+              {lightIsDark ? 'Gelap' : 'Terang'} · {lightRawValue}
+            </div>
+            <span className={styles.metricBadge}>
+              {lightIsDark ? 'Malam' : 'Siang'}
+            </span>
+          </div>
+        </div>
+
+        {/* Card 4: Kamera Aktif */}
+        <div className={styles.summaryCard}>
+          <div className={styles.summaryTop}>
+            <span className={styles.summaryLabel}>Kamera aktif</span>
+            <div className={styles.summaryIcon}>
+              <VideoCamera size={22} />
+            </div>
+          </div>
+          <div className={styles.summaryBottom}>
+            <div className={styles.metricValue}>
+              {activeCamerasCount} kamera
+            </div>
+            <span className={styles.metricBadge}>Siaga</span>
+          </div>
+        </div>
+      </section>
+
+      {/* 2. Section Saklar Lampu & Kipas */}
+      <section aria-label="Kontrol Saklar">
+        <div className={styles.sectionHeader}>
+          <div>
+            <h2 className={styles.sectionTitle}>Kontrol Saklar</h2>
+            <p className={styles.sectionSubtitle}>
+              Kanal lampu dan kipas yang terhubung langsung ke relai
+            </p>
+          </div>
+          <div style={{ display: 'flex', gap: 'var(--space-2)' }}>
+            <AppButton
+              variant="primary"
+              onClick={() => {
+                setShowClaimModal(true);
+                setClaimSuccess(false);
+                setClaimError('');
+                setQrRawInput('');
+                setClaimDeviceId('');
+                setClaimToken('');
+                setClaimName('');
+              }}
+            >
+              <Plus size={18} style={{ marginRight: 6 }} />
+              Hubungkan Perangkat
+            </AppButton>
+            {activeActuators > 0 && (
+              <AppButton
+                variant="outline"
+                onClick={() => setConfirmTurnOffAll(true)}
+                disabled={turnOffLoading}
+              >
+                Matikan Semua
+              </AppButton>
+            )}
+          </div>
+        </div>
+
+        <div style={{ marginTop: 'var(--space-4)' }}>
+          {devicesLoading && switchChannels.length === 0 ? (
+            <div style={{ padding: 'var(--space-8)', textAlign: 'center' }}>
+              Memuat perangkat...
+            </div>
+          ) : switchChannels.length === 0 ? (
+            <EmptyState
+              icon={Lightbulb}
+              title="Belum ada perangkat saklar terhubung"
+              description="Daftarkan perangkat ESP32 di menu Perangkat untuk mulai mengontrol lampu dan kipas."
+            />
+          ) : (
+            <div className={styles.switchboardGrid}>
+              {switchChannels.map(({ deviceId, channel }) => {
+                const isOn = channel.current_value === 'true' || channel.current_value === '1';
+                const isFan = channel.channel_key.toLowerCase().includes('fan') || channel.name.toLowerCase().includes('kipas');
+
+                return (
+                  <div
+                    key={`${deviceId}-${channel.channel_key}`}
+                    className={`${styles.tile} ${isOn ? styles.tileOn : ''}`}
+                  >
+                    <div className={styles.tileInfo}>
+                      <div className={`${styles.tileIcon} ${isOn ? styles.tileIconOn : ''}`}>
+                        {isFan ? <Fan size={22} /> : <Lightbulb size={22} />}
+                      </div>
+                      <div>
+                        <div className={styles.tileName}>
+                          {channel.alias || channel.name}
+                        </div>
+                        <div className={styles.tileSub}>
+                          {channel.channel_key} · {deviceId}
+                        </div>
+                      </div>
+                    </div>
+                    <AppSwitch
+                      checked={isOn}
+                      onChange={() => handleToggle(deviceId, channel)}
+                      ariaLabel={`Saklar ${channel.alias || channel.name}`}
+                    />
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* 3. Section Aktivitas Terakhir */}
+      <section aria-label="Aktivitas Terakhir">
+        <div className={styles.sectionHeader}>
+          <div>
+            <h2 className={styles.sectionTitle}>Aktivitas Terakhir</h2>
+            <p className={styles.sectionSubtitle}>
+              Catatan kejadian otomatis dan perintah pengguna di sistem
+            </p>
+          </div>
+        </div>
+
+        <div style={{ marginTop: 'var(--space-4)' }}>
+          <div className={styles.activityCard}>
+            {auditLogs.length === 0 ? (
+              <EmptyState
+                icon={Clock}
+                title="Belum ada aktivitas tercatat"
+                description="Perintah pengguna dan status aktuator akan muncul secara otomatis di sini."
+              />
+            ) : (
+              <div className={styles.activityList}>
+                {auditLogs.map((log) => {
+                  const dateStr = new Date(log.created_at).toLocaleString('id-ID', {
+                    dateStyle: 'short',
+                    timeStyle: 'medium',
+                  });
+
+                  return (
+                    <div key={log.id} className={styles.activityItem}>
+                      <div className={styles.activityLeft}>
+                        <span className={styles.activityDot} />
+                        <span className={styles.activityText}>
+                          <span className={styles.activityActor}>
+                            {log.username || 'Sistem'}:
+                          </span>{' '}
+                          {log.action} {log.target_id ? `(${log.target_id})` : ''}
+                        </span>
+                      </div>
+                      <div className={styles.activityTime}>{dateStr}</div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+        </div>
+      </section>
+
+      {/* Dialog Konfirmasi: Matikan Semua */}
+      <ConfirmDialog
+        open={confirmTurnOffAll}
+        title="Matikan Semua Perangkat?"
+        message="Apakah Anda yakin ingin mematikan semua saklar lampu dan kipas yang sedang menyala di rumah?"
+        confirmLabel="Ya, Matikan Semua"
+        cancelLabel="Batal"
+        danger
+        onConfirm={handleTurnOffAll}
+        onCancel={() => setConfirmTurnOffAll(false)}
+      />
+
+      {/* Modal: Hubungkan Perangkat (Scan QR / Kode Pairing) */}
+      {showClaimModal && (
+        <div className={styles.modalBackdrop}>
+          <div className={styles.modalCard}>
+            {claimSuccess ? (
+              <div className={styles.successBox}>
+                <CheckCircle size={48} color="var(--color-status-ok)" />
+                <h3 style={{ margin: 0, fontSize: 'var(--text-lg)', color: 'var(--color-text)' }}>
+                  Sambungan Telah Berhasil!
+                </h3>
+                <p style={{ margin: 0, fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)' }}>
+                  Perangkat <strong>{claimName || claimDeviceId}</strong> telah berhasil dihubungkan ke akun Anda dan kini siap dikontrol langsung dari dashboard.
+                </p>
+                <div style={{ marginTop: 'var(--space-3)', width: '100%' }}>
+                  <AppButton
+                    variant="primary"
+                    onClick={() => {
+                      setShowClaimModal(false);
+                      setClaimSuccess(false);
+                    }}
+                  >
+                    Mulai Kontrol Perangkat
+                  </AppButton>
+                </div>
+              </div>
+            ) : (
+              <>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <h3 style={{ margin: 0, fontSize: 'var(--text-md)', fontWeight: 700, color: 'var(--color-text)', display: 'flex', alignItems: 'center', gap: 'var(--space-2)' }}>
+                    <QrCode size={20} />
+                    Hubungkan Perangkat Baru
+                  </h3>
+                  <button
+                    onClick={() => setShowClaimModal(false)}
+                    style={{ background: 'transparent', border: 'none', cursor: 'pointer', color: 'var(--color-text-secondary)' }}
+                  >
+                    <X size={20} />
+                  </button>
+                </div>
+
+                <div className={styles.guideBox}>
+                  <strong>Langkah Mudah Menyambungkan:</strong>
+                  <br />
+                  1. Jalankan <code>esp32_thonny.py</code> di Thonny IDE pada ESP32 Anda.
+                  <br />
+                  2. Lihat <strong>6-Digit PAIR_CODE</strong> (atau string JSON QR) yang tercetak di Serial Monitor Thonny saat boot.
+                  <br />
+                  3. Tempel data QR atau ketik kode 6-digit di bawah ini, lalu klik <em>Hubungkan ke Akun</em>.
+                </div>
+
+                <form onSubmit={handleClaimDevice} style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
+                  <AppInput
+                    label="Scan / Tempel Data QR Stiker Perangkat"
+                    placeholder="Scan atau paste payload QR (JSON / URI / Kode)..."
+                    value={qrRawInput}
+                    onChange={(e) => handleParseQr(e.target.value)}
+                  />
+
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--space-2)' }}>
+                    <AppInput
+                      label="Device ID"
+                      placeholder="contoh: esp32_A4F2"
+                      value={claimDeviceId}
+                      onChange={(e) => setClaimDeviceId(e.target.value)}
+                      required
+                    />
+                    <AppInput
+                      label="Kode Pairing"
+                      placeholder="contoh: NEXA-8A4F-92C1"
+                      value={claimToken}
+                      onChange={(e) => setClaimToken(e.target.value)}
+                      required
+                    />
+                  </div>
+
+                  <AppInput
+                    label="Nama Perangkat (Bebas)"
+                    placeholder="contoh: Lampu Ruang Tamu"
+                    value={claimName}
+                    onChange={(e) => setClaimName(e.target.value)}
+                  />
+
+                  <AppInput
+                    label="Ruangan"
+                    placeholder="contoh: Ruang Tamu"
+                    value={claimRoom}
+                    onChange={(e) => setClaimRoom(e.target.value)}
+                  />
+
+                  {claimError && (
+                    <p style={{ color: 'var(--color-status-danger)', fontSize: 'var(--text-xs)', margin: 0 }}>
+                      {claimError}
+                    </p>
+                  )}
+
+                  <div style={{ display: 'flex', gap: 'var(--space-2)', marginTop: 'var(--space-2)', justifyContent: 'flex-end' }}>
+                    <AppButton
+                      type="button"
+                      variant="outline"
+                      onClick={() => setShowClaimModal(false)}
+                    >
+                      Batal
+                    </AppButton>
+                    <AppButton
+                      type="submit"
+                      variant="primary"
+                      disabled={claimLoading}
+                    >
+                      {claimLoading ? 'Menghubungkan...' : 'Hubungkan ke Akun'}
+                    </AppButton>
+                  </div>
+                </form>
+              </>
+            )}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+

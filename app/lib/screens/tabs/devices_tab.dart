@@ -402,10 +402,6 @@ class _DevicesTabState extends ConsumerState<DevicesTab> {
       decoration: BoxDecoration(
         color: isDark ? AppColors.darkSurface : AppColors.lightSurface,
         borderRadius: AppRadius.borderSm,
-        border: Border.all(
-          color: isDark ? AppColors.darkBorder : AppColors.lightBorder,
-          width: AppDimensions.borderWidth,
-        ),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.end,

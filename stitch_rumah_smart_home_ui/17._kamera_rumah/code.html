@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+
+<html lang="id"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>17. Kamera - Rumah</title>
+<!-- Google Fonts: Public Sans, Courier Prime (tokens mapped), Material Symbols -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&amp;family=Public+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-tertiary-container": "#b6eaa3",
+            "error-container": "#ffdad6",
+            "on-error": "#ffffff",
+            "secondary-fixed": "#dde4dd",
+            "on-surface": "#1c1c18",
+            "primary": "#115344",
+            "on-background": "#1c1c18",
+            "outline": "#707975",
+            "tertiary-fixed-dim": "#a1d48f",
+            "on-tertiary-fixed-variant": "#24501a",
+            "surface-variant": "#e5e2db",
+            "on-error-container": "#93000a",
+            "outline-variant": "#bfc9c4",
+            "surface-container": "#f1eee7",
+            "inverse-on-surface": "#f3f0e9",
+            "on-secondary": "#ffffff",
+            "inverse-primary": "#96d3bf",
+            "error": "#ba1a1a",
+            "on-primary-fixed-variant": "#0d5041",
+            "tertiary-fixed": "#bcf1a9",
+            "secondary-fixed-dim": "#c1c8c1",
+            "on-primary-fixed": "#002019",
+            "surface-dim": "#dcdad3",
+            "surface": "#fcf9f2",
+            "on-secondary-fixed-variant": "#424843",
+            "on-surface-variant": "#404945",
+            "surface-container-low": "#f6f3ec",
+            "on-primary": "#ffffff",
+            "on-secondary-fixed": "#171d19",
+            "on-tertiary": "#ffffff",
+            "on-primary-container": "#abe9d5",
+            "on-tertiary-fixed": "#012200",
+            "on-secondary-container": "#5d645e",
+            "secondary": "#59605a",
+            "surface-container-high": "#ebe8e1",
+            "inverse-surface": "#31312c",
+            "surface-tint": "#2c6859",
+            "secondary-container": "#dbe1da",
+            "primary-container": "#2f6b5b",
+            "primary-fixed-dim": "#96d3bf",
+            "tertiary-container": "#3e6b32",
+            "tertiary": "#26521c",
+            "surface-container-lowest": "#ffffff",
+            "surface-bright": "#fcf9f2",
+            "primary-fixed": "#b1efdb",
+            "background": "#fcf9f2",
+            "surface-container-highest": "#e5e2db"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "margin": "1rem",
+            "gutter-compact": "0.5rem",
+            "space-xxs": "0.25rem",
+            "space-sm": "0.75rem",
+            "space-lg": "1.25rem",
+            "gutter": "0.75rem",
+            "space-xs": "0.5rem",
+            "space-xl": "1.5rem",
+            "space-md": "1rem"
+          },
+          "fontFamily": {
+            "title-md": ["Public Sans"],
+            "headline-md": ["Public Sans"],
+            "headline-lg": ["Public Sans"],
+            "mono-data-md": ["Courier Prime"],
+            "mono-data-sm": ["Courier Prime"],
+            "body-sm": ["Public Sans"],
+            "label-md": ["Public Sans"],
+            "body-md": ["Public Sans"],
+            "mono-data-lg": ["Courier Prime"]
+          },
+          "fontSize": {
+            "title-md": ["18px", { "lineHeight": "24px", "fontWeight": "600" }],
+            "headline-md": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+            "mono-data-md": ["15px", { "lineHeight": "20px", "fontWeight": "400" }],
+            "mono-data-sm": ["13px", { "lineHeight": "16px", "fontWeight": "400" }],
+            "body-sm": ["13px", { "lineHeight": "18px", "fontWeight": "400" }],
+            "label-md": ["13px", { "lineHeight": "16px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+            "body-md": ["15px", { "lineHeight": "22px", "fontWeight": "400" }],
+            "mono-data-lg": ["24px", { "lineHeight": "28px", "fontWeight": "400" }]
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-surface-container-high flex justify-center items-center min-h-screen antialiased">
+<!-- Android Frame 360x800 -->
+<main class="w-[360px] h-[800px] bg-surface-container-high text-on-surface relative overflow-hidden flex flex-col justify-between select-none">
+<!-- Top Area (Status Bar + TopAppBar + Privacy Banner) -->
+<header class="w-full shrink-0">
+<!-- Android Status Bar (24px) -->
+<div class="w-full h-6 px-margin flex items-center justify-between text-on-surface">
+<span class="font-label-md text-label-md">09:41</span>
+<div class="flex items-center space-x-1">
+<span class="material-symbols-outlined text-[16px]" data-icon="network_wifi">network_wifi</span>
+<span class="material-symbols-outlined text-[16px]" data-icon="signal_cellular_alt">signal_cellular_alt</span>
+<span class="material-symbols-outlined text-[16px]" data-icon="battery_full">battery_full</span>
+</div>
+</div>
+<!-- TopAppBar -->
+<div class="flex justify-between items-center w-full px-margin h-16 max-w-[360px] mx-auto">
+<h1 class="font-headline-lg text-headline-lg text-on-surface">Kamera</h1>
+<!-- Contextual Action: Add Camera Button -->
+<button aria-label="Tambah kamera" class="w-11 h-11 rounded-full bg-secondary-fixed flex items-center justify-center text-primary-container transition-colors duration-150 active:opacity-80">
+<span class="material-symbols-outlined text-[24px]" data-icon="add">add</span>
+</button>
+</div>
+<!-- Privacy Mode Banner / Status Strip Card -->
+<div class="px-margin pt-1 pb-2">
+<div class="rounded-[20px] bg-surface-variant px-space-md py-space-sm flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-secondary text-[20px] shrink-0" data-icon="visibility_off">visibility_off</span>
+<p class="font-body-sm text-body-sm text-secondary truncate">
+            Mode privasi aktif, kamera Kamar dimatikan
+          </p>
+</div>
+</div>
+</header>
+<!-- Scrollable Camera Grid Canvas (2 Columns) -->
+<section class="flex-1 overflow-y-auto px-margin pt-2 pb-24">
+<div class="grid grid-cols-2 gap-gutter">
+<!-- Camera Tile 1: Teras -->
+<article class="bg-surface rounded-[20px] p-space-xs flex flex-col gap-2">
+<!-- 16:9 Placeholder Area -->
+<div class="aspect-video w-full rounded-[14px] bg-surface-variant flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary text-[24px]" data-icon="videocam">videocam</span>
+</div>
+<!-- Card Info -->
+<div class="px-space-xxs pb-1 flex flex-col gap-1">
+<h2 class="font-body-md text-body-md text-on-surface font-semibold truncate">Teras</h2>
+<div class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-tertiary-container inline-block"></span>
+<span class="font-body-sm text-body-sm text-tertiary-container font-medium">Live</span>
+</div>
+<p class="font-mono-data-sm text-mono-data-sm text-secondary">720p 15fps</p>
+</div>
+</article>
+<!-- Camera Tile 2: Ruang tamu -->
+<article class="bg-surface rounded-[20px] p-space-xs flex flex-col gap-2">
+<!-- 16:9 Placeholder Area -->
+<div class="aspect-video w-full rounded-[14px] bg-surface-variant flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary text-[24px]" data-icon="photo_camera">photo_camera</span>
+</div>
+<!-- Card Info -->
+<div class="px-space-xxs pb-1 flex flex-col gap-1">
+<h2 class="font-body-md text-body-md text-on-surface font-semibold truncate">Ruang tamu</h2>
+<div class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-tertiary-container inline-block"></span>
+<span class="font-body-sm text-body-sm text-tertiary-container font-medium">Live</span>
+</div>
+<p class="font-mono-data-sm text-mono-data-sm text-secondary">720p 15fps</p>
+</div>
+</article>
+<!-- Camera Tile 3: Kamar (Privacy Mode Active) -->
+<article class="bg-surface rounded-[20px] p-space-xs flex flex-col gap-2">
+<!-- 16:9 Inactive/Privacy Area -->
+<div class="aspect-video w-full rounded-[14px] bg-surface-container-highest flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary text-[24px]" data-icon="visibility_off">visibility_off</span>
+</div>
+<!-- Card Info -->
+<div class="px-space-xxs pb-1 flex flex-col gap-1">
+<h2 class="font-body-md text-body-md text-secondary font-semibold truncate">Kamar</h2>
+<div class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-outline-variant inline-block"></span>
+<span class="font-body-sm text-body-sm text-secondary font-medium">Privasi aktif</span>
+</div>
+<p class="font-mono-data-sm text-mono-data-sm text-secondary">Mati</p>
+</div>
+</article>
+<!-- Camera Tile 4: Halaman belakang (Offline) -->
+<article class="bg-surface rounded-[20px] p-space-xs flex flex-col gap-2">
+<!-- 16:9 Placeholder Area -->
+<div class="aspect-video w-full rounded-[14px] bg-surface-variant flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary text-[24px]" data-icon="photo_camera">photo_camera</span>
+</div>
+<!-- Card Info -->
+<div class="px-space-xxs pb-1 flex flex-col gap-1">
+<h2 class="font-body-md text-body-md text-secondary font-semibold truncate">Halaman belakang</h2>
+<div class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-error inline-block"></span>
+<span class="font-body-sm text-body-sm text-error font-medium">Offline</span>
+</div>
+<p class="font-mono-data-sm text-mono-data-sm text-secondary truncate">Terakhir 08:15</p>
+</div>
+</article>
+</div>
+</section>
+<!-- Bottom Navigation Bar (Material 3 - Flat, No Border, No Shadows) -->
+<nav class="fixed bottom-0 left-0 w-full z-50 h-20 flex justify-around items-center px-gutter max-w-[360px] mx-auto bg-surface-container-lowest">
+<!-- Tab 1: Beranda -->
+<button class="flex flex-col items-center justify-center gap-1 w-16 h-8 text-secondary font-body-sm text-body-sm transition-colors duration-200 active:scale-95">
+<span class="material-symbols-outlined text-[24px]" data-icon="home">home</span>
+<span class="font-body-sm text-body-sm">Beranda</span>
+</button>
+<!-- Tab 2: Kamera (Active Destination) -->
+<button class="flex flex-col items-center justify-center gap-1 w-16 h-8 text-primary-container font-label-md text-label-md transition-colors duration-200 active:scale-95">
+<div class="w-16 h-8 rounded-full bg-secondary-fixed flex items-center justify-center text-primary-container">
+<span class="material-symbols-outlined text-[24px]" data-icon="videocam" style="font-variation-settings: 'FILL' 1;">videocam</span>
+</div>
+<span class="font-label-md text-label-md text-primary-container">Kamera</span>
+</button>
+<!-- Tab 3: Asisten -->
+<button class="flex flex-col items-center justify-center gap-1 w-16 h-8 text-secondary font-body-sm text-body-sm transition-colors duration-200 active:scale-95">
+<span class="material-symbols-outlined text-[24px]" data-icon="mic">mic</span>
+<span class="font-body-sm text-body-sm">Asisten</span>
+</button>
+<!-- Tab 4: Lainnya -->
+<button class="flex flex-col items-center justify-center gap-1 w-16 h-8 text-secondary font-body-sm text-body-sm transition-colors duration-200 active:scale-95">
+<span class="material-symbols-outlined text-[24px]" data-icon="more_horiz">more_horiz</span>
+<span class="font-body-sm text-body-sm">Lainnya</span>
+</button>
+</nav>
+</main>
+</body></html>

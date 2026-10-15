@@ -1,0 +1,9 @@
+tunnel: 4e13bb28-53f8-475a-8021-3f11d3e07722
+credentials-file: C:\Users\DELL\.cloudflared\4e13bb28-53f8-475a-8021-3f11d3e07722.json
+
+ingress:
+  - hostname: aujasena.my.id
+    service: http://127.0.0.1:8000
+  - hostname: "*.aujasena.my.id"
+    service: http://127.0.0.1:8000
+  - service: http_status:404

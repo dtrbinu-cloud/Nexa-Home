@@ -1,0 +1,28 @@
+# Konfigurasi MediaMTX untuk Rumah Smart Home
+# Hanya mendengarkan di LAN dan mendelegasikan auth ke backend FastAPI
+logLevel: info
+logDestinations: [stdout]
+
+# API Kontrol MediaMTX
+api: yes
+apiAddress: 127.0.0.1:9997
+
+# Autentikasi terpusat via HTTP Hook ke backend FastAPI
+authMethod: http
+authHTTPAddress: http://127.0.0.1:8000/api/cameras/auth/mediamtx
+
+# Protokol Streaming (Hanya LAN / Localhost)
+protocols: [tcp]
+rtsp: yes
+rtspAddress: :8554
+
+webrtc: yes
+webrtcAddress: :8889
+webrtcLocalUDPAddress: :8189
+
+hls: no
+rtmp: no
+srt: no
+
+paths:
+  all:

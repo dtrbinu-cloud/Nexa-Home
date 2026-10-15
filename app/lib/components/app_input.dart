@@ -11,6 +11,8 @@ class AppInput extends StatelessWidget {
   final Widget? prefixIcon;
   final Widget? suffixIcon;
   final bool autofocus;
+  final bool isMono;
+  final int? maxLines;
 
   const AppInput({
     super.key,
@@ -23,13 +25,14 @@ class AppInput extends StatelessWidget {
     this.prefixIcon,
     this.suffixIcon,
     this.autofocus = false,
+    this.isMono = false,
+    this.maxLines = 1,
   });
 
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final surface = isDark ? AppColors.darkSurface : AppColors.lightSurface;
-    final border = isDark ? AppColors.darkBorder : AppColors.lightBorder;
+    final subtle = isDark ? AppColors.darkSubtle : AppColors.lightSubtle;
     final text = isDark ? AppColors.darkText : AppColors.lightText;
     final textSec = isDark ? AppColors.darkTextSecondary : AppColors.lightTextSecondary;
     final accent = isDark ? AppColors.darkAccent : AppColors.lightAccent;
@@ -44,45 +47,47 @@ class AppInput extends StatelessWidget {
             style: AppTypography.body(
               textSec,
               size: AppTypography.textXs,
-              weight: FontWeight.w500,
+              weight: FontWeight.w600,
             ),
           ),
-          const SizedBox(height: AppSpacing.space1),
+          const SizedBox(height: AppSpacing.space2),
         ],
-        SizedBox(
-          height: AppDimensions.controlHeight,
+        Container(
+          constraints: BoxConstraints(
+            minHeight: AppDimensions.controlHeight,
+          ),
           child: TextField(
             controller: controller,
             obscureText: obscureText,
             keyboardType: keyboardType,
             onChanged: onChanged,
             autofocus: autofocus,
-            style: AppTypography.body(text, size: AppTypography.textSm),
+            maxLines: maxLines,
+            style: isMono
+                ? AppTypography.mono(text, size: AppTypography.textSm)
+                : AppTypography.body(text, size: AppTypography.textSm),
             cursorColor: accent,
             decoration: InputDecoration(
               isDense: true,
               hintText: hint,
               hintStyle: AppTypography.body(textSec, size: AppTypography.textSm),
               filled: true,
-              fillColor: surface,
+              fillColor: subtle,
               contentPadding: const EdgeInsets.symmetric(
-                horizontal: AppSpacing.space3,
-                vertical: AppSpacing.space2,
+                horizontal: AppSpacing.space4,
+                vertical: 14.0,
               ),
               prefixIcon: prefixIcon,
               suffixIcon: suffixIcon,
-              enabledBorder: OutlineInputBorder(
+              enabledBorder: const OutlineInputBorder(
                 borderRadius: AppRadius.borderSm,
-                borderSide: BorderSide(
-                  color: border,
-                  width: AppDimensions.borderWidth,
-                ),
+                borderSide: BorderSide.none,
               ),
               focusedBorder: OutlineInputBorder(
                 borderRadius: AppRadius.borderSm,
                 borderSide: BorderSide(
                   color: accent,
-                  width: AppDimensions.borderWidth,
+                  width: 2.0,
                 ),
               ),
             ),

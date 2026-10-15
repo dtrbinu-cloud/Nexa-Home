@@ -1,0 +1,226 @@
+<!DOCTYPE html><html class="h-full" lang="id"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>10. Scan QR - Rumah</title>
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Courier+Prime&amp;family=Public+Sans:wght@400;600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@100..900&amp;display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "primary-container": "#2f6b5b",
+            "inverse-primary": "#96d3bf",
+            "primary-fixed": "#b1efdb",
+            "surface-bright": "#fcf9f2",
+            "surface-container-low": "#f6f3ec",
+            "error-container": "#ffdad6",
+            "secondary-fixed-dim": "#c1c8c1",
+            "inverse-surface": "#31312c",
+            "on-tertiary-fixed": "#012200",
+            "on-error-container": "#93000a",
+            "tertiary": "#26521c",
+            "on-background": "#1c1c18",
+            "on-secondary-fixed-variant": "#424843",
+            "background": "#fcf9f2",
+            "surface-variant": "#e5e2db",
+            "tertiary-fixed-dim": "#a1d48f",
+            "on-secondary-container": "#5d645e",
+            "secondary": "#59605a",
+            "tertiary-fixed": "#bcf1a9",
+            "on-tertiary": "#ffffff",
+            "surface-container-lowest": "#ffffff",
+            "outline-variant": "#bfc9c4",
+            "on-secondary-fixed": "#171d19",
+            "on-secondary": "#ffffff",
+            "surface-container": "#f1eee7",
+            "surface-dim": "#dcdad3",
+            "primary-fixed-dim": "#96d3bf",
+            "on-tertiary-fixed-variant": "#24501a",
+            "on-surface-variant": "#404945",
+            "on-primary-fixed-variant": "#0d5041",
+            "surface-container-high": "#ebe8e1",
+            "on-error": "#ffffff",
+            "tertiary-container": "#3e6b32",
+            "error": "#ba1a1a",
+            "on-primary-fixed": "#002019",
+            "primary": "#115344",
+            "outline": "#707975",
+            "inverse-on-surface": "#f3f0e9",
+            "on-primary": "#ffffff",
+            "surface-container-highest": "#e5e2db",
+            "on-tertiary-container": "#b6eaa3",
+            "secondary-container": "#dbe1da",
+            "surface-tint": "#2c6859",
+            "secondary-fixed": "#dde4dd",
+            "surface": "#fcf9f2",
+            "on-surface": "#1c1c18",
+            "on-primary-container": "#abe9d5"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "space-xs": "0.5rem",
+            "space-lg": "1.25rem",
+            "gutter-compact": "0.5rem",
+            "space-xl": "1.5rem",
+            "margin": "1rem",
+            "space-sm": "0.75rem",
+            "gutter": "0.75rem",
+            "space-md": "1rem",
+            "space-xxs": "0.25rem"
+          },
+          "fontFamily": {
+            "mono-data-lg": ["Courier Prime"],
+            "headline-lg": ["Public Sans"],
+            "label-md": ["Public Sans"],
+            "body-sm": ["Public Sans"],
+            "headline-md": ["Public Sans"],
+            "mono-data-sm": ["Courier Prime"],
+            "mono-data-md": ["Courier Prime"],
+            "body-md": ["Public Sans"],
+            "title-md": ["Public Sans"]
+          },
+          "fontSize": {
+            "mono-data-lg": ["24px", { "lineHeight": "28px", "fontWeight": "400" }],
+            "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+            "label-md": ["13px", { "lineHeight": "16px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+            "body-sm": ["13px", { "lineHeight": "18px", "fontWeight": "400" }],
+            "headline-md": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "mono-data-sm": ["13px", { "lineHeight": "16px", "fontWeight": "400" }],
+            "mono-data-md": ["15px", { "lineHeight": "20px", "fontWeight": "400" }],
+            "body-md": ["15px", { "lineHeight": "22px", "fontWeight": "400" }],
+            "title-md": ["18px", { "lineHeight": "24px", "fontWeight": "600" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+    @keyframes scanMotion {
+      0%, 100% {
+        top: 8px;
+      }
+      50% {
+        top: calc(100% - 10px);
+      }
+    }
+    .scan-line {
+      position: absolute;
+      left: 12px;
+      right: 12px;
+      height: 2px;
+      animation: scanMotion 3s ease-in-out infinite;
+    }
+  </style>
+</head>
+<body class="bg-surface text-on-surface h-full flex items-center justify-center m-0 p-0 antialiased selection:bg-secondary-fixed">
+<!-- Native Android Frame (360 x 800) -->
+<main class="relative w-[360px] h-[800px] overflow-hidden flex flex-col bg-[#151816] text-[#E8E6DF] select-none">
+<!-- Android Native Status Bar -->
+<header class="w-full h-7 pt-1 px-margin flex justify-between items-center z-20 shrink-0">
+<span class="font-label-md text-label-md text-[#E8E6DF] font-semibold tracking-normal">09:41</span>
+<div class="flex items-center gap-1.5 text-[#E8E6DF]">
+<span class="material-symbols-outlined text-[16px]" data-icon="wifi">wifi</span>
+<span class="material-symbols-outlined text-[16px]" data-icon="signal_cellular_alt">signal_cellular_alt</span>
+<span class="material-symbols-outlined text-[18px]" data-icon="battery_full">battery_full</span>
+</div>
+</header>
+<!-- Top App Bar for Task/Scan Flow (Suppressed BottomNavBar as this is a focused task destination) -->
+<div class="w-full h-14 px-margin flex items-center justify-between z-20 shrink-0">
+<button aria-label="Tutup" class="w-11 h-11 -ml-2 rounded-full flex items-center justify-center text-[#E8E6DF] active:bg-[#1D211E] transition-colors" type="button">
+<span class="material-symbols-outlined text-[24px]" data-icon="close">close</span>
+</button>
+<h1 class="font-title-md text-title-md font-semibold text-[#E8E6DF] tracking-tight">Scan QR</h1>
+<button aria-label="Senter" class="w-11 h-11 -mr-2 rounded-full flex items-center justify-center text-[#E8E6DF] active:bg-[#1D211E] transition-colors" id="torch-toggle" type="button">
+<span class="material-symbols-outlined text-[22px]" data-icon="flashlight_on">flashlight_on</span>
+</button>
+</div>
+<!-- Center Camera Viewfinder Area -->
+<section class="flex-1 flex flex-col items-center justify-center px-margin z-10">
+<!-- Scan Target Container (220 x 220 px) -->
+<div class="relative w-[220px] h-[220px] bg-[#1D211E] rounded-xl overflow-hidden flex items-center justify-center">
+<!-- Subtle Alignment Grid Matrix for Quiet Domesticity Tone -->
+<div class="absolute inset-0 grid grid-cols-3 grid-rows-3 opacity-20 pointer-events-none">
+<div class="border-r border-b border-[#5E655F]"></div>
+<div class="border-r border-b border-[#5E655F]"></div>
+<div class="border-b border-[#5E655F]"></div>
+<div class="border-r border-b border-[#5E655F]"></div>
+<div class="border-r border-b border-[#5E655F]"></div>
+<div class="border-b border-[#5E655F]"></div>
+<div class="border-r border-[#5E655F]"></div>
+<div class="border-r border-[#5E655F]"></div>
+<div></div>
+</div>
+<!-- 4 Corner Bracket Framing (Accent Color #5FA08E / Domestic Sanctuary Tone) -->
+<!-- Top Left -->
+<div class="absolute top-2 left-2 w-6 h-6 border-t-2 border-l-2 border-[#5FA08E] rounded-tl-[6px] pointer-events-none"></div>
+<!-- Top Right -->
+<div class="absolute top-2 right-2 w-6 h-6 border-t-2 border-r-2 border-[#5FA08E] rounded-tr-[6px] pointer-events-none"></div>
+<!-- Bottom Left -->
+<div class="absolute bottom-2 left-2 w-6 h-6 border-b-2 border-l-2 border-[#5FA08E] rounded-bl-[6px] pointer-events-none"></div>
+<!-- Bottom Right -->
+<div class="absolute bottom-2 right-2 w-6 h-6 border-b-2 border-r-2 border-[#5FA08E] rounded-br-[6px] pointer-events-none"></div>
+<!-- Moving Flat Accent Scanning Line (Flat solid bar, strict no-glow rule) -->
+<div class="scan-line bg-[#5FA08E] rounded-full pointer-events-none"></div>
+<!-- Central Alignment Dot Indicator -->
+<div class="w-1.5 h-1.5 rounded-full bg-[#5FA08E] opacity-60"></div>
+</div>
+<!-- Domestic Guidance Microcopy -->
+<div class="mt-8 px-4 text-center">
+<p class="font-body-md text-body-md text-[#E8E6DF] leading-snug">
+          Arahkan kamera ke QR di stiker alat
+        </p>
+<p class="font-body-sm text-body-sm text-[#9CA39E] mt-1.5">
+          Pastikan kode berada di dalam kotak bidik
+        </p>
+</div>
+<!-- Telemetry Status Tag -->
+<div class="mt-6 inline-flex items-center gap-2 px-3 py-1 bg-[#1D211E] rounded-full">
+<span class="w-2 h-2 rounded-full bg-[#5FA08E]"></span>
+<span class="font-mono-data-sm text-mono-data-sm text-[#9CA39E]">SENSOR: AKTIF</span>
+</div>
+</section>
+<!-- Bottom Action & System Navigation Bar Area -->
+<footer class="w-full px-margin pb-2 z-20 shrink-0 flex flex-col items-center">
+<!-- Cancel Button -->
+<button class="w-full h-12 rounded-xl bg-[#1D211E] border border-[#2D332F] text-[#E8E6DF] font-body-md text-body-md font-semibold flex items-center justify-center transition-colors active:bg-[#252B27]" type="button">
+        Batal
+      </button>
+<!-- Native Android Gesture Bar -->
+<div class="w-full h-7 flex items-center justify-center mt-1">
+<div class="w-18 w-[72px] h-1 bg-[#E8E6DF] opacity-40 rounded-full"></div>
+</div>
+</footer>
+</main>
+<script>
+    const torchBtn = document.getElementById('torch-toggle');
+    let torchActive = false;
+    if (torchBtn) {
+      torchBtn.addEventListener('click', () => {
+        torchActive = !torchActive;
+        const icon = torchBtn.querySelector('.material-symbols-outlined');
+        if (icon) {
+          icon.textContent = torchActive ? 'flashlight_off' : 'flashlight_on';
+          torchBtn.classList.toggle('text-[#5FA08E]', torchActive);
+          torchBtn.classList.toggle('text-[#E8E6DF]', !torchActive);
+        }
+      });
+    }
+  </script>
+</body></html>

@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+
+<html class="light" lang="id"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>26. Kelola Anggota - Rumah</title>
+<!-- Google Fonts: Public Sans & Courier Prime / Material Symbols -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&amp;family=Public+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS with custom theme config -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-secondary-fixed-variant": "#424843",
+            "surface-container-low": "#f6f3ec",
+            "on-surface-variant": "#404945",
+            "inverse-primary": "#96d3bf",
+            "tertiary": "#26521c",
+            "surface": "#fcf9f2",
+            "on-tertiary": "#ffffff",
+            "outline": "#707975",
+            "surface-dim": "#dcdad3",
+            "on-secondary-container": "#5d645e",
+            "on-primary-container": "#abe9d5",
+            "tertiary-fixed": "#bcf1a9",
+            "primary-fixed": "#b1efdb",
+            "on-tertiary-fixed-variant": "#24501a",
+            "outline-variant": "#bfc9c4",
+            "on-primary-fixed": "#002019",
+            "on-tertiary-fixed": "#012200",
+            "surface-container-lowest": "#ffffff",
+            "surface-container-highest": "#e5e2db",
+            "error-container": "#ffdad6",
+            "surface-container": "#f1eee7",
+            "on-error": "#ffffff",
+            "primary-fixed-dim": "#96d3bf",
+            "on-primary-fixed-variant": "#0d5041",
+            "primary": "#115344",
+            "on-secondary-fixed": "#171d19",
+            "error": "#ba1a1a",
+            "surface-container-high": "#ebe8e1",
+            "secondary": "#59605a",
+            "primary-container": "#2f6b5b",
+            "on-error-container": "#93000a",
+            "on-surface": "#1c1c18",
+            "inverse-on-surface": "#f3f0e9",
+            "tertiary-container": "#3e6b32",
+            "inverse-surface": "#31312c",
+            "on-secondary": "#ffffff",
+            "background": "#fcf9f2",
+            "on-background": "#1c1c18",
+            "surface-bright": "#fcf9f2",
+            "secondary-fixed-dim": "#c1c8c1",
+            "on-primary": "#ffffff",
+            "surface-tint": "#2c6859",
+            "on-tertiary-container": "#b6eaa3",
+            "secondary-fixed": "#dde4dd",
+            "secondary-container": "#dbe1da",
+            "surface-variant": "#e5e2db",
+            "tertiary-fixed-dim": "#a1d48f"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "space-xs": "0.5rem",
+            "space-md": "1rem",
+            "space-xxs": "0.25rem",
+            "gutter-compact": "0.5rem",
+            "gutter": "0.75rem",
+            "margin": "1rem",
+            "space-sm": "0.75rem",
+            "space-xl": "1.5rem",
+            "space-lg": "1.25rem"
+          },
+          "fontFamily": {
+            "mono-data-md": ["Courier Prime"],
+            "headline-md": ["Public Sans"],
+            "body-md": ["Public Sans"],
+            "mono-data-sm": ["Courier Prime"],
+            "body-sm": ["Public Sans"],
+            "label-md": ["Public Sans"],
+            "headline-lg": ["Public Sans"],
+            "mono-data-lg": ["Courier Prime"],
+            "title-md": ["Public Sans"]
+          },
+          "fontSize": {
+            "mono-data-md": ["15px", { "lineHeight": "20px", "fontWeight": "400" }],
+            "headline-md": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "body-md": ["15px", { "lineHeight": "22px", "fontWeight": "400" }],
+            "mono-data-sm": ["13px", { "lineHeight": "16px", "fontWeight": "400" }],
+            "body-sm": ["13px", { "lineHeight": "18px", "fontWeight": "400" }],
+            "label-md": ["13px", { "lineHeight": "16px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+            "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+            "mono-data-lg": ["24px", { "lineHeight": "28px", "fontWeight": "400" }],
+            "title-md": ["18px", { "lineHeight": "24px", "fontWeight": "600" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      line-height: 1;
+      text-transform: none;
+      letter-spacing: normal;
+      word-wrap: normal;
+      white-space: nowrap;
+      direction: ltr;
+    }
+    /* Hide scrollbars for clean native appearance */
+    ::-webkit-scrollbar {
+      display: none;
+    }
+    * {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+  </style>
+</head>
+<body class="bg-[#F4F1EA] text-on-surface antialiased min-h-screen flex items-center justify-center p-0 md:p-6 select-none">
+<!-- Mobile Frame Container: 360 x 800 Android Canvas -->
+<div class="relative w-full max-w-[360px] h-[800px] max-h-[800px] bg-[#F4F1EA] overflow-hidden flex flex-col justify-between shadow-none">
+<!-- Top System Bar Emulation (Clean, Minimalist Time & Battery State) -->
+<div class="h-6 w-full px-5 flex items-center justify-between text-secondary pt-2">
+<span class="font-mono-data-sm text-mono-data-sm text-[12px] tracking-tight">09:41</span>
+<div class="flex items-center space-x-1.5 text-secondary">
+<span class="material-symbols-outlined text-[14px]">wifi</span>
+<span class="material-symbols-outlined text-[14px]">signal_cellular_4_bar</span>
+<span class="material-symbols-outlined text-[16px]">battery_full</span>
+</div>
+</div>
+<!-- Top App Bar (Task-focused sub-page with Back action: Bottom Navigation Suppressed) -->
+<header class="flex items-center justify-between h-16 px-4 bg-[#F4F1EA]">
+<div class="flex items-center gap-2">
+<button aria-label="Kembali" class="w-11 h-11 flex items-center justify-center rounded-xl text-on-surface hover:bg-surface-container active:scale-95 transition-all" type="button">
+<span class="material-symbols-outlined text-[24px]">arrow_back</span>
+</button>
+<h1 class="font-title-md text-title-md text-on-surface font-semibold tracking-tight">Kelola Anggota</h1>
+</div>
+<button aria-label="Tambah Anggota" class="w-10 h-10 flex items-center justify-center rounded-full bg-[#E4EDE9] text-[#2F6B5B] hover:bg-secondary-fixed active:scale-95 transition-all" type="button">
+<span class="material-symbols-outlined text-[22px]" style="font-variation-settings: 'wght' 600;">add</span>
+</button>
+</header>
+<!-- Scrollable Canvas Area -->
+<main class="flex-1 overflow-y-auto px-4 pb-6 space-y-4">
+<!-- Member Count & Explanation Card (Floor 1: #FBF9F4) -->
+<section class="bg-[#FBF9F4] rounded-2xl p-4">
+<div class="flex items-center justify-between mb-1.5">
+<h2 class="font-title-md text-[17px] text-on-surface font-semibold">3 Anggota Terdaftar</h2>
+<span class="font-mono-data-sm text-mono-data-sm text-[#2F6B5B] bg-[#E4EDE9] px-2 py-0.5 rounded-md">Lokal Aktif</span>
+</div>
+<p class="font-body-sm text-body-sm text-secondary leading-relaxed">
+          Anggota keluarga memiliki akses kontrol perangkat dan notifikasi kehadiran sesuai hak akses.
+        </p>
+</section>
+<!-- Member List (Floor 1: #FBF9F4, dividers #E5E0D5) -->
+<section class="bg-[#FBF9F4] rounded-2xl divide-y divide-[#E5E0D5] overflow-hidden">
+<!-- Member 1: Bapak (Anda) -->
+<div class="p-3.5 flex items-center justify-between hover:bg-surface-container-low transition-colors">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-[#E4EDE9] text-[#2F6B5B] flex items-center justify-center font-title-md font-bold text-base flex-shrink-0">
+              B
+            </div>
+<div class="flex flex-col">
+<span class="font-title-md text-[15px] font-semibold text-on-surface leading-tight">Bapak (Anda)</span>
+<span class="font-body-sm text-body-sm text-secondary text-[12px] leading-snug">Admin Utama • HP Pixel 7</span>
+<span class="font-mono-data-sm text-mono-data-sm text-[11px] text-[#2F6B5B] mt-0.5">192.168.1.105</span>
+</div>
+</div>
+<div class="flex items-center">
+<span class="font-mono-data-sm text-mono-data-sm text-[11px] font-semibold bg-[#ECE7DC] text-on-surface px-2.5 py-1 rounded">
+              Admin
+            </span>
+</div>
+</div>
+<!-- Member 2: Ibu -->
+<div class="p-3.5 flex items-center justify-between hover:bg-surface-container-low transition-colors cursor-pointer active:bg-surface-container">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-[#ECE7DC] text-on-surface flex items-center justify-center font-title-md font-bold text-base flex-shrink-0">
+              I
+            </div>
+<div class="flex flex-col">
+<span class="font-title-md text-[15px] font-semibold text-on-surface leading-tight">Ibu</span>
+<span class="font-body-sm text-body-sm text-secondary text-[12px] leading-snug">Anggota Penuh • Galaxy A54</span>
+<span class="font-mono-data-sm text-mono-data-sm text-[11px] text-secondary mt-0.5">Aktif 10 mnt lalu</span>
+</div>
+</div>
+<div class="flex items-center gap-1">
+<span class="font-label-md text-label-md text-[11px] bg-[#ECE7DC] text-secondary px-2.5 py-0.5 rounded">
+              Akses Penuh
+            </span>
+<span class="material-symbols-outlined text-secondary text-[20px]">chevron_right</span>
+</div>
+</div>
+<!-- Member 3: Rian -->
+<div class="p-3.5 flex items-center justify-between hover:bg-surface-container-low transition-colors cursor-pointer active:bg-surface-container">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-[#ECE7DC] text-on-surface flex items-center justify-center font-title-md font-bold text-base flex-shrink-0">
+              R
+            </div>
+<div class="flex flex-col">
+<span class="font-title-md text-[15px] font-semibold text-on-surface leading-tight">Rian</span>
+<span class="font-body-sm text-body-sm text-secondary text-[12px] leading-snug">Akses Terbatas • iPhone 13</span>
+<span class="font-mono-data-sm text-mono-data-sm text-[11px] text-secondary mt-0.5">Di luar rumah</span>
+</div>
+</div>
+<div class="flex items-center gap-1">
+<span class="font-label-md text-label-md text-[11px] bg-[#ECE7DC] text-secondary px-2.5 py-0.5 rounded">
+              Terbatas
+            </span>
+<span class="material-symbols-outlined text-secondary text-[20px]">chevron_right</span>
+</div>
+</div>
+</section>
+<!-- Section: Undang Anggota Baru (Floor 1: #FBF9F4) -->
+<section class="bg-[#FBF9F4] rounded-2xl p-4">
+<h3 class="font-title-md text-[16px] text-on-surface font-semibold mb-1">Undang Anggota Baru</h3>
+<p class="font-body-sm text-body-sm text-secondary leading-relaxed mb-4">
+          Bagikan kode QR atau token sekali pakai untuk menambahkan anggota keluarga ke jaringan lokal rumah.
+        </p>
+<button class="w-full h-12 bg-[#2F6B5B] hover:bg-[#255849] active:scale-[0.99] text-[#FBF9F4] rounded-xl font-label-md text-label-md flex items-center justify-center gap-2 transition-all" type="button">
+<span class="material-symbols-outlined text-[18px]">qr_code_2</span>
+<span>Buat Kode Undangan</span>
+</button>
+</section>
+<!-- Section: Kebijakan Akses Privasi (Floor 2 Inset: #ECE7DC) -->
+<aside class="bg-[#ECE7DC] rounded-xl p-3.5 mb-2 flex items-start gap-2.5">
+<span class="material-symbols-outlined text-secondary text-[18px] mt-0.5 flex-shrink-0">info</span>
+<p class="font-body-sm text-body-sm text-secondary leading-normal text-[12px]">
+          Anggota dengan "Akses Terbatas" tidak dapat melihat rekaman kamera kamar atau mengubah konfigurasi jaringan server.
+        </p>
+</aside>
+</main>
+<!-- Bottom Indicator Pill (Android Gesture Bar) -->
+<div class="h-5 w-full flex items-center justify-center pb-2 bg-[#F4F1EA]">
+<div class="w-24 h-1 bg-surface-container-highest rounded-full"></div>
+</div>
+</div>
+</body></html>

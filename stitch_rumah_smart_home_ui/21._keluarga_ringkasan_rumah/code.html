@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+
+<html class="light" lang="id"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>21. Keluarga - Rumah</title>
+<!-- Google Fonts: Public Sans & Courier Prime / IBM Plex Mono fallback -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&amp;family=Public+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS v3 with Plugins -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "outline-variant": "#bfc9c4",
+            "primary": "#115344",
+            "surface-bright": "#fcf9f2",
+            "on-tertiary": "#ffffff",
+            "on-primary-container": "#abe9d5",
+            "surface-container": "#f1eee7",
+            "surface-container-lowest": "#ffffff",
+            "on-surface": "#1c1c18",
+            "on-error": "#ffffff",
+            "inverse-primary": "#96d3bf",
+            "outline": "#707975",
+            "surface-variant": "#e5e2db",
+            "inverse-on-surface": "#f3f0e9",
+            "on-secondary": "#ffffff",
+            "on-primary": "#ffffff",
+            "primary-fixed": "#b1efdb",
+            "on-secondary-fixed": "#171d19",
+            "primary-fixed-dim": "#96d3bf",
+            "surface-dim": "#dcdad3",
+            "tertiary-fixed-dim": "#a1d48f",
+            "on-tertiary-fixed-variant": "#24501a",
+            "secondary": "#59605a",
+            "on-tertiary-container": "#b6eaa3",
+            "on-background": "#1c1c18",
+            "surface": "#fcf9f2",
+            "surface-container-low": "#f6f3ec",
+            "error-container": "#ffdad6",
+            "surface-container-high": "#ebe8e1",
+            "secondary-fixed": "#dde4dd",
+            "error": "#ba1a1a",
+            "secondary-fixed-dim": "#c1c8c1",
+            "surface-tint": "#2c6859",
+            "tertiary-container": "#3e6b32",
+            "on-surface-variant": "#404945",
+            "surface-container-highest": "#e5e2db",
+            "on-secondary-container": "#5d645e",
+            "inverse-surface": "#31312c",
+            "on-tertiary-fixed": "#012200",
+            "tertiary-fixed": "#bcf1a9",
+            "on-secondary-fixed-variant": "#424843",
+            "on-primary-fixed-variant": "#0d5041",
+            "tertiary": "#26521c",
+            "background": "#fcf9f2",
+            "on-error-container": "#93000a",
+            "on-primary-fixed": "#002019",
+            "secondary-container": "#dbe1da",
+            "primary-container": "#2f6b5b"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "2xl": "1rem",
+            "3xl": "1.5rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "space-xl": "1.5rem",
+            "space-md": "1rem",
+            "space-sm": "0.75rem",
+            "margin": "1rem",
+            "space-xs": "0.5rem",
+            "space-xxs": "0.25rem",
+            "gutter-compact": "0.5rem",
+            "gutter": "0.75rem",
+            "space-lg": "1.25rem"
+          },
+          "fontFamily": {
+            "title-md": ["Public Sans"],
+            "headline-md": ["Public Sans"],
+            "mono-data-lg": ["Courier Prime", "monospace"],
+            "body-sm": ["Public Sans"],
+            "body-md": ["Public Sans"],
+            "mono-data-sm": ["Courier Prime", "monospace"],
+            "mono-data-md": ["Courier Prime", "monospace"],
+            "label-md": ["Public Sans"],
+            "headline-lg": ["Public Sans"]
+          },
+          "fontSize": {
+            "title-md": ["18px", { "lineHeight": "24px", "fontWeight": "600" }],
+            "headline-md": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "mono-data-lg": ["24px", { "lineHeight": "28px", "fontWeight": "400" }],
+            "body-sm": ["13px", { "lineHeight": "18px", "fontWeight": "400" }],
+            "body-md": ["15px", { "lineHeight": "22px", "fontWeight": "400" }],
+            "mono-data-sm": ["13px", { "lineHeight": "16px", "fontWeight": "400" }],
+            "mono-data-md": ["15px", { "lineHeight": "20px", "fontWeight": "400" }],
+            "label-md": ["13px", { "lineHeight": "16px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+            "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "600" }]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+    /* Hide scrollbar for pure serene layout */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+</head>
+<body class="bg-background text-on-surface antialiased min-h-screen flex justify-center selection:bg-secondary-fixed">
+<!-- Android Baseline Frame: 360px viewport boundary -->
+<div class="w-full max-w-[360px] min-h-[800px] bg-background flex flex-col relative pb-24">
+<!-- Android System Status Bar (09:41, WiFi, Cellular, Battery) -->
+<header class="w-full h-8 px-margin flex items-center justify-between text-secondary select-none pt-1">
+<span class="font-mono-data-sm text-mono-data-sm text-on-surface font-semibold tracking-tight">09:41</span>
+<div class="flex items-center space-x-1.5 text-secondary">
+<span class="material-symbols-outlined text-[16px]">network_wifi</span>
+<span class="material-symbols-outlined text-[16px]">signal_cellular_alt</span>
+<span class="material-symbols-outlined text-[18px]">battery_full</span>
+</div>
+</header>
+<!-- Top App Bar (Shared Components Anchor: headline, leading/trailing icons) -->
+<div class="flex justify-between items-center w-full px-margin h-16 max-w-[360px] mx-auto transition-colors duration-150">
+<div class="flex items-center gap-2">
+<h1 class="text-headline-lg font-headline-lg text-on-surface tracking-tight">Keluarga</h1>
+<span class="font-mono-data-sm text-mono-data-sm bg-surface-container text-secondary px-2 py-0.5 rounded-full tracking-wide">Admin</span>
+</div>
+<button aria-label="Pengaturan Anggota" class="w-12 h-12 flex items-center justify-center rounded-full hover:bg-surface-container active:opacity-80 transition-colors duration-150 text-secondary">
+<span class="material-symbols-outlined text-[24px]">settings</span>
+</button>
+</div>
+<!-- Main Content Canvas -->
+<main class="flex-1 px-margin space-y-6">
+<!-- Section 1: Status Kehadiran -->
+<section aria-labelledby="section-kehadiran">
+<div class="flex items-center justify-between mb-3">
+<h2 class="font-title-md text-title-md text-on-surface" id="section-kehadiran">Status Kehadiran</h2>
+<span class="font-mono-data-sm text-mono-data-sm text-secondary">3 Anggota</span>
+</div>
+<!-- Horizontal scrollable card carousel / grid -->
+<div class="flex gap-gutter overflow-x-auto no-scrollbar py-0.5 -mx-margin px-margin">
+<!-- Member 1: Bapak (Di rumah) -->
+<article class="min-w-[210px] bg-surface-bright rounded-2xl p-space-md flex flex-col justify-between select-none">
+<div class="flex items-start justify-between">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-on-surface font-headline-md text-[16px]">
+                B
+              </div>
+<div class="flex items-center gap-1.5 bg-secondary-fixed/50 px-2 py-1 rounded-full">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+<span class="font-label-md text-label-md text-primary">Di rumah</span>
+</div>
+</div>
+<div class="mt-4">
+<h3 class="font-title-md text-title-md text-on-surface">Bapak</h3>
+<p class="font-body-sm text-body-sm text-secondary mt-0.5">WiFi Rumah-Utama</p>
+<div class="mt-2 pt-2 border-t border-surface-container-highest flex items-center gap-1 text-secondary">
+<span class="material-symbols-outlined text-[14px]">schedule</span>
+<time class="font-mono-data-sm text-mono-data-sm">sejak 07:15</time>
+</div>
+</div>
+</article>
+<!-- Member 2: Ibu (Di rumah) -->
+<article class="min-w-[210px] bg-surface-bright rounded-2xl p-space-md flex flex-col justify-between select-none">
+<div class="flex items-start justify-between">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-on-surface font-headline-md text-[16px]">
+                I
+              </div>
+<div class="flex items-center gap-1.5 bg-secondary-fixed/50 px-2 py-1 rounded-full">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+<span class="font-label-md text-label-md text-primary">Di rumah</span>
+</div>
+</div>
+<div class="mt-4">
+<h3 class="font-title-md text-title-md text-on-surface">Ibu</h3>
+<p class="font-body-sm text-body-sm text-secondary mt-0.5">Sensor Dapur</p>
+<div class="mt-2 pt-2 border-t border-surface-container-highest flex items-center gap-1 text-secondary">
+<span class="material-symbols-outlined text-[14px]">schedule</span>
+<time class="font-mono-data-sm text-mono-data-sm">pukul 08:30</time>
+</div>
+</div>
+</article>
+<!-- Member 3: Rian (Di luar) -->
+<article class="min-w-[210px] bg-surface-bright rounded-2xl p-space-md flex flex-col justify-between select-none">
+<div class="flex items-start justify-between">
+<div class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center text-on-surface font-headline-md text-[16px]">
+                R
+              </div>
+<div class="flex items-center gap-1.5 bg-surface-container-high px-2 py-1 rounded-full">
+<span class="w-2 h-2 rounded-full bg-error"></span>
+<span class="font-label-md text-label-md text-on-surface-variant">Di luar</span>
+</div>
+</div>
+<div class="mt-4">
+<h3 class="font-title-md text-title-md text-on-surface">Rian</h3>
+<p class="font-body-sm text-body-sm text-secondary mt-0.5">Terakhir terdeteksi</p>
+<div class="mt-2 pt-2 border-t border-surface-container-highest flex items-center gap-1 text-secondary">
+<span class="material-symbols-outlined text-[14px]">schedule</span>
+<time class="font-mono-data-sm text-mono-data-sm">pukul 07:45</time>
+</div>
+</div>
+</article>
+</div>
+</section>
+<!-- Section 2: Ringkasan Hari Ini -->
+<section aria-labelledby="section-ringkasan">
+<h2 class="font-title-md text-title-md text-on-surface mb-3" id="section-ringkasan">Ringkasan Hari Ini</h2>
+<div class="grid grid-cols-2 gap-gutter">
+<!-- Mini Card 1: Total Kejadian -->
+<div class="bg-surface-bright rounded-2xl p-space-md flex flex-col justify-between">
+<div class="flex items-center justify-between text-secondary">
+<span class="font-label-md text-label-md text-secondary">Total Kejadian</span>
+<span class="material-symbols-outlined text-[18px]">history</span>
+</div>
+<div class="mt-2">
+<p class="font-mono-data-lg text-mono-data-lg text-on-surface font-normal">14</p>
+<p class="font-body-sm text-body-sm text-secondary mt-1">3 interaksi, 11 sensor</p>
+</div>
+</div>
+<!-- Mini Card 2: Kamera Aktif -->
+<div class="bg-surface-bright rounded-2xl p-space-md flex flex-col justify-between">
+<div class="flex items-center justify-between text-secondary">
+<span class="font-label-md text-label-md text-secondary">Kamera Aktif</span>
+<span class="material-symbols-outlined text-[18px]">videocam</span>
+</div>
+<div class="mt-2">
+<p class="font-mono-data-lg text-mono-data-lg text-on-surface font-normal">3/4 siap</p>
+<p class="font-body-sm text-body-sm text-secondary mt-1">1 mode privasi</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 3: Linimasa Aktivitas -->
+<section aria-labelledby="section-linimasa">
+<div class="flex items-center justify-between mb-3">
+<h2 class="font-title-md text-title-md text-on-surface" id="section-linimasa">Linimasa Aktivitas</h2>
+<button class="font-mono-data-sm text-mono-data-sm text-primary flex items-center gap-0.5">
+<span>Filter</span>
+<span class="material-symbols-outlined text-[16px]">tune</span>
+</button>
+</div>
+<!-- Filter Chips Row -->
+<div class="flex gap-2 overflow-x-auto no-scrollbar pb-1">
+<button class="h-8 px-3 rounded-lg bg-primary-container text-on-primary-container font-label-md text-label-md shrink-0">
+            Semua
+          </button>
+<button class="h-8 px-3 rounded-lg bg-surface-container text-secondary font-label-md text-label-md shrink-0 hover:bg-surface-container-high">
+            Kehadiran
+          </button>
+<button class="h-8 px-3 rounded-lg bg-surface-container text-secondary font-label-md text-label-md shrink-0 hover:bg-surface-container-high">
+            Keamanan
+          </button>
+<button class="h-8 px-3 rounded-lg bg-surface-container text-secondary font-label-md text-label-md shrink-0 hover:bg-surface-container-high">
+            Otomasi
+          </button>
+</div>
+<!-- Vertical Timeline List -->
+<div class="bg-surface-bright rounded-2xl mt-3 overflow-hidden divide-y divide-surface-container-highest">
+<!-- Item 1 (Interactive / Link to Screen 22) -->
+<a class="p-space-md flex items-center justify-between gap-3 hover:bg-surface-container-low transition-colors duration-150 cursor-pointer block group" href="#screen-22">
+<div class="flex items-start gap-3 flex-1 min-w-0">
+<time class="font-mono-data-sm text-mono-data-sm text-secondary pt-0.5 shrink-0">08:42</time>
+<div class="min-w-0">
+<div class="flex items-center gap-2">
+<h4 class="font-body-md text-body-md font-semibold text-on-surface truncate">Pintu depan dibuka</h4>
+<span class="bg-primary-fixed text-primary px-2 py-0.5 rounded text-[11px] font-label-md shrink-0">Kehadiran</span>
+</div>
+<p class="font-body-sm text-body-sm text-secondary truncate mt-0.5">Bapak tiba di rumah</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-[20px] text-secondary group-hover:translate-x-0.5 transition-transform duration-150 shrink-0">chevron_right</span>
+</a>
+<!-- Item 2: Rian meninggalkan rumah -->
+<div class="p-space-md flex items-center justify-between gap-3 hover:bg-surface-container-low transition-colors duration-150">
+<div class="flex items-start gap-3 flex-1 min-w-0">
+<time class="font-mono-data-sm text-mono-data-sm text-secondary pt-0.5 shrink-0">07:45</time>
+<div class="min-w-0">
+<div class="flex items-center gap-2">
+<h4 class="font-body-md text-body-md font-semibold text-on-surface truncate">Rian meninggalkan rumah</h4>
+<span class="bg-surface-container text-secondary px-2 py-0.5 rounded text-[11px] font-label-md shrink-0">Koneksi</span>
+</div>
+<p class="font-body-sm text-body-sm text-secondary truncate mt-0.5">WiFi 'Rumah-Utama' terputus</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-[20px] text-secondary shrink-0">chevron_right</span>
+</div>
+<!-- Item 3: Lampu luar dimatikan -->
+<div class="p-space-md flex items-center justify-between gap-3 hover:bg-surface-container-low transition-colors duration-150">
+<div class="flex items-start gap-3 flex-1 min-w-0">
+<time class="font-mono-data-sm text-mono-data-sm text-secondary pt-0.5 shrink-0">06:30</time>
+<div class="min-w-0">
+<div class="flex items-center gap-2">
+<h4 class="font-body-md text-body-md font-semibold text-on-surface truncate">Lampu luar dimatikan</h4>
+<span class="bg-surface-container text-secondary px-2 py-0.5 rounded text-[11px] font-label-md shrink-0">Otomasi</span>
+</div>
+<p class="font-body-sm text-body-sm text-secondary truncate mt-0.5">Otomasi jadwal pagi</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-[20px] text-secondary shrink-0">chevron_right</span>
+</div>
+<!-- Item 4: Gerakan di Teras -->
+<div class="p-space-md flex items-center justify-between gap-3 hover:bg-surface-container-low transition-colors duration-150">
+<div class="flex items-start gap-3 flex-1 min-w-0">
+<time class="font-mono-data-sm text-mono-data-sm text-secondary pt-0.5 shrink-0">02:14</time>
+<div class="min-w-0">
+<div class="flex items-center gap-2">
+<h4 class="font-body-md text-body-md font-semibold text-on-surface truncate">Gerakan di Teras</h4>
+<span class="bg-surface-container-highest text-on-surface px-2 py-0.5 rounded text-[11px] font-label-md shrink-0">Kamera</span>
+</div>
+<p class="font-body-sm text-body-sm text-secondary truncate mt-0.5">Kamera Teras merekam 1 menit</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-[20px] text-secondary shrink-0">chevron_right</span>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar (Shared Components JSON faithful execution) -->
+<!-- Fixed anchored navigation with 4 destinations: Beranda, Kamera, Asisten, Lainnya -->
+<nav aria-label="Navigasi Utama" class="fixed bottom-0 left-0 w-full z-50 h-20 flex justify-around items-center px-gutter max-w-[360px] mx-auto bg-surface-container-lowest">
+<!-- Beranda -->
+<button class="flex flex-col items-center justify-center gap-1 w-16 h-8 text-secondary font-body-sm text-body-sm transition-colors duration-200 active:scale-95 hover:bg-surface-container rounded-full">
+<span class="material-symbols-outlined text-[20px]">home</span>
+<span class="text-[11px] font-label-md leading-none">Beranda</span>
+</button>
+<!-- Kamera -->
+<button class="flex flex-col items-center justify-center gap-1 w-16 h-8 text-secondary font-body-sm text-body-sm transition-colors duration-200 active:scale-95 hover:bg-surface-container rounded-full">
+<span class="material-symbols-outlined text-[20px]">videocam</span>
+<span class="text-[11px] font-label-md leading-none">Kamera</span>
+</button>
+<!-- Asisten -->
+<button class="flex flex-col items-center justify-center gap-1 w-16 h-8 text-secondary font-body-sm text-body-sm transition-colors duration-200 active:scale-95 hover:bg-surface-container rounded-full">
+<span class="material-symbols-outlined text-[20px]">mic</span>
+<span class="text-[11px] font-label-md leading-none">Asisten</span>
+</button>
+<!-- Lainnya (Active: representing the Extended Family/Keluarga module under Lainnya) -->
+<button class="flex flex-col items-center justify-center gap-1 w-16 h-8 rounded-full bg-secondary-fixed text-primary-container font-label-md text-label-md transition-colors duration-200 active:scale-95">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">more_horiz</span>
+<span class="text-[11px] font-label-md leading-none">Lainnya</span>
+</button>
+</nav>
+</div>
+</body></html>

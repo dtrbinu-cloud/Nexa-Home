@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
@@ -17,6 +18,16 @@ class AddDeviceScreen extends StatefulWidget {
 }
 
 class _AddDeviceScreenState extends State<AddDeviceScreen> {
+  int _activeTab = 0; // 0: Scan QR / Kode Pairing (Opsi B), 1: Manual Developer
+
+  // Form Klaim via QR / Token
+  final _qrInputController = TextEditingController();
+  final _claimIdController = TextEditingController();
+  final _claimTokenController = TextEditingController();
+  final _claimNameController = TextEditingController();
+  final _claimRoomController = TextEditingController(text: 'Ruang Tamu');
+
+  // Form Manual Developer
   final _idController = TextEditingController();
   final _nameController = TextEditingController();
   final _roomController = TextEditingController();
@@ -26,13 +37,135 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
 
   @override
   void dispose() {
+    _qrInputController.dispose();
+    _claimIdController.dispose();
+    _claimTokenController.dispose();
+    _claimNameController.dispose();
+    _claimRoomController.dispose();
     _idController.dispose();
     _nameController.dispose();
     _roomController.dispose();
     super.dispose();
   }
 
-  Future<void> _submit() async {
+  void _parseQrPayload(String raw) {
+    final text = raw.trim();
+    if (text.isEmpty) return;
+
+    // 1. Cek format JSON: {"id": "esp32_xxxx", "token": "NEXA-xxxx"}
+    if (text.startsWith('{') && text.endsWith('}')) {
+      try {
+        final data = jsonDecode(text) as Map<String, dynamic>;
+        if (data.containsKey('id')) {
+          _claimIdController.text = data['id'].toString();
+        }
+        if (data.containsKey('token')) {
+          _claimTokenController.text = data['token'].toString();
+        }
+        AppToast.show(context, 'Data QR berhasil dibaca.');
+        return;
+      } catch (_) {}
+    }
+
+    // 2. Cek format URI: rumah://claim?id=esp32_xxxx&token=NEXA-xxxx
+    if (text.contains('?') && text.contains('id=')) {
+      try {
+        final uri = Uri.parse(text);
+        final id = uri.queryParameters['id'];
+        final token = uri.queryParameters['token'];
+        if (id != null) _claimIdController.text = id;
+        if (token != null) _claimTokenController.text = token;
+        AppToast.show(context, 'Data QR URI berhasil dibaca.');
+        return;
+      } catch (_) {}
+    }
+
+    // 3. Cek format plain ID:TOKEN
+    if (text.contains(':')) {
+      final parts = text.split(':');
+      _claimIdController.text = parts[0].trim();
+      _claimTokenController.text = parts[1].trim();
+      AppToast.show(context, 'Data pairing berhasil diurai.');
+      return;
+    }
+
+    // Default jika hanya teks ID
+    _claimIdController.text = text;
+  }
+
+  Future<void> _submitClaim() async {
+    final devId = _claimIdController.text.trim();
+    final token = _claimTokenController.text.trim();
+    final name = _claimNameController.text.trim();
+    final room = _claimRoomController.text.trim();
+
+    if (devId.isEmpty || token.isEmpty) {
+      AppToast.show(context, 'Device ID dan Kode Pairing / QR wajib diisi.');
+      return;
+    }
+
+    setState(() => _isLoading = true);
+
+    try {
+      final dio = await ApiClient.getInstance();
+      final res = await dio.post(
+        '/api/devices/claim',
+        data: {
+          'device_id': devId,
+          'claim_token': token,
+          'name': name.isEmpty ? 'Perangkat $devId' : name,
+          'room': room.isEmpty ? 'Ruang Tamu' : room,
+        },
+      );
+
+      setState(() => _isLoading = false);
+
+      if (res.statusCode == 200 && mounted) {
+        // Tampilkan pop-up dialog sukses
+        await showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (ctx) {
+            final isDark = Theme.of(ctx).brightness == Brightness.dark;
+            final text = isDark ? AppColors.darkText : AppColors.lightText;
+            final textSec = isDark ? AppColors.darkTextSecondary : AppColors.lightTextSecondary;
+
+            return AlertDialog(
+              shape: RoundedRectangleBorder(borderRadius: AppRadius.borderMd),
+              title: Row(
+                children: [
+                  Icon(PhosphorIcons.checkCircle(), color: AppColors.statusOk, size: AppDimensions.iconSizeMd),
+                  const SizedBox(width: AppSpacing.space2),
+                  Text('Sambungan Telah Berhasil!', style: AppTypography.body(text, weight: FontWeight.w700, size: AppTypography.textMd)),
+                ],
+              ),
+              content: Text(
+                'Perangkat "${name.isEmpty ? devId : name}" berhasil dihubungkan ke akun Anda dan kini siap dikontrol langsung.',
+                style: AppTypography.body(textSec, size: AppTypography.textSm),
+              ),
+              actions: [
+                AppButton(
+                  label: 'Mulai Kontrol Perangkat',
+                  variant: AppButtonVariant.primary,
+                  onPressed: () {
+                    Navigator.of(ctx).pop();
+                    Navigator.of(context).pop(true);
+                  },
+                ),
+              ],
+            );
+          },
+        );
+      }
+    } catch (e) {
+      setState(() => _isLoading = false);
+      if (mounted) {
+        AppToast.show(context, 'Gagal menghubungkan perangkat. Pastikan kode pairing benar.');
+      }
+    }
+  }
+
+  Future<void> _submitManual() async {
     final devId = _idController.text.trim();
     final name = _nameController.text.trim();
     final room = _roomController.text.trim();
@@ -91,18 +224,170 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(AppSpacing.space4),
-          child: _createdCredentials == null ? _buildForm(text, textSec) : _buildCredentialsView(text, textSec),
+          child: _createdCredentials == null
+              ? Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Tab Selector
+                    Row(
+                      children: [
+                        Expanded(
+                          child: GestureDetector(
+                            onTap: () => setState(() => _activeTab = 0),
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(vertical: AppSpacing.space2),
+                              decoration: BoxDecoration(
+                                border: Border(
+                                  bottom: BorderSide(
+                                    color: _activeTab == 0 ? (isDark ? AppColors.darkAccent : AppColors.lightAccent) : AppColors.transparent,
+                                    width: 2,
+                                  ),
+                                ),
+                              ),
+                              alignment: Alignment.center,
+                              child: Text(
+                                'Scan QR / Kode Stiker',
+                                style: AppTypography.body(
+                                  _activeTab == 0 ? text : textSec,
+                                  weight: _activeTab == 0 ? FontWeight.w600 : FontWeight.w400,
+                                  size: AppTypography.textSm,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: GestureDetector(
+                            onTap: () => setState(() => _activeTab = 1),
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(vertical: AppSpacing.space2),
+                              decoration: BoxDecoration(
+                                border: Border(
+                                  bottom: BorderSide(
+                                    color: _activeTab == 1 ? (isDark ? AppColors.darkAccent : AppColors.lightAccent) : AppColors.transparent,
+                                    width: 2,
+                                  ),
+                                ),
+                              ),
+                              alignment: Alignment.center,
+                              child: Text(
+                                'Daftar Manual',
+                                style: AppTypography.body(
+                                  _activeTab == 1 ? text : textSec,
+                                  weight: _activeTab == 1 ? FontWeight.w600 : FontWeight.w400,
+                                  size: AppTypography.textSm,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: AppSpacing.space4),
+
+                    if (_activeTab == 0) _buildClaimForm(text, textSec) else _buildManualForm(text, textSec),
+                  ],
+                )
+              : _buildCredentialsView(text, textSec),
         ),
       ),
     );
   }
 
-  Widget _buildForm(Color text, Color textSec) {
+  Widget _buildClaimForm(Color text, Color textSec) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // Panduan 3 Langkah
+        AppCard(
+          padding: const EdgeInsets.all(AppSpacing.space3),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Icon(PhosphorIcons.info(), size: AppDimensions.iconSizeSm, color: AppColors.statusOk),
+                  const SizedBox(width: AppSpacing.space2),
+                  Text('Langkah Mudah Sambung Alat:', style: AppTypography.body(text, weight: FontWeight.w600, size: AppTypography.textSm)),
+                ],
+              ),
+              const SizedBox(height: AppSpacing.space2),
+              Text(
+                '1. Sambungkan HP ke WiFi alat (nama tertera di stiker, misal: Rumah-Smart-XXXX).\n'
+                '2. Buka jendela pengaturan yang muncul otomatis, pilih WiFi rumah & masukkan sandinya.\n'
+                '3. Scan atau masukkan kode stiker di bawah ini, lalu klik "Hubungkan ke Akun".',
+                style: AppTypography.body(textSec, size: AppTypography.textXs),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: AppSpacing.space4),
+
+        // Parser Input QR
+        AppInput(
+          controller: _qrInputController,
+          label: 'Scan / Tempel Data QR Stiker Perangkat',
+          hint: 'Scan atau tempel payload teks QR di sini...',
+          prefixIcon: Icon(PhosphorIcons.qrCode(), size: AppDimensions.iconSizeSm),
+          onChanged: _parseQrPayload,
+        ),
+        const SizedBox(height: AppSpacing.space3),
+
+        Row(
+          children: [
+            Expanded(
+              child: AppInput(
+                controller: _claimIdController,
+                label: 'Device ID',
+                hint: 'contoh: esp32_A4F2',
+                prefixIcon: Icon(PhosphorIcons.fingerprint(), size: AppDimensions.iconSizeSm),
+              ),
+            ),
+            const SizedBox(width: AppSpacing.space2),
+            Expanded(
+              child: AppInput(
+                controller: _claimTokenController,
+                label: 'Kode Pairing',
+                hint: 'contoh: NEXA-8A4F-92C1',
+                prefixIcon: Icon(PhosphorIcons.key(), size: AppDimensions.iconSizeSm),
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: AppSpacing.space3),
+
+        AppInput(
+          controller: _claimNameController,
+          label: 'Nama Perangkat (Bebas)',
+          hint: 'contoh: Lampu Ruang Tamu',
+          prefixIcon: Icon(PhosphorIcons.tag(), size: AppDimensions.iconSizeSm),
+        ),
+        const SizedBox(height: AppSpacing.space3),
+
+        AppInput(
+          controller: _claimRoomController,
+          label: 'Ruangan',
+          hint: 'contoh: Ruang Tamu',
+          prefixIcon: Icon(PhosphorIcons.house(), size: AppDimensions.iconSizeSm),
+        ),
+        const SizedBox(height: AppSpacing.space6),
+
+        AppButton(
+          label: 'Daftarkan Perangkat',
+          onPressed: _submitClaim,
+          isLoading: _isLoading,
+          icon: Icon(PhosphorIcons.link(), size: AppDimensions.iconSizeSm),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildManualForm(Color text, Color textSec) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Daftarkan modul ESP32 baru ke server. Sistem akan secara otomatis membuatkan username dan password MQTT unik.',
+          'Daftarkan modul ESP32 secara manual (kredensial MQTT akan digenerate server untuk dimasukkan ke secrets.h).',
           style: AppTypography.body(textSec, size: AppTypography.textSm),
         ),
         const SizedBox(height: AppSpacing.space4),
@@ -128,8 +413,8 @@ class _AddDeviceScreenState extends State<AddDeviceScreen> {
         ),
         const SizedBox(height: AppSpacing.space6),
         AppButton(
-          label: 'Daftarkan Perangkat',
-          onPressed: _submit,
+          label: 'Daftarkan Manual',
+          onPressed: _submitManual,
           isLoading: _isLoading,
           icon: Icon(PhosphorIcons.plusCircle(), size: AppDimensions.iconSizeSm),
         ),

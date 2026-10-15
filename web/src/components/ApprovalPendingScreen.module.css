@@ -1,0 +1,99 @@
+.container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  padding: var(--space-4);
+  font-family: var(--font-body);
+}
+
+.card {
+  width: 100%;
+  max-width: 480px;
+  background-color: var(--color-surface);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-card);
+  padding: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  box-shadow: none;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--space-2);
+}
+
+.iconWrapper {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-card);
+  border: var(--border-width) solid var(--color-border);
+  background-color: var(--color-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-accent);
+  margin-bottom: var(--space-2);
+}
+
+.title {
+  font-size: var(--text-lg);
+  font-weight: 600;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+.subtitle {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.section {
+  border-top: var(--border-width) solid var(--color-border);
+  padding-top: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.sectionTitle {
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+}
+
+.message {
+  font-size: var(--text-xs);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-button);
+}
+
+.messageOk {
+  background-color: var(--color-subtle);
+  color: var(--color-accent);
+  border: var(--border-width) solid var(--color-border);
+}
+
+.messageDanger {
+  background-color: var(--color-subtle);
+  color: var(--color-status-danger);
+  border: var(--border-width) solid var(--color-border);
+}
+
+.buttonRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}

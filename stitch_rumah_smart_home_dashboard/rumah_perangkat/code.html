@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+
+<html class="light" lang="id"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Rumah - Manajemen Perangkat</title>
+<!-- Google Fonts: Public Sans & IBM Plex Mono -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&amp;family=Public+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "surface-container-highest": "#dfe4df",
+            "tertiary-fixed": "#ffdad4",
+            "on-tertiary-fixed": "#370e08",
+            "on-secondary": "#ffffff",
+            "primary": "#115344",
+            "on-secondary-fixed": "#091f19",
+            "inverse-surface": "#2c322e",
+            "on-tertiary-container": "#ffd3cc",
+            "tertiary-container": "#8c5148",
+            "primary-container": "#2f6b5b",
+            "background": "#f6fbf5",
+            "on-tertiary-fixed-variant": "#6d3830",
+            "surface-container-lowest": "#ffffff",
+            "primary-fixed-dim": "#96d3bf",
+            "primary-fixed": "#b1efdb",
+            "on-surface-variant": "#404945",
+            "on-surface": "#181d1a",
+            "on-secondary-fixed-variant": "#354b44",
+            "tertiary": "#703a32",
+            "surface-tint": "#2c6859",
+            "on-secondary-container": "#536961",
+            "surface-container-low": "#f0f5f0",
+            "on-primary": "#ffffff",
+            "error-container": "#ffdad6",
+            "on-tertiary": "#ffffff",
+            "inverse-on-surface": "#edf2ed",
+            "on-error-container": "#93000a",
+            "surface-bright": "#f6fbf5",
+            "on-primary-fixed-variant": "#0d5041",
+            "surface-variant": "#dfe4df",
+            "surface-container": "#ebefea",
+            "inverse-primary": "#96d3bf",
+            "secondary-fixed": "#cfe8de",
+            "secondary": "#4d635b",
+            "surface-dim": "#d7dbd6",
+            "on-error": "#ffffff",
+            "on-primary-fixed": "#002019",
+            "on-primary-container": "#abe9d5",
+            "surface-container-high": "#e5e9e4",
+            "outline-variant": "#bfc9c4",
+            "secondary-fixed-dim": "#b4ccc2",
+            "outline": "#707975",
+            "secondary-container": "#cfe8de",
+            "error": "#ba1a1a",
+            "surface": "#f6fbf5",
+            "tertiary-fixed-dim": "#ffb4a8",
+            "on-background": "#181d1a"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          "spacing": {
+            "space-xl": "32px",
+            "gutter-desktop": "24px",
+            "margin": "16px",
+            "space-xs": "4px",
+            "space-md": "16px",
+            "space-lg": "24px",
+            "gutter": "16px",
+            "space-sm": "8px",
+            "margin-desktop": "32px"
+          },
+          "fontFamily": {
+            "body-md": ["Public Sans", "sans-serif"],
+            "body-sm": ["Public Sans", "sans-serif"],
+            "body-lg": ["Public Sans", "sans-serif"],
+            "mono-metric": ["IBM Plex Mono", "monospace"],
+            "mono-body": ["IBM Plex Mono", "monospace"],
+            "headline-sm": ["Public Sans", "sans-serif"],
+            "mono-sm": ["IBM Plex Mono", "monospace"],
+            "headline-lg": ["Public Sans", "sans-serif"],
+            "label-md": ["Public Sans", "sans-serif"],
+            "headline-md": ["Public Sans", "sans-serif"],
+            "headline-lg-mobile": ["Public Sans", "sans-serif"]
+          },
+          "fontSize": {
+            "body-md": ["15px", { "lineHeight": "22px", "fontWeight": "400" }],
+            "body-sm": ["13px", { "lineHeight": "18px", "fontWeight": "400" }],
+            "body-lg": ["18px", { "lineHeight": "26px", "fontWeight": "400" }],
+            "mono-metric": ["24px", { "lineHeight": "28px", "fontWeight": "600" }],
+            "mono-body": ["15px", { "lineHeight": "20px", "fontWeight": "400" }],
+            "headline-sm": ["18px", { "lineHeight": "24px", "fontWeight": "600" }],
+            "mono-sm": ["13px", { "lineHeight": "16px", "fontWeight": "400" }],
+            "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "600" }],
+            "label-md": ["13px", { "lineHeight": "16px", "fontWeight": "500" }],
+            "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+            "headline-lg-mobile": ["24px", { "lineHeight": "32px", "fontWeight": "600" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    * {
+      box-shadow: none !important;
+      backdrop-filter: none !important;
+    }
+    .material-symbols-outlined {
+      font-family: 'Material Symbols Outlined';
+      font-weight: normal;
+      font-style: normal;
+      font-size: 20px;
+      line-height: 1;
+      letter-spacing: normal;
+      text-transform: none;
+      display: inline-block;
+      white-space: nowrap;
+      word-wrap: normal;
+      direction: ltr;
+      -webkit-font-feature-settings: 'liga';
+      -webkit-font-smoothing: antialiased;
+    }
+    /* Switchboard toggle switch: 56x32px */
+    .switch-track-sb {
+      width: 56px;
+      height: 32px;
+      border-radius: 9999px;
+      position: relative;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      transition: background-color 150ms ease;
+    }
+    .switch-knob-sb {
+      width: 24px;
+      height: 24px;
+      border-radius: 9999px;
+      position: absolute;
+      top: 4px;
+      left: 4px;
+      transition: transform 150ms ease, background-color 150ms ease;
+    }
+    .switch-checkbox-sb:checked + .switch-track-sb {
+      background-color: #2F6B5B;
+    }
+    .switch-checkbox-sb:checked + .switch-track-sb .switch-knob-sb {
+      transform: translateX(24px);
+      background-color: #FFFFFF;
+    }
+    .switch-checkbox-sb:not(:checked) + .switch-track-sb {
+      background-color: #D9D3C6;
+    }
+    .switch-checkbox-sb:not(:checked) + .switch-track-sb .switch-knob-sb {
+      transform: translateX(0);
+      background-color: #FBF9F4;
+    }
+  </style>
+</head>
+<body class="bg-[#F4F1EA] text-on-surface antialiased min-h-screen selection:bg-secondary-container selection:text-primary">
+<!-- ================= SIDEBAR ================= -->
+<aside class="fixed left-0 top-0 h-screen w-60 bg-surface-container-low dark:bg-inverse-surface border-r border-outline-variant dark:border-outline z-30">
+<div class="flex flex-col justify-between h-full w-60 py-6 px-3">
+<!-- Brand & Header -->
+<div>
+<div class="px-4 pb-6 border-b border-outline-variant">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[#2F6B5B] text-[22px]" data-icon="home">home</span>
+<span class="font-headline-md text-headline-md font-semibold text-on-surface dark:text-inverse-on-surface tracking-tight">Rumah</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Rumah Tangga</p>
+</div>
+<!-- Navigation Tabs -->
+<nav class="mt-4 flex flex-col gap-1">
+<!-- Beranda -->
+<a class="flex items-center gap-3 px-4 py-2.5 text-on-surface-variant dark:text-surface-variant font-normal hover:bg-surface-container hover:text-on-surface transition-colors duration-150 ease-linear rounded-[8px]" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-body-md text-body-md">Beranda</span>
+</a>
+<!-- Perangkat (ACTIVE) with #E4EDE9 and #2F6B5B -->
+<a class="flex items-center gap-3 px-4 py-2.5 text-[#2F6B5B] bg-[#E4EDE9] font-medium border-l-4 border-[#2F6B5B] rounded-r-[8px] transition-colors duration-150 ease-linear" href="#">
+<span class="material-symbols-outlined text-[#2F6B5B]" data-icon="devices">devices</span>
+<span class="font-body-md text-body-md font-semibold">Perangkat</span>
+</a>
+<!-- Asisten -->
+<a class="flex items-center gap-3 px-4 py-2.5 text-on-surface-variant dark:text-surface-variant font-normal hover:bg-surface-container hover:text-on-surface transition-colors duration-150 ease-linear rounded-[8px]" href="#">
+<span class="material-symbols-outlined" data-icon="smart_toy">smart_toy</span>
+<span class="font-body-md text-body-md">Asisten</span>
+</a>
+<!-- Kamera -->
+<a class="flex items-center gap-3 px-4 py-2.5 text-on-surface-variant dark:text-surface-variant font-normal hover:bg-surface-container hover:text-on-surface transition-colors duration-150 ease-linear rounded-[8px]" href="#">
+<span class="material-symbols-outlined" data-icon="videocam">videocam</span>
+<span class="font-body-md text-body-md">Kamera</span>
+</a>
+<!-- Keluarga -->
+<a class="flex items-center gap-3 px-4 py-2.5 text-on-surface-variant dark:text-surface-variant font-normal hover:bg-surface-container hover:text-on-surface transition-colors duration-150 ease-linear rounded-[8px]" href="#">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+<span class="font-body-md text-body-md">Keluarga</span>
+</a>
+<!-- Pengaturan -->
+<a class="flex items-center gap-3 px-4 py-2.5 text-on-surface-variant dark:text-surface-variant font-normal hover:bg-surface-container hover:text-on-surface transition-colors duration-150 ease-linear rounded-[8px]" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-body-md text-body-md">Pengaturan</span>
+</a>
+</nav>
+</div>
+<!-- Footer SideNav -->
+<div class="px-4 pt-4 border-t border-outline-variant">
+<div class="flex items-center gap-2.5 text-[#4C7A3F] font-mono-sm text-mono-sm">
+<span class="material-symbols-outlined text-[18px]" data-icon="check_circle">check_circle</span>
+<span class="text-on-surface">Server Terhubung</span>
+</div>
+<p class="font-mono-sm text-mono-sm text-on-surface-variant mt-1">Uptime: 48d 14h</p>
+</div>
+</div>
+</aside>
+<!-- ================= TOPBAR ================= -->
+<header class="fixed top-0 left-0 right-0 h-16 bg-surface dark:bg-inverse-surface border-b border-outline-variant dark:border-outline z-20 ml-60 flex justify-between items-center px-6 pl-8">
+<div class="flex items-center gap-4">
+<h1 class="font-headline-sm text-headline-sm font-semibold text-on-surface dark:text-inverse-on-surface">Perangkat</h1>
+<div class="flex items-center gap-1.5 px-2.5 py-1 bg-[#ECE7DC] border border-[#D9D3C6] rounded-[6px]">
+<span class="w-2 h-2 rounded-full bg-[#4C7A3F]"></span>
+<span class="font-mono-sm text-mono-sm text-[#1F2421]">Server Terhubung</span>
+</div>
+</div>
+<!-- Trailing actions & user profile -->
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2 text-on-surface-variant">
+<button class="w-10 h-10 flex items-center justify-center rounded-[6px] border border-[#D9D3C6] bg-[#FBF9F4] hover:bg-[#ECE7DC] text-on-surface transition-colors duration-150 ease-linear" title="Keamanan">
+<span class="material-symbols-outlined" data-icon="shield">shield</span>
+</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-[6px] border border-[#D9D3C6] bg-[#FBF9F4] hover:bg-[#ECE7DC] text-on-surface transition-colors duration-150 ease-linear" title="Notifikasi">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+</div>
+<div class="h-6 w-px bg-outline-variant"></div>
+<!-- User Chip: Budi · Admin with initial B -->
+<div class="flex items-center gap-2.5 pl-1">
+<div class="w-8 h-8 rounded-[4px] bg-[#E4EDE9] border border-[#2F6B5B]/30 flex items-center justify-center font-mono-sm font-semibold text-[#2F6B5B]">
+          B
+        </div>
+<div class="flex flex-col">
+<span class="font-body-md text-body-md font-medium text-on-surface leading-tight">Budi · Admin</span>
+<span class="font-mono-sm text-mono-sm text-on-surface-variant">ID: 01-ADM</span>
+</div>
+</div>
+</div>
+</header>
+<!-- ================= MAIN CONTENT CANVAS ================= -->
+<main class="ml-60 pt-20 px-8 pb-16 min-h-screen">
+<div class="max-w-[1140px] mx-auto space-y-6">
+<!-- 1. BANNER PERINGATAN GAS -->
+<!-- radius 20px, fill #FDF3F2, danger color #B23A2E, Gas values in IBM Plex Mono, button Bungkam Buzzer 44px radius 12px -->
+<div class="bg-[#FDF3F2] border border-[#B23A2E]/40 rounded-[20px] p-5 flex items-center justify-between gap-5">
+<div class="flex items-center gap-4">
+<div class="w-11 h-11 rounded-full bg-[#FFDAD6] border border-[#B23A2E]/30 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[#B23A2E] text-[24px]" data-icon="warning">warning</span>
+</div>
+<div>
+<p class="font-body-md text-body-md text-[#B23A2E] font-medium leading-relaxed">
+<span class="font-semibold">Peringatan:</span> Gas <span class="font-mono-sm font-semibold tracking-tight">1620</span> (ambang <span class="font-mono-sm font-semibold tracking-tight">1500</span>) - Terdeteksi di atas ambang batas. Katup otomatis ditutup.
+            </p>
+<p class="font-mono-sm text-mono-sm text-on-surface-variant mt-0.5">
+              Topik MQTT: home/dapur/sensor/gas • Status Solenoid: DITUTUP
+            </p>
+</div>
+</div>
+<button class="h-[44px] px-5 rounded-[12px] bg-[#B23A2E] hover:bg-[#8C1F15] text-[#FFFFFF] font-label-md text-label-md shrink-0 flex items-center gap-2 transition-colors duration-150 ease-linear">
+<span class="material-symbols-outlined text-[18px]" data-icon="volume_off">volume_off</span>
+<span>Bungkam Buzzer</span>
+</button>
+</div>
+<!-- 2. 2-COLUMN SWITCHBOARD GRID FOR DEVICES -->
+<!-- Device tiles: radius 24px, 2-column house switchboard style -->
+<section>
+<div class="flex items-center justify-between mb-4">
+<div>
+<h2 class="font-headline-sm text-headline-sm font-semibold text-on-surface">Panel Saklar Rumah (ESP32)</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">Kontrol langsung relai &amp; status aktuator kanal 1–6</p>
+</div>
+<div class="flex items-center gap-2">
+<span class="px-3 py-1 bg-[#ECE7DC] border border-[#D9D3C6] font-mono-sm text-mono-sm rounded-[8px] text-on-surface">
+            Broker: MQTT (Online)
+          </span>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-5">
+<!-- Tile 1: Lampu Ruang Tengah (ON) -->
+<div class="bg-[#E4EDE9] border border-[#2F6B5B]/20 rounded-[24px] p-6 flex items-center justify-between transition-all duration-150">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-[#FFFFFF] border border-[#2F6B5B]/30 flex items-center justify-center text-[#2F6B5B] shrink-0">
+<span class="material-symbols-outlined text-[26px]" data-icon="lightbulb">lightbulb</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm font-semibold text-[#2F6B5B]">Lampu Ruang Tengah</h3>
+<p class="font-body-sm text-body-sm text-[#2F6B5B]/80 mt-0.5 font-medium">ESP32 · Kanal 1</p>
+<div class="mt-2 inline-flex items-center gap-1.5 px-2 py-0.5 rounded-[6px] bg-[#FFFFFF]/80 font-mono-sm text-mono-sm text-[#2F6B5B]">
+<span class="w-2 h-2 rounded-full bg-[#2F6B5B]"></span>
+              ON · Terhubung
+            </div>
+</div>
+</div>
+<label class="relative inline-flex items-center cursor-pointer select-none">
+<input checked="" class="sr-only switch-checkbox-sb" type="checkbox"/>
+<span class="switch-track-sb">
+<span class="switch-knob-sb"></span>
+</span>
+</label>
+</div>
+<!-- Tile 2: Lampu Dapur & Tamu (OFF) -->
+<div class="bg-[#FBF9F4] border border-[#D9D3C6] rounded-[24px] p-6 flex items-center justify-between transition-all duration-150">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-[#ECE7DC] border border-[#D9D3C6] flex items-center justify-center text-on-surface-variant shrink-0">
+<span class="material-symbols-outlined text-[26px]" data-icon="lightbulb">lightbulb</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm font-semibold text-on-surface">Lampu Dapur &amp; Tamu</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">ESP32 · Kanal 2</p>
+<div class="mt-2 inline-flex items-center gap-1.5 px-2 py-0.5 rounded-[6px] bg-[#ECE7DC] font-mono-sm text-mono-sm text-on-surface-variant">
+<span class="w-2 h-2 rounded-full bg-outline"></span>
+              OFF · Siaga
+            </div>
+</div>
+</div>
+<label class="relative inline-flex items-center cursor-pointer select-none">
+<input class="sr-only switch-checkbox-sb" type="checkbox"/>
+<span class="switch-track-sb">
+<span class="switch-knob-sb"></span>
+</span>
+</label>
+</div>
+<!-- Tile 3: Lampu Kamar (ON) -->
+<div class="bg-[#E4EDE9] border border-[#2F6B5B]/20 rounded-[24px] p-6 flex items-center justify-between transition-all duration-150">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-[#FFFFFF] border border-[#2F6B5B]/30 flex items-center justify-center text-[#2F6B5B] shrink-0">
+<span class="material-symbols-outlined text-[26px]" data-icon="bed">bed</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm font-semibold text-[#2F6B5B]">Lampu Kamar</h3>
+<p class="font-body-sm text-body-sm text-[#2F6B5B]/80 mt-0.5 font-medium">ESP32 · Kanal 3</p>
+<div class="mt-2 inline-flex items-center gap-1.5 px-2 py-0.5 rounded-[6px] bg-[#FFFFFF]/80 font-mono-sm text-mono-sm text-[#2F6B5B]">
+<span class="w-2 h-2 rounded-full bg-[#2F6B5B]"></span>
+              ON · Terhubung
+            </div>
+</div>
+</div>
+<label class="relative inline-flex items-center cursor-pointer select-none">
+<input checked="" class="sr-only switch-checkbox-sb" type="checkbox"/>
+<span class="switch-track-sb">
+<span class="switch-knob-sb"></span>
+</span>
+</label>
+</div>
+<!-- Tile 4: Kipas Angin (ON) -->
+<div class="bg-[#E4EDE9] border border-[#2F6B5B]/20 rounded-[24px] p-6 flex items-center justify-between transition-all duration-150">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-[#FFFFFF] border border-[#2F6B5B]/30 flex items-center justify-center text-[#2F6B5B] shrink-0">
+<span class="material-symbols-outlined text-[26px]" data-icon="mode_fan">mode_fan</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm font-semibold text-[#2F6B5B]">Kipas Angin</h3>
+<p class="font-body-sm text-body-sm text-[#2F6B5B]/80 mt-0.5 font-medium">ESP32 · Kanal 4</p>
+<div class="mt-2 inline-flex items-center gap-1.5 px-2 py-0.5 rounded-[6px] bg-[#FFFFFF]/80 font-mono-sm text-mono-sm text-[#2F6B5B]">
+<span class="w-2 h-2 rounded-full bg-[#2F6B5B]"></span>
+              ON · Kecepatan 2
+            </div>
+</div>
+</div>
+<label class="relative inline-flex items-center cursor-pointer select-none">
+<input checked="" class="sr-only switch-checkbox-sb" type="checkbox"/>
+<span class="switch-track-sb">
+<span class="switch-knob-sb"></span>
+</span>
+</label>
+</div>
+<!-- Tile 5: Buzzer Peringatan (SIAGA) -->
+<div class="bg-[#FBF9F4] border border-[#D9D3C6] rounded-[24px] p-6 flex items-center justify-between transition-all duration-150">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-[#ECE7DC] border border-[#D9D3C6] flex items-center justify-center text-[#B23A2E] shrink-0">
+<span class="material-symbols-outlined text-[26px]" data-icon="notifications_active">notifications_active</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm font-semibold text-on-surface">Buzzer Peringatan</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">ESP32 · Kanal 5</p>
+<div class="mt-2 inline-flex items-center gap-1.5 px-2 py-0.5 rounded-[6px] bg-[#ECE7DC] font-mono-sm text-mono-sm text-on-surface">
+<span class="w-2 h-2 rounded-full bg-[#B7791F]"></span>
+              SIAGA · Siap Picu
+            </div>
+</div>
+</div>
+<label class="relative inline-flex items-center cursor-pointer select-none">
+<input class="sr-only switch-checkbox-sb" type="checkbox"/>
+<span class="switch-track-sb">
+<span class="switch-knob-sb"></span>
+</span>
+</label>
+</div>
+<!-- Tile 6: Sensor Gas & Cahaya (AKTIF) -->
+<div class="bg-[#E4EDE9] border border-[#2F6B5B]/20 rounded-[24px] p-6 flex items-center justify-between transition-all duration-150">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-[#FFFFFF] border border-[#2F6B5B]/30 flex items-center justify-center text-[#2F6B5B] shrink-0">
+<span class="material-symbols-outlined text-[26px]" data-icon="sensors">sensors</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm font-semibold text-[#2F6B5B]">Sensor Gas &amp; Cahaya</h3>
+<p class="font-body-sm text-body-sm text-[#2F6B5B]/80 mt-0.5 font-medium">
+              Nilai Gas <span class="font-mono-sm font-semibold">820</span> (ambang <span class="font-mono-sm font-semibold">1500</span>) · Cahaya <span class="font-mono-sm font-semibold">42</span>
+</p>
+<div class="mt-2 inline-flex items-center gap-1.5 px-2 py-0.5 rounded-[6px] bg-[#FFFFFF]/80 font-mono-sm text-mono-sm text-[#2F6B5B]">
+<span class="w-2 h-2 rounded-full bg-[#2F6B5B]"></span>
+              AKTIF · Streaming Telemetri
+            </div>
+</div>
+</div>
+<div class="px-3.5 py-1.5 rounded-[12px] bg-[#2F6B5B] text-[#FFFFFF] font-mono-sm text-mono-sm font-medium">
+            1000ms
+          </div>
+</div>
+</div>
+</section>
+<!-- 3. TABEL / DAFTAR TELEMETRI REAL ESP32 OVER MQTT -->
+<!-- Card radius 20px, fill #FBF9F4, NO outer card border. Headers in Public Sans, timestamps/IDs/sensor numbers in IBM Plex Mono ONLY. Protocol strictly MQTT -->
+<section class="bg-[#FBF9F4] rounded-[20px] overflow-hidden p-6">
+<div class="flex items-center justify-between pb-4 border-b border-[#E5E0D5]">
+<div>
+<h2 class="font-headline-sm text-headline-sm font-semibold text-on-surface">Telemetri Real ESP32 via MQTT</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">Log pesan data terenkripsi dari gateway MQTT broker lokal</p>
+</div>
+<div class="flex items-center gap-2">
+<span class="font-mono-sm text-mono-sm text-[#2F6B5B] bg-[#E4EDE9] px-2.5 py-1 rounded-[6px] font-medium">
+            MQTT QOS 1 · mTLS
+          </span>
+</div>
+</div>
+<div class="overflow-x-auto mt-2">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="text-on-surface-variant font-label-md text-label-md border-b border-[#E5E0D5]">
+<th class="py-3 px-4 font-semibold">Perangkat</th>
+<th class="py-3 px-4 font-semibold">Protokol</th>
+<th class="py-3 px-4 font-semibold">Status</th>
+<th class="py-3 px-4 font-semibold">Nilai Terakhir</th>
+<th class="py-3 px-4 text-right font-semibold">Waktu</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-[#E5E0D5] font-body-md text-body-md">
+<!-- Row 1 -->
+<tr class="hover:bg-[#F4F1EA] transition-colors duration-100">
+<td class="py-3 px-4">
+<div class="flex items-center gap-2.5">
+<span class="material-symbols-outlined text-[#2F6B5B] text-[20px]" data-icon="lightbulb">lightbulb</span>
+<div>
+<span class="font-medium text-on-surface">Lampu Ruang Tengah</span>
+<span class="ml-2 font-mono-sm text-mono-sm text-on-surface-variant">ESP32-CH01</span>
+</div>
+</div>
+</td>
+<td class="py-3 px-4">
+<span class="px-2 py-0.5 rounded-[4px] bg-[#ECE7DC] font-mono-sm text-mono-sm text-on-surface">MQTT</span>
+</td>
+<td class="py-3 px-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#E4EDE9] text-[#2F6B5B] font-body-sm text-body-sm font-medium">
+<span class="w-2 h-2 rounded-full bg-[#2F6B5B]"></span>
+                  Online
+                </span>
+</td>
+<td class="py-3 px-4">
+<span class="font-body-sm text-body-sm text-on-surface">
+                  Status: <span class="font-mono-sm font-medium">ON</span> · Arus: <span class="font-mono-sm font-medium">0.18 A</span>
+</span>
+</td>
+<td class="py-3 px-4 text-right">
+<div class="font-mono-sm text-mono-sm text-on-surface">19:42:10</div>
+<div class="font-mono-sm text-mono-sm text-on-surface-variant">2026-02-28</div>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-[#F4F1EA] transition-colors duration-100">
+<td class="py-3 px-4">
+<div class="flex items-center gap-2.5">
+<span class="material-symbols-outlined text-outline text-[20px]" data-icon="lightbulb">lightbulb</span>
+<div>
+<span class="font-medium text-on-surface">Lampu Dapur &amp; Tamu</span>
+<span class="ml-2 font-mono-sm text-mono-sm text-on-surface-variant">ESP32-CH02</span>
+</div>
+</div>
+</td>
+<td class="py-3 px-4">
+<span class="px-2 py-0.5 rounded-[4px] bg-[#ECE7DC] font-mono-sm text-mono-sm text-on-surface">MQTT</span>
+</td>
+<td class="py-3 px-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#ECE7DC] text-on-surface-variant font-body-sm text-body-sm font-medium">
+<span class="w-2 h-2 rounded-full bg-outline"></span>
+                  Siaga
+                </span>
+</td>
+<td class="py-3 px-4">
+<span class="font-body-sm text-body-sm text-on-surface">
+                  Status: <span class="font-mono-sm font-medium">OFF</span> · Arus: <span class="font-mono-sm font-medium">0.00 A</span>
+</span>
+</td>
+<td class="py-3 px-4 text-right">
+<div class="font-mono-sm text-mono-sm text-on-surface">19:41:55</div>
+<div class="font-mono-sm text-mono-sm text-on-surface-variant">2026-02-28</div>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-[#F4F1EA] transition-colors duration-100">
+<td class="py-3 px-4">
+<div class="flex items-center gap-2.5">
+<span class="material-symbols-outlined text-[#2F6B5B] text-[20px]" data-icon="bed">bed</span>
+<div>
+<span class="font-medium text-on-surface">Lampu Kamar</span>
+<span class="ml-2 font-mono-sm text-mono-sm text-on-surface-variant">ESP32-CH03</span>
+</div>
+</div>
+</td>
+<td class="py-3 px-4">
+<span class="px-2 py-0.5 rounded-[4px] bg-[#ECE7DC] font-mono-sm text-mono-sm text-on-surface">MQTT</span>
+</td>
+<td class="py-3 px-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#E4EDE9] text-[#2F6B5B] font-body-sm text-body-sm font-medium">
+<span class="w-2 h-2 rounded-full bg-[#2F6B5B]"></span>
+                  Online
+                </span>
+</td>
+<td class="py-3 px-4">
+<span class="font-body-sm text-body-sm text-on-surface">
+                  Status: <span class="font-mono-sm font-medium">ON</span> · Arus: <span class="font-mono-sm font-medium">0.12 A</span>
+</span>
+</td>
+<td class="py-3 px-4 text-right">
+<div class="font-mono-sm text-mono-sm text-on-surface">19:42:08</div>
+<div class="font-mono-sm text-mono-sm text-on-surface-variant">2026-02-28</div>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-[#F4F1EA] transition-colors duration-100">
+<td class="py-3 px-4">
+<div class="flex items-center gap-2.5">
+<span class="material-symbols-outlined text-[#2F6B5B] text-[20px]" data-icon="mode_fan">mode_fan</span>
+<div>
+<span class="font-medium text-on-surface">Kipas Angin</span>
+<span class="ml-2 font-mono-sm text-mono-sm text-on-surface-variant">ESP32-CH04</span>
+</div>
+</div>
+</td>
+<td class="py-3 px-4">
+<span class="px-2 py-0.5 rounded-[4px] bg-[#ECE7DC] font-mono-sm text-mono-sm text-on-surface">MQTT</span>
+</td>
+<td class="py-3 px-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#E4EDE9] text-[#2F6B5B] font-body-sm text-body-sm font-medium">
+<span class="w-2 h-2 rounded-full bg-[#2F6B5B]"></span>
+                  Online
+                </span>
+</td>
+<td class="py-3 px-4">
+<span class="font-body-sm text-body-sm text-on-surface">
+                  Status: <span class="font-mono-sm font-medium">ON</span> · Rotasi: <span class="font-mono-sm font-medium">1120 RPM</span>
+</span>
+</td>
+<td class="py-3 px-4 text-right">
+<div class="font-mono-sm text-mono-sm text-on-surface">19:42:11</div>
+<div class="font-mono-sm text-mono-sm text-on-surface-variant">2026-02-28</div>
+</td>
+</tr>
+<!-- Row 5 -->
+<tr class="hover:bg-[#F4F1EA] transition-colors duration-100">
+<td class="py-3 px-4">
+<div class="flex items-center gap-2.5">
+<span class="material-symbols-outlined text-[#B23A2E] text-[20px]" data-icon="notifications_active">notifications_active</span>
+<div>
+<span class="font-medium text-on-surface">Buzzer Peringatan</span>
+<span class="ml-2 font-mono-sm text-mono-sm text-on-surface-variant">ESP32-CH05</span>
+</div>
+</div>
+</td>
+<td class="py-3 px-4">
+<span class="px-2 py-0.5 rounded-[4px] bg-[#ECE7DC] font-mono-sm text-mono-sm text-on-surface">MQTT</span>
+</td>
+<td class="py-3 px-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#ECE7DC] text-[#B7791F] font-body-sm text-body-sm font-medium">
+<span class="w-2 h-2 rounded-full bg-[#B7791F]"></span>
+                  Siaga
+                </span>
+</td>
+<td class="py-3 px-4">
+<span class="font-body-sm text-body-sm text-on-surface">
+                  Status: <span class="font-mono-sm font-medium">ARMED</span> · DB: <span class="font-mono-sm font-medium">0 dB</span>
+</span>
+</td>
+<td class="py-3 px-4 text-right">
+<div class="font-mono-sm text-mono-sm text-on-surface">19:42:04</div>
+<div class="font-mono-sm text-mono-sm text-on-surface-variant">2026-02-28</div>
+</td>
+</tr>
+<!-- Row 6 -->
+<tr class="hover:bg-[#F4F1EA] transition-colors duration-100">
+<td class="py-3 px-4">
+<div class="flex items-center gap-2.5">
+<span class="material-symbols-outlined text-[#2F6B5B] text-[20px]" data-icon="sensors">sensors</span>
+<div>
+<span class="font-medium text-on-surface">Sensor Gas &amp; Cahaya</span>
+<span class="ml-2 font-mono-sm text-mono-sm text-on-surface-variant">ESP32-CH06</span>
+</div>
+</div>
+</td>
+<td class="py-3 px-4">
+<span class="px-2 py-0.5 rounded-[4px] bg-[#ECE7DC] font-mono-sm text-mono-sm text-on-surface">MQTT</span>
+</td>
+<td class="py-3 px-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#E4EDE9] text-[#2F6B5B] font-body-sm text-body-sm font-medium">
+<span class="w-2 h-2 rounded-full bg-[#2F6B5B]"></span>
+                  Aktif
+                </span>
+</td>
+<td class="py-3 px-4">
+<span class="font-body-sm text-body-sm text-on-surface">
+                  Gas: <span class="font-mono-sm font-medium text-[#B23A2E]">820 ppm</span> · Cahaya: <span class="font-mono-sm font-medium">42 lx</span>
+</span>
+</td>
+<td class="py-3 px-4 text-right">
+<div class="font-mono-sm text-mono-sm text-on-surface">19:42:10</div>
+<div class="font-mono-sm text-mono-sm text-on-surface-variant">2026-02-28</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<!-- 4. GRAFIK 24 JAM -->
+<!-- Line chart of sensor gas & light in last 24 hours. Value line with threshold line "Ambang 1500" in dashed #B23A2E. Timestamps in IBM Plex Mono. Labels in Public Sans. No boxes inside boxes. -->
+<section class="bg-[#FBF9F4] rounded-[20px] p-6">
+<div class="flex items-center justify-between pb-4 border-b border-[#E5E0D5]">
+<div>
+<h2 class="font-headline-sm text-headline-sm font-semibold text-on-surface">Grafik 24 Jam: Sensor Gas &amp; Cahaya</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">Pemantauan historis konsentrasi gas (ppm) dan intensitas cahaya (lx)</p>
+</div>
+<!-- Legend -->
+<div class="flex items-center gap-5 font-body-sm text-body-sm">
+<div class="flex items-center gap-2">
+<span class="w-3.5 h-1 rounded-full bg-[#B23A2E]"></span>
+<span class="text-on-surface">Sensor Gas (ppm)</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-3.5 h-1 rounded-full bg-[#2F6B5B]"></span>
+<span class="text-on-surface">Sensor Cahaya (lx)</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-4 border-t-2 border-dashed border-[#B23A2E]"></span>
+<span class="text-[#B23A2E] font-medium">Ambang 1500</span>
+</div>
+</div>
+</div>
+<!-- Direct SVG Line Chart (No inner nested cards) -->
+<div class="w-full h-64 mt-6">
+<svg class="w-full h-full overflow-visible" preserveaspectratio="none" viewbox="0 0 1000 220">
+<!-- Horizontal grid lines -->
+<line stroke="#E5E0D5" stroke-width="1" x1="0" x2="1000" y1="20" y2="20"></line>
+<line stroke="#E5E0D5" stroke-width="1" x1="0" x2="1000" y1="70" y2="70"></line>
+<line stroke="#E5E0D5" stroke-width="1" x1="0" x2="1000" y1="120" y2="120"></line>
+<line stroke="#E5E0D5" stroke-width="1" x1="0" x2="1000" y1="170" y2="170"></line>
+<!-- Ambang 1500 dashed line (#B23A2E) -->
+<line stroke="#B23A2E" stroke-dasharray="5,5" stroke-width="1.5" x1="0" x2="1000" y1="55" y2="55"></line>
+<!-- Sensor Cahaya Line (#2F6B5B) -->
+<polyline fill="none" points="
+            0,165 
+            100,160 
+            200,168 
+            300,172 
+            400,150 
+            500,135 
+            600,110 
+            700,95 
+            800,105 
+            900,130 
+            1000,140" stroke="#2F6B5B" stroke-width="2.5"></polyline>
+<!-- Sensor Gas Line (#B23A2E) with sudden spike crossing threshold -->
+<polyline fill="none" points="
+            0,145 
+            100,142 
+            200,140 
+            300,138 
+            400,142 
+            500,135 
+            600,130 
+            700,125 
+            800,110 
+            880,75 
+            940,35 
+            1000,42" stroke="#B23A2E" stroke-width="2.5"></polyline>
+<!-- Sensor gas spike highlight dot -->
+<circle cx="940" cy="35" fill="#B23A2E" r="5"></circle>
+<!-- Sensor cahaya current dot -->
+<circle cx="1000" cy="140" fill="#2F6B5B" r="4"></circle>
+</svg>
+</div>
+<!-- X-Axis Timestamps strictly in IBM Plex Mono -->
+<div class="mt-3 flex justify-between font-mono-sm text-mono-sm text-on-surface-variant border-t border-[#E5E0D5] pt-2">
+<span>19:42 (24j Lalu)</span>
+<span>23:00</span>
+<span>03:00</span>
+<span>07:00</span>
+<span>11:00</span>
+<span>15:00</span>
+<span class="text-[#B23A2E] font-medium">19:42 (Sekarang)</span>
+</div>
+<div class="mt-3 flex items-center justify-between font-body-sm text-body-sm text-on-surface-variant">
+<span>Telemetri diperbarui otomatis via ESP32 MQTT loop</span>
+<span class="text-[#B23A2E] font-medium">Lonjakan gas mencapai 1620 ppm (ambang 1500 ppm terlampaui)</span>
+</div>
+</section>
+</div>
+</main>
+</body></html>

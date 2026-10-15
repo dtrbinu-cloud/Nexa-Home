@@ -22,9 +22,17 @@ constexpr uint8_t RELAY_INACTIVE_LEVEL= HIGH;
 constexpr uint8_t PIN_MQ2_GAS         = 33;  // ADC1 Channel 5
 constexpr uint8_t PIN_LDR_DIGITAL     = 22;  // Digital Input
 
+// Tombol Factory Reset Fisik (GPIO 0 adalah tombol BOOT pada ESP32)
+constexpr uint8_t PIN_FACTORY_RESET_BUTTON = 0;
+constexpr uint32_t FACTORY_RESET_HOLD_MS   = 7000; // Tahan 7 detik untuk reset pabrik
+
+// LED Indikator Status (GPIO 2 adalah built-in LED ESP32)
+constexpr uint8_t PIN_STATUS_LED           = 2;
+
 // --- PARAMETER LOGIKA & AMBANG BATAS ---
 constexpr uint16_t GAS_RAW_THRESHOLD  = 1500;  // Ambang batas gas darurat
 constexpr uint32_t TELEMETRY_INTERVAL_MS = 10000; // Kirim telemetri setiap 10 detik
 constexpr uint32_t WDT_TIMEOUT_SECONDS = 15;     // Watchdog timeout 15 detik
 
 #endif // CONFIG_H
+

@@ -3,45 +3,54 @@ import 'package:app/theme/tokens.dart';
 
 class AppSwitch extends StatelessWidget {
   final bool value;
-  final ValueChanged<bool> onChanged;
+  final ValueChanged<bool>? onChanged;
+  final String? semanticLabel;
 
   const AppSwitch({
     super.key,
     required this.value,
     required this.onChanged,
+    this.semanticLabel,
   });
 
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final accent = isDark ? AppColors.darkAccent : AppColors.lightAccent;
-    final surface = isDark ? AppColors.darkSurface : AppColors.lightSurface;
-    final border = isDark ? AppColors.darkBorder : AppColors.lightBorder;
-    final thumbOn = isDark ? AppColors.darkAccentText : AppColors.lightAccentText;
-    final thumbOff = isDark ? AppColors.darkTextSecondary : AppColors.lightTextSecondary;
+    final inactiveBg = isDark ? AppColors.darkSubtle : AppColors.lightSubtle;
+    final thumbColor = isDark ? AppColors.darkText : AppColors.lightSurface;
 
-    return GestureDetector(
-      onTap: () => onChanged(!value),
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 150),
-        width: 44,
-        height: 24,
-        padding: const EdgeInsets.all(2),
-        decoration: BoxDecoration(
-          color: value ? accent : surface,
-          borderRadius: const BorderRadius.all(Radius.circular(12)),
-          border: Border.all(
-            color: value ? accent : border,
-            width: AppDimensions.borderWidth,
-          ),
-        ),
-        alignment: value ? Alignment.centerRight : Alignment.centerLeft,
+    return Semantics(
+      label: semanticLabel ?? 'Saklar',
+      toggled: value,
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: onChanged == null ? null : () => onChanged!(!value),
         child: Container(
-          width: 18,
-          height: 18,
-          decoration: BoxDecoration(
-            color: value ? thumbOn : thumbOff,
-            shape: BoxShape.circle,
+          constraints: const BoxConstraints(
+            minWidth: 48.0,
+            minHeight: 48.0,
+          ),
+          alignment: Alignment.center,
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 180),
+            curve: Curves.easeInOut,
+            width: AppDimensions.toggleWidth, // 56.0
+            height: AppDimensions.toggleHeight, // 32.0
+            padding: const EdgeInsets.all(3.0), // offset 3
+            decoration: BoxDecoration(
+              color: value ? accent : inactiveBg,
+              borderRadius: const BorderRadius.all(Radius.circular(AppRadius.pill)),
+            ),
+            alignment: value ? Alignment.centerRight : Alignment.centerLeft,
+            child: Container(
+              width: AppDimensions.toggleThumbSize, // 26.0
+              height: AppDimensions.toggleThumbSize, // 26.0
+              decoration: BoxDecoration(
+                color: thumbColor,
+                shape: BoxShape.circle,
+              ),
+            ),
           ),
         ),
       ),

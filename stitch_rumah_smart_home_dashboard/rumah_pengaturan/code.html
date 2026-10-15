@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+
+<html class="light" lang="id"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Rumah - Pengaturan Sistem</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&amp;family=Public+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "surface-container-highest": "#dfe4df",
+            "tertiary-fixed": "#ffdad4",
+            "on-tertiary-fixed": "#370e08",
+            "on-secondary": "#ffffff",
+            "primary": "#115344",
+            "on-secondary-fixed": "#091f19",
+            "inverse-surface": "#2c322e",
+            "on-tertiary-container": "#ffd3cc",
+            "tertiary-container": "#8c5148",
+            "primary-container": "#2f6b5b",
+            "background": "#f6fbf5",
+            "on-tertiary-fixed-variant": "#6d3830",
+            "surface-container-lowest": "#ffffff",
+            "primary-fixed-dim": "#96d3bf",
+            "primary-fixed": "#b1efdb",
+            "on-surface-variant": "#404945",
+            "on-surface": "#181d1a",
+            "on-secondary-fixed-variant": "#354b44",
+            "tertiary": "#703a32",
+            "surface-tint": "#2c6859",
+            "on-secondary-container": "#536961",
+            "surface-container-low": "#f0f5f0",
+            "on-primary": "#ffffff",
+            "error-container": "#ffdad6",
+            "on-tertiary": "#ffffff",
+            "inverse-on-surface": "#edf2ed",
+            "on-error-container": "#93000a",
+            "surface-bright": "#f6fbf5",
+            "on-primary-fixed-variant": "#0d5041",
+            "surface-variant": "#dfe4df",
+            "surface-container": "#ebefea",
+            "inverse-primary": "#96d3bf",
+            "secondary-fixed": "#cfe8de",
+            "secondary": "#4d635b",
+            "surface-dim": "#d7dbd6",
+            "on-error": "#ffffff",
+            "on-primary-fixed": "#002019",
+            "on-primary-container": "#abe9d5",
+            "surface-container-high": "#e5e9e4",
+            "outline-variant": "#bfc9c4",
+            "secondary-fixed-dim": "#b4ccc2",
+            "outline": "#707975",
+            "secondary-container": "#cfe8de",
+            "error": "#ba1a1a",
+            "surface": "#f6fbf5",
+            "tertiary-fixed-dim": "#ffb4a8",
+            "on-background": "#181d1a"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem",
+            "card": "20px",
+            "btn": "12px"
+          },
+          "fontFamily": {
+            "body-md": ["Public Sans"],
+            "body-sm": ["Public Sans"],
+            "body-lg": ["Public Sans"],
+            "mono-metric": ["IBM Plex Mono"],
+            "mono-body": ["IBM Plex Mono"],
+            "headline-sm": ["Public Sans"],
+            "mono-sm": ["IBM Plex Mono"],
+            "headline-lg": ["Public Sans"],
+            "label-md": ["Public Sans"],
+            "headline-md": ["Public Sans"],
+            "headline-lg-mobile": ["Public Sans"]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    * {
+      box-shadow: none !important;
+      backdrop-filter: none !important;
+    }
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 20;
+      font-size: 20px;
+      line-height: 1;
+      display: inline-block;
+    }
+    /* Softer shapes with NO card border */
+    .app-card {
+      background-color: #FBF9F4;
+      border: none !important;
+      border-radius: 20px;
+    }
+    .app-input {
+      height: 44px;
+      box-sizing: border-box;
+      background-color: #FBF9F4;
+      border: 1px solid #D9D3C6;
+      border-radius: 12px;
+      padding-left: 14px;
+      padding-right: 14px;
+      outline: none;
+      transition: border-color 150ms ease;
+    }
+    .app-input:focus {
+      border-color: #2F6B5B;
+      box-shadow: none !important;
+    }
+    .app-btn-primary {
+      height: 44px;
+      box-sizing: border-box;
+      background-color: #2F6B5B;
+      color: #ffffff;
+      border-radius: 12px;
+      padding-left: 18px;
+      padding-right: 18px;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      cursor: pointer;
+      transition: background-color 150ms ease-linear;
+    }
+    .app-btn-primary:hover {
+      background-color: #255849;
+    }
+    .app-btn-outline {
+      height: 44px;
+      box-sizing: border-box;
+      background-color: transparent;
+      border: 1px solid #D9D3C6;
+      color: #181d1a;
+      border-radius: 12px;
+      padding-left: 18px;
+      padding-right: 18px;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background-color 150ms ease-linear;
+    }
+    .app-btn-outline:hover {
+      background-color: #ECE7DC;
+    }
+    /* Specific 56x32px toggle with 24px circular knob */
+    .app-toggle-56 {
+      width: 56px;
+      height: 32px;
+      border-radius: 16px;
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: background-color 150ms ease;
+    }
+    .app-toggle-56 .app-toggle-knob {
+      width: 24px;
+      height: 24px;
+      border-radius: 12px;
+      background-color: #FBF9F4;
+      position: absolute;
+      top: 4px;
+      transition: left 150ms ease;
+    }
+    .app-toggle-56.active {
+      background-color: #2F6B5B;
+    }
+    .app-toggle-56.active .app-toggle-knob {
+      left: 28px;
+    }
+    .app-toggle-56.inactive {
+      background-color: #D9D3C6;
+    }
+    .app-toggle-56.inactive .app-toggle-knob {
+      left: 4px;
+    }
+    .app-radio {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      border: 1px solid #D9D3C6;
+      appearance: none;
+      outline: none;
+      cursor: pointer;
+      display: inline-grid;
+      place-content: center;
+      background-color: #FBF9F4;
+    }
+    .app-radio:checked {
+      border-color: #2F6B5B;
+    }
+    .app-radio:checked::after {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: #2F6B5B;
+    }
+    input[type=range] {
+      -webkit-appearance: none;
+      background: transparent;
+    }
+    input[type=range]::-webkit-slider-runnable-track {
+      height: 6px;
+      background: #ECE7DC;
+      border-radius: 3px;
+    }
+    input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      height: 18px;
+      width: 18px;
+      border-radius: 50%;
+      background: #2F6B5B;
+      cursor: pointer;
+      margin-top: -6px;
+    }
+  </style>
+</head>
+<body class="bg-[#F4F1EA] text-on-surface antialiased font-body-md text-body-md min-h-screen">
+<!-- ========================================================================= -->
+<!-- SIDE NAVIGATION (Identical 240px, "Rumah", "Rumah Tangga", Pengaturan active #E4EDE9 & #2F6B5B) -->
+<!-- ========================================================================= -->
+<aside class="fixed left-0 top-0 h-screen w-60 bg-surface-container-low border-r border-[#D9D3C6] z-30 select-none">
+<div class="flex flex-col justify-between h-full w-60 py-6 px-3">
+<!-- Nav Header / Brand -->
+<div>
+<div class="px-3 pb-6 border-b border-[#E5E0D5]">
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-primary inline-block"></span>
+<span class="font-headline-md text-headline-md font-semibold text-on-surface tracking-tight">Rumah</span>
+</div>
+<p class="font-mono-sm text-mono-sm text-on-surface-variant mt-1">Rumah Tangga</p>
+</div>
+<!-- Navigation Tabs (Pengaturan ACTIVE with #E4EDE9 and #2F6B5B) -->
+<nav class="mt-4 flex flex-col space-y-1">
+<!-- 0: Beranda -->
+<a class="flex items-center gap-3 px-4 py-2.5 text-on-surface-variant font-normal hover:bg-surface-container hover:text-on-surface transition-colors duration-150 ease-linear rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-body-md text-body-md">Beranda</span>
+</a>
+<!-- 1: Perangkat -->
+<a class="flex items-center gap-3 px-4 py-2.5 text-on-surface-variant font-normal hover:bg-surface-container hover:text-on-surface transition-colors duration-150 ease-linear rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="devices">devices</span>
+<span class="font-body-md text-body-md">Perangkat</span>
+</a>
+<!-- 2: Asisten -->
+<a class="flex items-center gap-3 px-4 py-2.5 text-on-surface-variant font-normal hover:bg-surface-container hover:text-on-surface transition-colors duration-150 ease-linear rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="smart_toy">smart_toy</span>
+<span class="font-body-md text-body-md">Asisten</span>
+</a>
+<!-- 3: Kamera -->
+<a class="flex items-center gap-3 px-4 py-2.5 text-on-surface-variant font-normal hover:bg-surface-container hover:text-on-surface transition-colors duration-150 ease-linear rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="videocam">videocam</span>
+<span class="font-body-md text-body-md">Kamera</span>
+</a>
+<!-- 4: Keluarga -->
+<a class="flex items-center gap-3 px-4 py-2.5 text-on-surface-variant font-normal hover:bg-surface-container hover:text-on-surface transition-colors duration-150 ease-linear rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+<span class="font-body-md text-body-md">Keluarga</span>
+</a>
+<!-- 5: Pengaturan (ACTIVE with #E4EDE9 and #2F6B5B) -->
+<a aria-current="page" class="flex items-center gap-3 px-4 py-2.5 text-[#2F6B5B] bg-[#E4EDE9] font-medium border-l-4 border-[#2F6B5B] transition-colors duration-150 ease-linear rounded-r-lg" href="#">
+<span class="material-symbols-outlined text-[#2F6B5B]" data-icon="settings">settings</span>
+<span class="font-body-md text-body-md font-medium text-[#2F6B5B]">Pengaturan</span>
+</a>
+</nav>
+</div>
+<!-- Nav Footer -->
+<div class="pt-4 border-t border-[#E5E0D5] px-2">
+<div class="flex items-center gap-2.5 px-3 py-2 bg-[#ECE7DC] rounded-xl text-on-surface-variant text-body-sm">
+<span class="material-symbols-outlined text-[#4C7A3F]" data-icon="check_circle">check_circle</span>
+<span class="font-mono-sm text-mono-sm font-medium">Server Terhubung</span>
+</div>
+<p class="font-mono-sm text-[11px] text-[#5E655F] mt-2 px-3">Node: local-srv-01 / 192.168.1.2</p>
+</div>
+</div>
+</aside>
+<!-- ========================================================================= -->
+<!-- TOP APP BAR (Identical top bar with round "B") -->
+<!-- ========================================================================= -->
+<header class="fixed top-0 right-0 left-60 h-16 bg-[#FBF9F4] border-b border-[#D9D3C6] z-20 flex justify-between items-center px-8">
+<div class="flex items-center gap-4">
+<h1 class="font-headline-sm text-headline-sm font-semibold text-on-surface tracking-tight">Pengaturan</h1>
+<span class="h-4 w-[1px] bg-[#D9D3C6]"></span>
+<div class="flex items-center gap-2 px-2.5 py-1 bg-[#ECE7DC] rounded-full text-on-surface">
+<span class="w-2 h-2 rounded-full bg-[#4C7A3F]"></span>
+<span class="font-mono-sm text-mono-sm text-on-surface">Server Terhubung</span>
+</div>
+</div>
+<!-- Trailing Actions & User Identity Profile -->
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-1 border-r border-[#D9D3C6] pr-4">
+<button aria-label="Notifikasi" class="w-9 h-9 flex items-center justify-center rounded-xl hover:bg-[#ECE7DC] text-on-surface-variant transition-colors" title="Notifikasi">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button aria-label="Status Keamanan" class="w-9 h-9 flex items-center justify-center rounded-xl hover:bg-[#ECE7DC] text-on-surface-variant transition-colors" title="Status Keamanan">
+<span class="material-symbols-outlined" data-icon="shield">shield</span>
+</button>
+</div>
+<div class="flex items-center gap-3">
+<div class="text-right">
+<p class="font-body-md text-body-md font-medium text-on-surface leading-tight">Budi · Admin</p>
+<p class="font-mono-sm text-mono-sm text-[#5E655F]">Akses Penuh</p>
+</div>
+<div class="w-9 h-9 rounded-full bg-[#2F6B5B] text-[#FBF9F4] flex items-center justify-center font-semibold text-sm">
+          B
+        </div>
+</div>
+</div>
+</header>
+<!-- ========================================================================= -->
+<!-- MAIN SETTINGS CANVAS (Desktop 1440px Grid Context) -->
+<!-- ========================================================================= -->
+<main class="ml-60 pt-24 pb-16 px-8 max-w-[1200px]">
+<!-- Header Context & Quick System Notice -->
+<div class="mb-6 flex items-baseline justify-between">
+<div>
+<p class="font-mono-sm text-mono-sm text-[#5E655F]">Pusat Kendali Konfigurasi Rumah Tangga</p>
+<h2 class="font-headline-lg text-headline-lg font-semibold text-on-surface tracking-tight mt-0.5">Pengaturan Sistem</h2>
+</div>
+<div class="flex items-center gap-3">
+<button class="app-btn-outline font-label-md text-label-md" type="button">
+<span class="material-symbols-outlined mr-1.5" data-icon="refresh">refresh</span>
+          Muat Ulang
+        </button>
+<button class="app-btn-primary font-label-md text-label-md" type="button">
+          Simpan Perubahan
+        </button>
+</div>
+</div>
+<div class="space-y-6">
+<!-- ===================================================================== -->
+<!-- BAGIAN 1: AKUN DAN 2FA & BAGIAN 2: KAMERA DAN PRIVASI (2-Col Grid) -->
+<!-- ===================================================================== -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+<!-- KARTU 1: Akun dan 2FA -->
+<section class="app-card p-6 flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between pb-4 border-b border-[#E5E0D5]">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[#2F6B5B]" data-icon="account_circle">account_circle</span>
+<h3 class="font-headline-sm text-headline-sm font-semibold text-on-surface">Akun dan 2FA</h3>
+</div>
+<span class="font-mono-sm text-mono-sm px-2.5 py-1 rounded-full bg-[#ECE7DC] text-[#1F2421]">Identitas Primer</span>
+</div>
+<div class="py-5 space-y-5">
+<!-- Detail Profil: No inner box border, clean layout with thin divider -->
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-11 h-11 rounded-full bg-[#2F6B5B] text-[#FBF9F4] flex items-center justify-center font-bold text-base">
+                    BA
+                  </div>
+<div>
+<h4 class="font-body-md text-body-md font-semibold text-on-surface">Budi (Admin)</h4>
+<p class="font-mono-sm text-mono-sm text-[#5E655F]">budi@rumah.lan</p>
+</div>
+</div>
+<div class="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#ECE7DC]">
+<span class="w-2 h-2 rounded-full bg-[#4C7A3F]"></span>
+<span class="font-mono-sm text-mono-sm text-[#4C7A3F] font-medium">Sesi Lokal</span>
+</div>
+</div>
+<div class="h-[1px] bg-[#E5E0D5]"></div>
+<!-- Parameter Input Nama & Alamat Jaringan (44px tall, radius 12px) -->
+<div class="grid grid-cols-2 gap-4">
+<div>
+<label class="block font-label-md text-label-md text-on-surface-variant mb-1.5">Nama Tampilan</label>
+<input class="app-input w-full font-body-md text-body-md text-on-surface" type="text" value="Budi (Admin)"/>
+</div>
+<div>
+<label class="block font-label-md text-label-md text-on-surface-variant mb-1.5">Email Lokal</label>
+<input class="app-input w-full font-body-md text-body-md text-on-surface font-mono-sm" type="email" value="budi@rumah.lan"/>
+</div>
+</div>
+<div class="h-[1px] bg-[#E5E0D5]"></div>
+<!-- Toggle 2FA Aktif (56x32px toggle with 24px knob) -->
+<div class="flex items-center justify-between">
+<div class="pr-4">
+<div class="flex items-center gap-2">
+<span class="font-body-md text-body-md font-semibold text-on-surface">Verifikasi Dua Langkah (2FA)</span>
+<span class="font-mono-sm text-xs text-[#2F6B5B] font-semibold px-2 py-0.5 rounded-full bg-[#E4EDE9]">AKTIF</span>
+</div>
+<p class="font-body-sm text-body-sm text-[#5E655F] mt-1">
+                  Amankan autentikasi lokal menggunakan kode token waktu nyata (TOTP).
+                </p>
+</div>
+<!-- Switch State: AKTIF (56x32) -->
+<div aria-checked="true" class="app-toggle-56 active" role="switch" tabindex="0">
+<span class="app-toggle-knob"></span>
+</div>
+</div>
+<!-- Autentikator Status -->
+<div class="flex items-center justify-between text-body-sm pt-1">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[#4C7A3F]" data-icon="lock">lock</span>
+<div>
+<p class="font-label-md text-label-md text-on-surface">Autentikator TOTP Terhubung</p>
+<p class="font-mono-sm text-[12px] text-[#5E655F]">Diperbarui pada 28 Feb 2026, 14:02 WIB</p>
+</div>
+</div>
+<button class="app-btn-outline h-9 px-3 text-xs font-mono-sm rounded-btn" type="button">Reset Kunci</button>
+</div>
+</div>
+</div>
+<div class="pt-4 border-t border-[#E5E0D5] flex justify-end">
+<button class="app-btn-outline font-label-md text-label-md text-xs" type="button">Ganti Kata Sandi Lokal</button>
+</div>
+</section>
+<!-- KARTU 2: Kamera dan Privasi -->
+<section class="app-card p-6 flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between pb-4 border-b border-[#E5E0D5]">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[#2F6B5B]" data-icon="videocam">videocam</span>
+<h3 class="font-headline-sm text-headline-sm font-semibold text-on-surface">Kamera dan Privasi</h3>
+</div>
+<span class="font-mono-sm text-mono-sm px-2.5 py-1 rounded-full bg-[#ECE7DC] text-[#1F2421]">4 Unit Terpasang</span>
+</div>
+<div class="py-5 space-y-5">
+<!-- Select Retensi Penyimpanan (44px tall, radius 12px) -->
+<div>
+<label class="block font-label-md text-label-md text-on-surface-variant mb-1.5">
+                  Kebijakan Retensi Penyimpanan Klip
+                </label>
+<div class="relative">
+<select class="app-input w-full font-body-md text-body-md text-on-surface cursor-pointer pr-10 appearance-none">
+<option value="7">Simpan klip gerakan selama 7 hari</option>
+<option selected="" value="14">Simpan klip gerakan selama 14 hari</option>
+<option value="30">Simpan klip gerakan selama 30 hari</option>
+<option value="90">Simpan klip gerakan selama 90 hari</option>
+</select>
+<span class="material-symbols-outlined absolute right-3.5 top-3 text-on-surface-variant pointer-events-none" data-icon="expand_more">expand_more</span>
+</div>
+<p class="font-mono-sm text-[12px] text-[#5E655F] mt-1.5">
+                  Penyimpanan terpakai 182.4 GB dari 1.0 TB (SSD Lokal Terenkripsi).
+                </p>
+</div>
+<div class="h-[1px] bg-[#E5E0D5]"></div>
+<!-- Saklar Rekam Audio (MATI Default 56x32) + Peringatan Jelas -->
+<div>
+<div class="flex items-center justify-between">
+<div class="pr-4">
+<span class="font-body-md text-body-md font-semibold text-on-surface">Rekam Aliran Audio Mikrofon</span>
+<p class="font-body-sm text-body-sm text-[#5E655F] mt-0.5">
+                    Mengizinkan mikrofon kamera gerbang dan ruang tamu aktif saat perekaman.
+                  </p>
+</div>
+<!-- Switch State: MATI SECARA DEFAULT (56x32) -->
+<div aria-checked="false" class="app-toggle-56 inactive" role="switch" tabindex="0">
+<span class="app-toggle-knob"></span>
+</div>
+</div>
+<!-- Peringatan Privasi Jelas -->
+<div class="mt-3.5 p-3.5 bg-[#ECE7DC] rounded-xl flex items-start gap-2.5">
+<span class="material-symbols-outlined text-[#B7791F] shrink-0 mt-0.5" data-icon="warning">warning</span>
+<div class="font-body-sm text-body-sm text-on-surface">
+<span class="font-semibold text-[#181d1a]">Peringatan privasi:</span> Merekam percakapan suara memerlukan persetujuan seluruh penghuni rumah. Nonaktifkan fungsi ini bila kamera mencakup area intim keluarga.
+                  </div>
+</div>
+</div>
+</div>
+</div>
+<div class="pt-4 border-t border-[#E5E0D5] flex items-center justify-between">
+<span class="font-mono-sm text-[12px] text-[#5E655F]">RTSP Port: 8554 / H.265 Pure</span>
+<button class="app-btn-outline font-label-md text-label-md text-xs" type="button">Uji Feed Kamera</button>
+</div>
+</section>
+</div>
+<!-- ===================================================================== -->
+<!-- BAGIAN 3: SUARA ASISTEN (Ardi online, Gadis online, Piper offline) -->
+<!-- ===================================================================== -->
+<section class="app-card p-6">
+<div class="flex items-center justify-between pb-4 border-b border-[#E5E0D5]">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[#2F6B5B]" data-icon="smart_toy">smart_toy</span>
+<h3 class="font-headline-sm text-headline-sm font-semibold text-on-surface">Suara Asisten</h3>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-[#4C7A3F]"></span>
+<span class="font-mono-sm text-mono-sm text-[#1F2421]">Mesin Suara Terhubung</span>
+</div>
+</div>
+<div class="mt-5 grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Pilihan Model Suara Eksklusif 3 Pilihan -->
+<div class="md:col-span-2 space-y-3">
+<label class="block font-label-md text-label-md text-on-surface-variant">
+            Pilihan Suara Sintesis (Bahasa Indonesia)
+          </label>
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+<!-- Option 1: Ardi (online) -->
+<label class="p-4 rounded-xl border border-[#2F6B5B] bg-[#E4EDE9] cursor-pointer flex flex-col justify-between transition-colors">
+<div class="flex items-center justify-between">
+<span class="font-body-md text-body-md font-semibold text-[#2F6B5B]">Ardi</span>
+<input checked="" class="app-radio" name="assistant_voice" type="radio"/>
+</div>
+<p class="font-body-sm text-[12px] text-on-surface-variant mt-2 leading-snug">
+                Artikulasi hangat, intonasi tenang dan ramah keluarga.
+              </p>
+<div class="mt-3 flex items-center justify-between pt-2 border-t border-[#bfc9c4]">
+<span class="font-mono-sm text-[11px] text-[#2F6B5B] font-medium">Online (Cloud)</span>
+<span class="material-symbols-outlined text-[#2F6B5B] text-base" data-icon="cloud">cloud</span>
+</div>
+</label>
+<!-- Option 2: Gadis (online) -->
+<label class="p-4 rounded-xl border border-[#D9D3C6] bg-[#FBF9F4] cursor-pointer flex flex-col justify-between hover:bg-[#ECE7DC] transition-colors">
+<div class="flex items-center justify-between">
+<span class="font-body-md text-body-md font-semibold text-on-surface">Gadis</span>
+<input class="app-radio" name="assistant_voice" type="radio"/>
+</div>
+<p class="font-body-sm text-[12px] text-[#5E655F] mt-2 leading-snug">
+                Suara feminin yang cerah, luwes, dan responsif.
+              </p>
+<div class="mt-3 flex items-center justify-between pt-2 border-t border-[#E5E0D5]">
+<span class="font-mono-sm text-[11px] text-[#5E655F]">Online (Cloud)</span>
+<span class="material-symbols-outlined text-[#5E655F] text-base" data-icon="cloud">cloud</span>
+</div>
+</label>
+<!-- Option 3: Piper (offline) -->
+<label class="p-4 rounded-xl border border-[#D9D3C6] bg-[#FBF9F4] cursor-pointer flex flex-col justify-between hover:bg-[#ECE7DC] transition-colors">
+<div class="flex items-center justify-between">
+<span class="font-body-md text-body-md font-semibold text-on-surface">Piper</span>
+<input class="app-radio" name="assistant_voice" type="radio"/>
+</div>
+<p class="font-body-sm text-[12px] text-[#5E655F] mt-2 leading-snug">
+                Sintesis lokal murni tanpa ketergantungan koneksi internet.
+              </p>
+<div class="mt-3 flex items-center justify-between pt-2 border-t border-[#E5E0D5]">
+<span class="font-mono-sm text-[11px] text-[#4C7A3F] font-medium">Offline (Lokal)</span>
+<span class="material-symbols-outlined text-[#4C7A3F] text-base" data-icon="offline_bolt">offline_bolt</span>
+</div>
+</label>
+</div>
+</div>
+<!-- Slider Kecepatan Bicara -->
+<div class="p-4 bg-[#ECE7DC] rounded-xl flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-2">
+<label class="font-label-md text-label-md text-on-surface font-medium">Kecepatan Bicara</label>
+<span class="font-mono-sm text-mono-sm font-semibold text-[#2F6B5B]">1.00x</span>
+</div>
+<input class="w-full my-2" max="1.5" min="0.75" step="0.05" type="range" value="1.00"/>
+<div class="flex justify-between font-mono-sm text-[11px] text-[#5E655F]">
+<span>0.75x</span>
+<span>1.0x (Normal)</span>
+<span>1.50x</span>
+</div>
+<div class="mt-4 pt-3 border-t border-[#D9D3C6] space-y-1.5">
+<div class="flex items-center justify-between text-body-sm">
+<span class="text-on-surface-variant">Volume Notifikasi</span>
+<span class="font-mono-sm text-mono-sm font-semibold">75%</span>
+</div>
+<div class="w-full bg-[#D9D3C6] h-1.5 rounded-full overflow-hidden">
+<div class="bg-[#2F6B5B] h-full w-[75%]"></div>
+</div>
+</div>
+</div>
+<button class="app-btn-outline w-full mt-4 font-label-md text-label-md bg-[#FBF9F4]" type="button">
+<span class="material-symbols-outlined mr-1.5" data-icon="play_arrow">play_arrow</span>
+            Uji Coba Suara
+          </button>
+</div>
+</div>
+</section>
+<!-- ===================================================================== -->
+<!-- BAGIAN 4: KANAL SAKLAR & HAK AKSES (ESP32 via MQTT Hardware Repertoire) -->
+<!-- ===================================================================== -->
+<section class="app-card p-6">
+<div class="flex items-center justify-between pb-4 border-b border-[#E5E0D5]">
+<div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[#2F6B5B]" data-icon="toggle_on">toggle_on</span>
+<h3 class="font-headline-sm text-headline-sm font-semibold text-on-surface">Kanal Saklar &amp; Hak Akses</h3>
+</div>
+<p class="font-mono-sm text-mono-sm text-[#5E655F] mt-0.5">Konfigurasi kanal perangkat keras ESP32 via protokol MQTT</p>
+</div>
+<span class="font-mono-sm text-mono-sm px-3 py-1 rounded-full bg-[#ECE7DC] text-[#1F2421]">
+          Modul: ESP32-MQTT-Relay
+        </span>
+</div>
+<!-- Table Matrix Layout (Clean & Rounded) -->
+<div class="mt-4 overflow-x-auto rounded-xl">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-[#ECE7DC] text-on-surface-variant font-mono-sm text-mono-sm">
+<th class="py-3 px-4 font-semibold w-24">ID KANAL</th>
+<th class="py-3 px-4 font-semibold">ALIAS KANAL</th>
+<th class="py-3 px-4 font-semibold w-48 text-center">PENANDA SENSITIF</th>
+<th class="py-3 px-4 font-semibold w-48 text-center">IZIN ANAK</th>
+<th class="py-3 px-4 font-semibold w-32 text-right">STATUS</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-[#E5E0D5] font-body-md text-body-md">
+<!-- CH-01 Lampu Ruang Tengah -->
+<tr class="hover:bg-[#ECE7DC]/40 transition-colors">
+<td class="py-3.5 px-4 font-mono-sm font-semibold text-[#2F6B5B]">CH-01</td>
+<td class="py-3.5 px-4 font-medium text-on-surface">Lampu Ruang Tengah</td>
+<td class="py-3.5 px-4 text-center">
+<div aria-checked="false" class="app-toggle-56 inactive inline-flex scale-75" role="switch" tabindex="0">
+<span class="app-toggle-knob"></span>
+</div>
+</td>
+<td class="py-3.5 px-4 text-center">
+<div aria-checked="true" class="app-toggle-56 active inline-flex scale-75" role="switch" tabindex="0">
+<span class="app-toggle-knob"></span>
+</div>
+</td>
+<td class="py-3.5 px-4 text-right">
+<span class="font-mono-sm text-[12px] text-[#4C7A3F] font-semibold">HIDUP</span>
+</td>
+</tr>
+<!-- CH-02 Lampu Dapur & Tamu -->
+<tr class="hover:bg-[#ECE7DC]/40 transition-colors">
+<td class="py-3.5 px-4 font-mono-sm font-semibold text-[#2F6B5B]">CH-02</td>
+<td class="py-3.5 px-4 font-medium text-on-surface">Lampu Dapur &amp; Tamu</td>
+<td class="py-3.5 px-4 text-center">
+<div aria-checked="false" class="app-toggle-56 inactive inline-flex scale-75" role="switch" tabindex="0">
+<span class="app-toggle-knob"></span>
+</div>
+</td>
+<td class="py-3.5 px-4 text-center">
+<div aria-checked="true" class="app-toggle-56 active inline-flex scale-75" role="switch" tabindex="0">
+<span class="app-toggle-knob"></span>
+</div>
+</td>
+<td class="py-3.5 px-4 text-right">
+<span class="font-mono-sm text-[12px] text-[#4C7A3F] font-semibold">HIDUP</span>
+</td>
+</tr>
+<!-- CH-03 Lampu Kamar -->
+<tr class="hover:bg-[#ECE7DC]/40 transition-colors">
+<td class="py-3.5 px-4 font-mono-sm font-semibold text-[#2F6B5B]">CH-03</td>
+<td class="py-3.5 px-4 font-medium text-on-surface">Lampu Kamar</td>
+<td class="py-3.5 px-4 text-center">
+<div aria-checked="false" class="app-toggle-56 inactive inline-flex scale-75" role="switch" tabindex="0">
+<span class="app-toggle-knob"></span>
+</div>
+</td>
+<td class="py-3.5 px-4 text-center">
+<div aria-checked="true" class="app-toggle-56 active inline-flex scale-75" role="switch" tabindex="0">
+<span class="app-toggle-knob"></span>
+</div>
+</td>
+<td class="py-3.5 px-4 text-right">
+<span class="font-mono-sm text-[12px] text-[#5E655F]">MATI</span>
+</td>
+</tr>
+<!-- CH-04 Kipas Angin -->
+<tr class="hover:bg-[#ECE7DC]/40 transition-colors">
+<td class="py-3.5 px-4 font-mono-sm font-semibold text-[#2F6B5B]">CH-04</td>
+<td class="py-3.5 px-4 font-medium text-on-surface">Kipas Angin</td>
+<td class="py-3.5 px-4 text-center">
+<div aria-checked="false" class="app-toggle-56 inactive inline-flex scale-75" role="switch" tabindex="0">
+<span class="app-toggle-knob"></span>
+</div>
+</td>
+<td class="py-3.5 px-4 text-center">
+<div aria-checked="true" class="app-toggle-56 active inline-flex scale-75" role="switch" tabindex="0">
+<span class="app-toggle-knob"></span>
+</div>
+</td>
+<td class="py-3.5 px-4 text-right">
+<span class="font-mono-sm text-[12px] text-[#4C7A3F] font-semibold">HIDUP</span>
+</td>
+</tr>
+<!-- CH-05 Buzzer -->
+<tr class="hover:bg-[#ECE7DC]/40 transition-colors">
+<td class="py-3.5 px-4 font-mono-sm font-semibold text-[#2F6B5B]">CH-05</td>
+<td class="py-3.5 px-4 font-medium text-on-surface flex items-center gap-1.5">
+            Buzzer
+            <span class="material-symbols-outlined text-xs text-[#BA1A1A]" data-icon="lock">lock</span>
+</td>
+<td class="py-3.5 px-4 text-center">
+<div aria-checked="true" class="app-toggle-56 active inline-flex scale-75" role="switch" tabindex="0">
+<span class="app-toggle-knob"></span>
+</div>
+</td>
+<td class="py-3.5 px-4 text-center">
+<div aria-checked="false" class="app-toggle-56 inactive inline-flex scale-75" role="switch" tabindex="0">
+<span class="app-toggle-knob"></span>
+</div>
+</td>
+<td class="py-3.5 px-4 text-right">
+<span class="font-mono-sm text-[12px] text-[#5E655F]">SIAGA</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="mt-4 pt-3 border-t border-[#E5E0D5] flex items-center justify-between text-body-sm text-[#5E655F]">
+<p class="font-mono-sm text-mono-sm">Topik MQTT: rumah/lantai1/relay/set</p>
+<div class="flex gap-2">
+<button class="app-btn-outline h-9 px-3 text-xs font-label-md rounded-btn" type="button">Sinkronkan MQTT</button>
+</div>
+</div>
+</section>
+<!-- ===================================================================== -->
+<!-- BAGIAN 5: LOG AUDIT SISTEM (Headers Public Sans, Timestamps IBM Plex Mono 2026, Actions Public Sans) -->
+<!-- ===================================================================== -->
+<section class="app-card p-6">
+<div class="flex items-center justify-between pb-4 border-b border-[#E5E0D5]">
+<div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[#2F6B5B]" data-icon="history">history</span>
+<h3 class="font-headline-sm text-headline-sm font-semibold text-on-surface">Log Audit Sistem</h3>
+</div>
+<p class="font-mono-sm text-mono-sm text-[#5E655F] mt-0.5">Catatan intervensi perangkat keras dan otentikasi waktu-nyata</p>
+</div>
+<div class="flex items-center gap-2">
+<button class="app-btn-outline h-9 px-3 text-xs font-mono-sm flex items-center gap-1.5 rounded-btn" type="button">
+<span class="material-symbols-outlined text-sm" data-icon="download">download</span>
+            Ekspor CSV
+          </button>
+<button class="app-btn-outline h-9 px-3 text-xs font-mono-sm rounded-btn" type="button">Bersihkan Log</button>
+</div>
+</div>
+<!-- Filter bar -->
+<div class="mt-4 flex items-center justify-between text-body-sm font-body-md">
+<div class="flex items-center gap-2">
+<span class="text-[#5E655F] font-mono-sm text-xs">Filter:</span>
+<span class="px-3 py-1 bg-[#2F6B5B] text-[#ffffff] rounded-full text-xs font-medium cursor-pointer">Semua (48)</span>
+<span class="px-3 py-1 bg-[#ECE7DC] text-on-surface rounded-full text-xs cursor-pointer">Budi (12)</span>
+<span class="px-3 py-1 bg-[#ECE7DC] text-on-surface rounded-full text-xs cursor-pointer">Otomatisasi (29)</span>
+<span class="px-3 py-1 bg-[#ECE7DC] text-on-surface rounded-full text-xs cursor-pointer">Tamu (7)</span>
+</div>
+<span class="text-[#5E655F] text-xs font-mono-sm">Menampilkan 5 aktivitas terbaru</span>
+</div>
+<!-- Tabel Bersih -->
+<div class="mt-4 overflow-x-auto rounded-xl">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-[#ECE7DC] font-body-md text-on-surface-variant text-[13px]">
+<th class="py-3 px-4 font-semibold w-48">Waktu</th>
+<th class="py-3 px-4 font-semibold w-36">Pelaku</th>
+<th class="py-3 px-4 font-semibold">Aksi &amp; Operasi</th>
+<th class="py-3 px-4 font-semibold w-48 text-right font-mono-sm text-xs">IP / Sumber</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-[#E5E0D5] font-body-md text-body-md">
+<!-- Log 1: Budi -->
+<tr class="hover:bg-[#ECE7DC]/40 transition-colors">
+<td class="py-3 px-4 font-mono-sm text-xs text-[#5E655F]">2026-02-28 19:42:10</td>
+<td class="py-3 px-4">
+<span class="inline-flex items-center gap-1.5 font-medium text-[#2F6B5B]">
+<span class="w-1.5 h-1.5 rounded-full bg-[#2F6B5B]"></span>
+              Budi (Admin)
+            </span>
+</td>
+<td class="py-3 px-4 text-on-surface">
+            Konfigurasi sistem disimpan: 2FA diverifikasi dan aktif
+          </td>
+<td class="py-3 px-4 text-right font-mono-sm text-xs text-[#5E655F]">192.168.1.105 (Web)</td>
+</tr>
+<!-- Log 2: Otomatisasi -->
+<tr class="hover:bg-[#ECE7DC]/40 transition-colors">
+<td class="py-3 px-4 font-mono-sm text-xs text-[#5E655F]">2026-02-28 18:00:00</td>
+<td class="py-3 px-4">
+<span class="inline-flex items-center gap-1.5 font-medium text-[#703A32]">
+<span class="w-1.5 h-1.5 rounded-full bg-[#703A32]"></span>
+              Otomatisasi
+            </span>
+</td>
+<td class="py-3 px-4 text-on-surface">
+            Pemicu jadwal malam: Menghidupkan CH-01 Lampu Ruang Tengah
+          </td>
+<td class="py-3 px-4 text-right font-mono-sm text-xs text-[#5E655F]">Jadwal Lokal</td>
+</tr>
+<!-- Log 3: Budi -->
+<tr class="hover:bg-[#ECE7DC]/40 transition-colors">
+<td class="py-3 px-4 font-mono-sm text-xs text-[#5E655F]">2026-02-28 16:15:22</td>
+<td class="py-3 px-4">
+<span class="inline-flex items-center gap-1.5 font-medium text-[#2F6B5B]">
+<span class="w-1.5 h-1.5 rounded-full bg-[#2F6B5B]"></span>
+              Budi (Admin)
+            </span>
+</td>
+<td class="py-3 px-4 text-on-surface">
+            Retensi video kamera diubah menjadi 14 hari
+          </td>
+<td class="py-3 px-4 text-right font-mono-sm text-xs text-[#5E655F]">192.168.1.105 (Web)</td>
+</tr>
+<!-- Log 4: Tamu -->
+<tr class="hover:bg-[#ECE7DC]/40 transition-colors">
+<td class="py-3 px-4 font-mono-sm text-xs text-[#5E655F]">2026-02-28 15:02:44</td>
+<td class="py-3 px-4">
+<span class="inline-flex items-center gap-1.5 font-medium text-[#B7791F]">
+<span class="w-1.5 h-1.5 rounded-full bg-[#B7791F]"></span>
+              Tamu (Anak)
+            </span>
+</td>
+<td class="py-3 px-4 text-on-surface">
+            Mencoba mengakses saklar CH-05 Buzzer — Akses Ditolak
+          </td>
+<td class="py-3 px-4 text-right font-mono-sm text-xs text-[#5E655F]">192.168.1.202 (Tablet)</td>
+</tr>
+<!-- Log 5: Otomatisasi -->
+<tr class="hover:bg-[#ECE7DC]/40 transition-colors">
+<td class="py-3 px-4 font-mono-sm text-xs text-[#5E655F]">2026-02-28 12:00:01</td>
+<td class="py-3 px-4">
+<span class="inline-flex items-center gap-1.5 font-medium text-[#703A32]">
+<span class="w-1.5 h-1.5 rounded-full bg-[#703A32]"></span>
+              Otomatisasi
+            </span>
+</td>
+<td class="py-3 px-4 text-on-surface">
+            Pemeriksaan koneksi modul ESP32 via MQTT selesai dalam batas toleransi
+          </td>
+<td class="py-3 px-4 text-right font-mono-sm text-xs text-[#5E655F]">MQTT Broker</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="mt-4 pt-3 border-t border-[#E5E0D5] flex items-center justify-between">
+<p class="font-mono-sm text-[12px] text-[#5E655F]">Sinkronisasi data log lokal tersimpan otomatis</p>
+<div class="flex items-center gap-1">
+<button class="app-btn-outline h-8 px-2.5 text-xs font-mono-sm rounded-btn" disabled="" style="opacity: 0.4;">« Sebelumnya</button>
+<span class="font-mono-sm text-xs px-2 text-on-surface">1 / 10</span>
+<button class="app-btn-outline h-8 px-2.5 text-xs font-mono-sm rounded-btn">Berikutnya »</button>
+</div>
+</div>
+</section>
+<!-- Footer Bersih (strictly Indonesian, no telemetry) -->
+<footer class="pt-4 flex items-center justify-between text-body-sm text-[#5E655F]">
+<p class="font-mono-sm text-mono-sm text-[12px]">Rumah · Pengaturan Sistem Rumah Tangga</p>
+<p class="font-mono-sm text-mono-sm text-[12px]">© 2026 Rumah. Seluruh hak cipta dilindungi.</p>
+</footer>
+</div>
+</main>
+<!-- Toggle Interactive Script -->
+<script>
+    document.querySelectorAll('.app-toggle-56').forEach(toggle => {
+      toggle.addEventListener('click', function() {
+        const isChecked = this.getAttribute('aria-checked') === 'true';
+        if (isChecked) {
+          this.setAttribute('aria-checked', 'false');
+          this.classList.remove('active');
+          this.classList.add('inactive');
+        } else {
+          this.setAttribute('aria-checked', 'true');
+          this.classList.remove('inactive');
+          this.classList.add('active');
+        }
+      });
+    });
+  </script>
+</body></html>

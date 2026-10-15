@@ -1,0 +1,28 @@
+.card {
+  background-color: var(--color-surface);
+  border-radius: var(--radius-card);
+  padding: var(--space-6);
+  border: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.tile {
+  background-color: var(--color-surface);
+  border-radius: var(--radius-tile);
+  padding: var(--space-6);
+  border: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.tileActive {
+  background-color: var(--color-accent-light);
+}
+
+.panel {
+  background-color: var(--color-surface);
+  border-radius: var(--radius-card);
+  padding: var(--space-5);
+  border: none;
+}

@@ -5,25 +5,25 @@ class AppCard extends StatelessWidget {
   final Widget child;
   final EdgeInsetsGeometry padding;
   final VoidCallback? onTap;
+  final Color? backgroundColor;
 
   const AppCard({
     super.key,
     required this.child,
     this.padding = const EdgeInsets.all(AppSpacing.space4),
     this.onTap,
+    this.backgroundColor,
   });
 
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final bg = isDark ? AppColors.darkSurface : AppColors.lightSurface;
-    final border = isDark ? AppColors.darkBorder : AppColors.lightBorder;
+    final bg = backgroundColor ?? (isDark ? AppColors.darkSurface : AppColors.lightSurface);
 
     final container = Container(
       decoration: BoxDecoration(
         color: bg,
-        borderRadius: AppRadius.borderMd,
-        border: Border.all(color: border, width: AppDimensions.borderWidth),
+        borderRadius: AppRadius.borderCard,
       ),
       padding: padding,
       child: child,
@@ -32,10 +32,10 @@ class AppCard extends StatelessWidget {
     if (onTap != null) {
       return Material(
         color: AppColors.transparent,
-        borderRadius: AppRadius.borderMd,
+        borderRadius: AppRadius.borderCard,
         child: InkWell(
           onTap: onTap,
-          borderRadius: AppRadius.borderMd,
+          borderRadius: AppRadius.borderCard,
           child: container,
         ),
       );

@@ -1,0 +1,191 @@
+<!DOCTYPE html><html lang="id"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Masuk - Rumah</title>
+<!-- Google Fonts: Public Sans & Courier Prime -->
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Courier+Prime&amp;family=Public+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "primary-container": "#2f6b5b",
+            "error-container": "#ffdad6",
+            "secondary-fixed": "#dde4dd",
+            "secondary-container": "#dbe1da",
+            "on-primary-fixed": "#002019",
+            "on-secondary": "#ffffff",
+            "surface-container-highest": "#e5e2db",
+            "inverse-on-surface": "#f3f0e9",
+            "on-surface": "#1c1c18",
+            "on-background": "#1c1c18",
+            "on-secondary-fixed": "#171d19",
+            "surface-dim": "#dcdad3",
+            "surface-container-lowest": "#ffffff",
+            "error": "#ba1a1a",
+            "on-tertiary-container": "#b6eaa3",
+            "on-primary": "#ffffff",
+            "tertiary-container": "#3e6b32",
+            "on-primary-fixed-variant": "#0d5041",
+            "background": "#f4f1ea",
+            "outline-variant": "#bfc9c4",
+            "surface-container-low": "#f6f3ec",
+            "surface-bright": "#fcf9f2",
+            "outline": "#707975",
+            "on-surface-variant": "#404945",
+            "surface-container-high": "#ebe8e1",
+            "on-secondary-container": "#5d645e",
+            "on-tertiary": "#ffffff",
+            "tertiary-fixed-dim": "#a1d48f",
+            "tertiary-fixed": "#bcf1a9",
+            "primary": "#115344",
+            "on-error-container": "#93000a",
+            "on-error": "#ffffff",
+            "inverse-primary": "#96d3bf",
+            "on-tertiary-fixed-variant": "#24501a",
+            "surface": "#f4f1ea",
+            "surface-tint": "#2c6859",
+            "surface-variant": "#ece7dc",
+            "secondary-fixed-dim": "#c1c8c1",
+            "primary-fixed": "#b1efdb",
+            "surface-container": "#f1eee7",
+            "primary-fixed-dim": "#96d3bf",
+            "on-secondary-fixed-variant": "#424843",
+            "secondary": "#5e655f",
+            "on-primary-container": "#abe9d5",
+            "on-tertiary-fixed": "#012200",
+            "tertiary": "#26521c",
+            "inverse-surface": "#31312c"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "space-md": "1rem",
+            "space-sm": "0.75rem",
+            "margin": "1rem",
+            "gutter-compact": "0.5rem",
+            "space-xxs": "0.25rem",
+            "space-xl": "1.5rem",
+            "gutter": "0.75rem",
+            "space-xs": "0.5rem",
+            "space-lg": "1.25rem"
+          },
+          "fontFamily": {
+            "body-sm": ["Public Sans"],
+            "body-md": ["Public Sans"],
+            "label-md": ["Public Sans"],
+            "mono-data-md": ["Courier Prime"],
+            "mono-data-lg": ["Courier Prime"],
+            "title-md": ["Public Sans"],
+            "headline-lg": ["Public Sans"],
+            "mono-data-sm": ["Courier Prime"],
+            "headline-md": ["Public Sans"]
+          },
+          "fontSize": {
+            "body-sm": ["13px", { "lineHeight": "18px", "fontWeight": "400" }],
+            "body-md": ["15px", { "lineHeight": "22px", "fontWeight": "400" }],
+            "label-md": ["13px", { "lineHeight": "16px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+            "mono-data-md": ["15px", { "lineHeight": "20px", "fontWeight": "400" }],
+            "mono-data-lg": ["24px", { "lineHeight": "28px", "fontWeight": "400" }],
+            "title-md": ["18px", { "lineHeight": "24px", "fontWeight": "600" }],
+            "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+            "mono-data-sm": ["13px", { "lineHeight": "16px", "fontWeight": "400" }],
+            "headline-md": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      line-height: 1;
+      display: inline-block;
+      vertical-align: middle;
+    }
+  </style>
+</head>
+<body class="bg-[#F4F1EA] flex justify-center items-start min-h-screen antialiased select-none p-0 m-0">
+<!-- Android Native 360x800 Frame -->
+<main class="w-[360px] h-[800px] min-h-[800px] max-h-[800px] bg-[#F4F1EA] flex flex-col relative overflow-hidden">
+<!-- Status Bar (24px default height equivalent, dark icons) -->
+<header class="w-full h-6 px-6 pt-2 flex justify-between items-center bg-[#F4F1EA] shrink-0">
+<span class="font-label-md text-label-md text-[#1F2421] font-semibold text-[13px] leading-none">09:41</span>
+<div class="flex items-center space-x-1.5 text-[#1F2421]">
+<span class="material-symbols-outlined text-[16px] leading-none" data-icon="wifi">wifi</span>
+<span class="material-symbols-outlined text-[16px] leading-none" data-icon="signal_cellular_alt">signal_cellular_alt</span>
+<span class="material-symbols-outlined text-[16px] leading-none" data-icon="battery_full">battery_full</span>
+</div>
+</header>
+<!-- Content Area: 24px side padding -->
+<section class="px-6 flex flex-col w-full">
+<!-- House Icon + Brand Label (72px below status bar) -->
+<div class="mt-[72px] flex items-center space-x-2">
+<span class="material-symbols-outlined text-[#2F6B5B] text-[28px] leading-none" data-icon="home">home</span>
+<span class="font-title-md text-title-md text-[#1F2421] text-[18px] font-semibold leading-none">Rumah</span>
+</div>
+<!-- Heading & Description (48px gap below brand) -->
+<div class="mt-12 flex flex-col">
+<h1 class="font-headline-lg text-headline-lg text-[#1F2421] text-[32px] font-semibold leading-10">Masuk</h1>
+<p class="font-body-md text-body-md text-[#5E655F] text-[15px] font-normal leading-[22px] mt-1">Gunakan akun dari admin rumah.</p>
+</div>
+<!-- Inputs Section (32px gap below text) -->
+<form class="mt-8 flex flex-col space-y-3 w-full" onsubmit="event.preventDefault();">
+<!-- Field 1: Nama pengguna -->
+<div class="relative w-full h-14 bg-[#ECE7DC] rounded-xl px-4 pt-2.5 pb-1 flex flex-col justify-center focus-within:ring-1.5 focus-within:ring-[#2F6B5B] transition-colors">
+<label class="font-body-sm text-body-sm text-[#5E655F] text-[13px] leading-none mb-0.5 pointer-events-none select-none" for="username">Nama pengguna</label>
+<input autocomplete="username" class="w-full bg-transparent p-0 m-0 border-0 text-[#1F2421] font-body-md text-[15px] leading-tight focus:ring-0 focus:outline-none" id="username" name="username" type="text">
+</div>
+<!-- Field 2: Kata sandi -->
+<div class="relative w-full h-14 bg-[#ECE7DC] rounded-xl px-4 pt-2.5 pb-1 flex items-center focus-within:ring-1.5 focus-within:ring-[#2F6B5B] transition-colors">
+<div class="flex-1 flex flex-col justify-center">
+<label class="font-body-sm text-body-sm text-[#5E655F] text-[13px] leading-none mb-0.5 pointer-events-none select-none" for="password">Kata sandi</label>
+<input autocomplete="current-password" class="w-full bg-transparent p-0 m-0 border-0 text-[#1F2421] font-body-md text-[15px] leading-tight focus:ring-0 focus:outline-none" id="password" name="password" type="password">
+</div>
+<button aria-label="Tampilkan kata sandi" class="w-10 h-10 -mr-2 flex items-center justify-center text-[#5E655F] hover:text-[#1F2421] transition-colors focus:outline-none" id="togglePassword" type="button">
+<span class="material-symbols-outlined text-[24px]" data-icon="visibility">visibility</span>
+</button>
+</div>
+<!-- Forgot Password Subtext (12px gap below fields) -->
+<div class="pt-0">
+<p class="font-body-sm text-body-sm text-[#5E655F] text-[13px] font-normal leading-[18px]">Lupa kata sandi? Minta admin mengatur ulang.</p>
+</div>
+<!-- Primary Action Button (24px gap below text) -->
+<div class="pt-3">
+<button class="w-full h-12 bg-[#2F6B5B] active:bg-[#255849] text-[#FBF9F4] font-label-md text-label-md text-[15px] font-semibold rounded-xl flex items-center justify-center transition-colors" type="submit">
+            Masuk
+          </button>
+</div>
+</form>
+</section>
+<!-- Lower half empty area strictly preserving edge-to-edge #F4F1EA background -->
+<div class="flex-1 w-full pointer-events-none"></div>
+</main>
+<script>
+    // Password toggle interaction
+    const toggleBtn = document.getElementById('togglePassword');
+    const passwordInput = document.getElementById('password');
+    if (toggleBtn && passwordInput) {
+      toggleBtn.addEventListener('click', () => {
+        const isPassword = passwordInput.getAttribute('type') === 'password';
+        passwordInput.setAttribute('type', isPassword ? 'text' : 'password');
+        const iconSpan = toggleBtn.querySelector('.material-symbols-outlined');
+        if (iconSpan) {
+          iconSpan.textContent = isPassword ? 'visibility_off' : 'visibility';
+        }
+      });
+    }
+  </script>
+</body></html>

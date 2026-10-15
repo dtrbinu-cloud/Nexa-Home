@@ -22,7 +22,9 @@ class RumahApp extends ConsumerWidget {
       debugShowCheckedModeBanner: false,
       theme: AppTheme.light(),
       darkTheme: AppTheme.dark(),
-      themeMode: themeMode == 'dark' ? ThemeMode.dark : ThemeMode.light,
+      themeMode: themeMode == 'dark'
+          ? ThemeMode.dark
+          : (themeMode == 'light' ? ThemeMode.light : ThemeMode.system),
       routerConfig: router,
     );
   }

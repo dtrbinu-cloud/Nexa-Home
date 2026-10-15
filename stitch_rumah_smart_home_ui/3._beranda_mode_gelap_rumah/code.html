@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+
+<html lang="id"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Rumah Pintar - Beranda</title>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts: Public Sans & Courier Prime / IBM Plex Mono style -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&amp;family=Public+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "page-bg": "#151816",
+            "card-bg": "#1D211E",
+            "inset-bg": "#232824",
+            "divider-color": "#2D332F",
+            "text-primary": "#E8E6DF",
+            "text-secondary": "#8A938C",
+            "accent": "#5FA08E",
+            "accent-pressed": "#4E8777",
+            "on-tint": "#1F2C27",
+            "status-ok": "#4C7A3F",
+            "status-warning": "#B7791F",
+            "status-danger": "#B23A2E"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "2xl": "1.25rem",
+            "3xl": "1.5rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "space-md": "1rem",
+            "space-sm": "0.75rem",
+            "margin": "1rem",
+            "gutter-compact": "0.5rem",
+            "space-xxs": "0.25rem",
+            "space-xl": "1.5rem",
+            "gutter": "0.75rem",
+            "space-xs": "0.5rem",
+            "space-lg": "1.25rem"
+          },
+          "fontFamily": {
+            "body-sm": ["Public Sans", "sans-serif"],
+            "body-md": ["Public Sans", "sans-serif"],
+            "label-md": ["Public Sans", "sans-serif"],
+            "mono-data-md": ["Courier Prime", "monospace"],
+            "mono-data-lg": ["Courier Prime", "monospace"],
+            "title-md": ["Public Sans", "sans-serif"],
+            "headline-lg": ["Public Sans", "sans-serif"],
+            "mono-data-sm": ["Courier Prime", "monospace"],
+            "headline-md": ["Public Sans", "sans-serif"]
+          },
+          "fontSize": {
+            "body-sm": ["13px", { "lineHeight": "18px", "fontWeight": "400" }],
+            "body-md": ["15px", { "lineHeight": "22px", "fontWeight": "400" }],
+            "label-md": ["13px", { "lineHeight": "16px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+            "mono-data-md": ["15px", { "lineHeight": "20px", "fontWeight": "400" }],
+            "mono-data-lg": ["24px", { "lineHeight": "28px", "fontWeight": "400" }],
+            "title-md": ["18px", { "lineHeight": "24px", "fontWeight": "600" }],
+            "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+            "mono-data-sm": ["13px", { "lineHeight": "16px", "fontWeight": "400" }],
+            "headline-md": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+  </style>
+</head>
+<body class="bg-page-bg text-text-primary antialiased flex justify-center min-h-screen selection:bg-on-tint selection:text-accent">
+<!-- Native Frame Container: 360px wide -->
+<main class="w-full max-w-[360px] min-h-[800px] bg-page-bg relative flex flex-col pb-28">
+<!-- Android Status Bar: Height 24px, 16px side padding, flat page color -->
+<header class="w-full h-6 px-margin flex items-center justify-between select-none bg-page-bg">
+<span class="font-mono-data-sm text-mono-data-sm text-text-primary font-semibold tracking-tight">09:41</span>
+<div class="flex items-center gap-1.5 text-text-primary">
+<span class="material-symbols-outlined text-[15px]" data-icon="signal_cellular_4_bar">signal_cellular_4_bar</span>
+<span class="material-symbols-outlined text-[15px]" data-icon="wifi">wifi</span>
+<span class="material-symbols-outlined text-[15px]" data-icon="battery_full">battery_full</span>
+</div>
+</header>
+<!-- Top App Bar: 56px height, side padding 16px, Flat (No borders/shadows) -->
+<section class="w-full h-14 px-margin flex items-center justify-between">
+<h1 class="font-headline-lg text-headline-lg text-text-primary font-semibold leading-none">Beranda</h1>
+<div class="flex items-center gap-2">
+<!-- Bell Icon Button: 44px target with notification dot -->
+<button aria-label="Notifikasi" class="relative w-11 h-11 flex items-center justify-center rounded-full hover:bg-inset-bg transition-colors">
+<span class="material-symbols-outlined text-2xl text-text-primary" data-icon="notifications">notifications</span>
+<span class="absolute top-2.5 right-2.5 w-2 h-2 rounded-full bg-status-danger"></span>
+</button>
+<!-- Plus Icon Button: 44px round, active tint -->
+<button aria-label="Tambah Perangkat" class="w-11 h-11 rounded-full bg-on-tint flex items-center justify-center hover:bg-accent hover:text-page-bg transition-colors group">
+<span class="material-symbols-outlined text-2xl text-accent group-hover:text-page-bg transition-colors" data-icon="add">add</span>
+</button>
+</div>
+</section>
+<!-- Content Canvas with 16px screen edge padding -->
+<div class="px-margin flex flex-col pt-4">
+<!-- Status Card: #1D211E, radius 20px, padding 16px, flat no border -->
+<section class="bg-card-bg rounded-2xl p-space-md flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-status-ok shrink-0"></span>
+<span class="font-body-md text-body-md font-semibold text-text-primary">Semua aman</span>
+</div>
+<span class="font-mono-data-sm text-mono-data-sm text-text-secondary">19:45</span>
+</section>
+<!-- 3 Sensor Cards Row: 12px gap below, radius 20px, padding 14px 12px, flat -->
+<section class="grid grid-cols-3 gap-gutter mt-3">
+<!-- Card 1: Gas -->
+<div class="bg-card-bg rounded-2xl px-3 py-3.5 flex flex-col justify-between h-[84px]">
+<span class="font-body-sm text-body-sm text-text-secondary">Gas</span>
+<div class="flex flex-col">
+<span class="font-body-md text-body-md font-semibold text-accent leading-tight">Aman</span>
+<span class="font-mono-data-sm text-mono-data-sm text-text-secondary leading-tight mt-0.5">412</span>
+</div>
+</div>
+<!-- Card 2: Cahaya -->
+<div class="bg-card-bg rounded-2xl px-3 py-3.5 flex flex-col justify-between h-[84px]">
+<span class="font-body-sm text-body-sm text-text-secondary">Cahaya</span>
+<div class="flex flex-col">
+<span class="font-body-md text-body-md font-semibold text-text-primary leading-tight">Terang</span>
+</div>
+</div>
+<!-- Card 3: Online -->
+<div class="bg-card-bg rounded-2xl px-3 py-3.5 flex flex-col justify-between h-[84px]">
+<span class="font-body-sm text-body-sm text-text-secondary">Online</span>
+<div class="flex flex-col">
+<span class="font-mono-data-md text-mono-data-md font-semibold text-text-primary leading-tight">3 dari 4</span>
+</div>
+</div>
+</section>
+<!-- Room Chip Row: 20px gap below, Horizontally scrollable, 8px gap -->
+<nav aria-label="Filter Ruangan" class="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1 mt-5">
+<button class="shrink-0 bg-accent text-page-bg font-label-md text-label-md py-2 px-4 rounded-lg transition-colors">
+          Semua
+        </button>
+<button class="shrink-0 bg-inset-bg text-text-primary font-body-sm text-body-sm py-2 px-4 rounded-lg hover:bg-card-bg transition-colors">
+          Ruang tengah
+        </button>
+<button class="shrink-0 bg-inset-bg text-text-primary font-body-sm text-body-sm py-2 px-4 rounded-lg hover:bg-card-bg transition-colors">
+          Kamar
+        </button>
+<button class="shrink-0 bg-inset-bg text-text-primary font-body-sm text-body-sm py-2 px-4 rounded-lg hover:bg-card-bg transition-colors">
+          Dapur
+        </button>
+</nav>
+<!-- Section: Ruangan Header -->
+<section class="mt-4">
+<h2 class="font-title-md text-title-md font-semibold text-text-primary">Ruangan</h2>
+<!-- 2-Column Device Matrix: 12px gap, 24px radius, min-height 120px, no borders -->
+<div class="grid grid-cols-2 gap-gutter mt-3">
+<!-- Tile 1 (ON): Lampu utama -->
+<div class="bg-on-tint rounded-3xl p-space-md min-h-[128px] flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="material-symbols-outlined text-2xl text-accent" data-icon="lightbulb" data-weight="fill" style="font-variation-settings: 'FILL' 1;">lightbulb</span>
+<!-- Toggle active: 56x32px -->
+<div aria-checked="true" class="w-14 h-8 bg-accent rounded-full relative p-0.5 cursor-pointer flex items-center justify-end px-1" role="switch">
+<div class="w-[26px] h-[26px] rounded-full bg-page-bg"></div>
+</div>
+</div>
+<div class="flex flex-col mt-3">
+<span class="font-body-md text-body-md font-semibold text-text-primary leading-snug">Lampu utama</span>
+<span class="font-body-sm text-body-sm text-accent mt-0.5">Ruang tengah • Menyala</span>
+</div>
+</div>
+<!-- Tile 2 (OFF): Lampu meja -->
+<div class="bg-card-bg rounded-3xl p-space-md min-h-[128px] flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="material-symbols-outlined text-2xl text-text-secondary" data-icon="lightbulb">lightbulb</span>
+<!-- Toggle inactive: 56x32px -->
+<div aria-checked="false" class="w-14 h-8 bg-inset-bg rounded-full relative p-0.5 cursor-pointer flex items-center justify-start px-1" role="switch">
+<div class="w-[26px] h-[26px] rounded-full bg-text-secondary"></div>
+</div>
+</div>
+<div class="flex flex-col mt-3">
+<span class="font-body-md text-body-md font-semibold text-text-primary leading-snug">Lampu meja</span>
+<span class="font-body-sm text-body-sm text-text-secondary mt-0.5">Kamar • Mati</span>
+</div>
+</div>
+<!-- Tile 3 (ON): Lampu dapur -->
+<div class="bg-on-tint rounded-3xl p-space-md min-h-[128px] flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="material-symbols-outlined text-2xl text-accent" data-icon="lightbulb" data-weight="fill" style="font-variation-settings: 'FILL' 1;">lightbulb</span>
+<div aria-checked="true" class="w-14 h-8 bg-accent rounded-full relative p-0.5 cursor-pointer flex items-center justify-end px-1" role="switch">
+<div class="w-[26px] h-[26px] rounded-full bg-page-bg"></div>
+</div>
+</div>
+<div class="flex flex-col mt-3">
+<span class="font-body-md text-body-md font-semibold text-text-primary leading-snug">Lampu dapur</span>
+<span class="font-body-sm text-body-sm text-accent mt-0.5">Dapur • Menyala</span>
+</div>
+</div>
+<!-- Tile 4 (ON): Kipas angin -->
+<div class="bg-on-tint rounded-3xl p-space-md min-h-[128px] flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="material-symbols-outlined text-2xl text-accent" data-icon="mode_fan" data-weight="fill" style="font-variation-settings: 'FILL' 1;">mode_fan</span>
+<div aria-checked="true" class="w-14 h-8 bg-accent rounded-full relative p-0.5 cursor-pointer flex items-center justify-end px-1" role="switch">
+<div class="w-[26px] h-[26px] rounded-full bg-page-bg"></div>
+</div>
+</div>
+<div class="flex flex-col mt-3">
+<span class="font-body-md text-body-md font-semibold text-text-primary leading-snug">Kipas angin</span>
+<span class="font-body-sm text-body-sm text-accent mt-0.5">Level 2 dari 3</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Section: Terakhir Activity Header -->
+<section class="mt-6">
+<div class="flex justify-between items-center">
+<h2 class="font-title-md text-title-md font-semibold text-text-primary">Terakhir</h2>
+<button class="font-label-md text-label-md text-accent hover:text-accent-pressed transition-colors">
+            Lihat semua
+          </button>
+</div>
+<!-- Recent Events Card: #1D211E, radius 20px, padding 4px 16px, divider #2D332F -->
+<div class="bg-card-bg rounded-2xl px-space-md py-1 mt-3 divide-y divide-divider-color">
+<!-- Row 1 -->
+<div class="py-3.5 flex items-baseline gap-3">
+<span class="font-mono-data-sm text-mono-data-sm text-text-secondary shrink-0">19:42</span>
+<span class="font-body-sm text-body-sm text-text-primary">Lampu utama dinyalakan oleh Bapak</span>
+</div>
+<!-- Row 2 -->
+<div class="py-3.5 flex items-baseline gap-3">
+<span class="font-mono-data-sm text-mono-data-sm text-text-secondary shrink-0">18:15</span>
+<span class="font-body-sm text-body-sm text-text-primary">Kipas ruang tengah diubah ke Level 2</span>
+</div>
+<!-- Row 3 -->
+<div class="py-3.5 flex items-baseline gap-3">
+<span class="font-mono-data-sm text-mono-data-sm text-text-secondary shrink-0">17:30</span>
+<span class="font-body-sm text-body-sm text-text-primary">Mode malam dinonaktifkan</span>
+</div>
+</div>
+</section>
+</div>
+<!-- Bottom Navigation Bar: M3 specification, fixed bottom, 80px, background #1D211E, NO top line, NO shadow -->
+<nav aria-label="Navigasi Utama" class="fixed bottom-0 left-0 right-0 max-w-[360px] mx-auto h-20 bg-card-bg z-50 flex items-center justify-around px-gutter border-none shadow-none">
+<!-- 1. Beranda (Active) -->
+<button aria-current="page" class="w-1/4 flex flex-col items-center justify-center gap-1 active:scale-95 transition-transform">
+<div class="w-16 h-8 rounded-full bg-on-tint flex items-center justify-center">
+<span class="material-symbols-outlined text-xl text-accent" data-icon="home" data-weight="fill" style="font-variation-settings: 'FILL' 1;">home</span>
+</div>
+<span class="font-label-md text-[13px] leading-4 text-accent font-semibold">Beranda</span>
+</button>
+<!-- 2. Kamera (Inactive) -->
+<button class="w-1/4 flex flex-col items-center justify-center gap-1 active:scale-95 transition-transform">
+<div class="w-16 h-8 flex items-center justify-center">
+<span class="material-symbols-outlined text-xl text-text-secondary" data-icon="videocam">videocam</span>
+</div>
+<span class="font-body-sm text-body-sm text-text-secondary">Kamera</span>
+</button>
+<!-- 3. Asisten (Inactive) -->
+<button class="w-1/4 flex flex-col items-center justify-center gap-1 active:scale-95 transition-transform">
+<div class="w-16 h-8 flex items-center justify-center">
+<span class="material-symbols-outlined text-xl text-text-secondary" data-icon="mic">mic</span>
+</div>
+<span class="font-body-sm text-body-sm text-text-secondary">Asisten</span>
+</button>
+<!-- 4. Lainnya (Inactive) -->
+<button class="w-1/4 flex flex-col items-center justify-center gap-1 active:scale-95 transition-transform">
+<div class="w-16 h-8 flex items-center justify-center">
+<span class="material-symbols-outlined text-xl text-text-secondary" data-icon="more_horiz">more_horiz</span>
+</div>
+<span class="font-body-sm text-body-sm text-text-secondary">Lainnya</span>
+</button>
+</nav>
+</main>
+</body></html>

@@ -1,0 +1,303 @@
+<!DOCTYPE html><html lang="id"><head>
+<meta charset="utf-8">
+<meta content="width=360, initial-scale=1.0" name="viewport">
+<title>Gagal - Tambah Perangkat - Rumah</title>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<!-- Google Fonts: Public Sans & Courier Prime -->
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&amp;family=Public+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<!-- Tailwind CSS with custom configuration -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "surface-container-low": "#f6f3ec",
+            "on-tertiary": "#ffffff",
+            "inverse-primary": "#96d3bf",
+            "on-error": "#ffffff",
+            "on-surface": "#1c1c18",
+            "outline": "#707975",
+            "surface-bright": "#fcf9f2",
+            "secondary-container": "#dbe1da",
+            "primary-fixed-dim": "#96d3bf",
+            "surface-container-highest": "#e5e2db",
+            "background": "#fcf9f2",
+            "on-secondary-container": "#5d645e",
+            "on-primary-container": "#abe9d5",
+            "primary-container": "#2f6b5b",
+            "surface": "#fcf9f2",
+            "tertiary-container": "#3e6b32",
+            "surface-container-lowest": "#ffffff",
+            "surface-dim": "#dcdad3",
+            "tertiary-fixed-dim": "#a1d48f",
+            "error": "#ba1a1a",
+            "on-background": "#1c1c18",
+            "surface-container-high": "#ebe8e1",
+            "surface-tint": "#2c6859",
+            "surface-variant": "#e5e2db",
+            "on-primary-fixed-variant": "#0d5041",
+            "on-tertiary-fixed-variant": "#24501a",
+            "on-secondary": "#ffffff",
+            "error-container": "#ffdad6",
+            "on-secondary-fixed-variant": "#424843",
+            "tertiary": "#26521c",
+            "on-tertiary-fixed": "#012200",
+            "on-primary-fixed": "#002019",
+            "on-tertiary-container": "#b6eaa3",
+            "on-secondary-fixed": "#171d19",
+            "inverse-surface": "#31312c",
+            "secondary": "#59605a",
+            "inverse-on-surface": "#f3f0e9",
+            "primary": "#115344",
+            "on-surface-variant": "#404945",
+            "on-error-container": "#93000a",
+            "primary-fixed": "#b1efdb",
+            "tertiary-fixed": "#bcf1a9",
+            "surface-container": "#f1eee7",
+            "secondary-fixed-dim": "#c1c8c1",
+            "secondary-fixed": "#dde4dd",
+            "outline-variant": "#bfc9c4",
+            "on-primary": "#ffffff"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "gutter-compact": "0.5rem",
+            "space-md": "1rem",
+            "space-sm": "0.75rem",
+            "space-xl": "1.5rem",
+            "margin": "1rem",
+            "gutter": "0.75rem",
+            "space-xs": "0.5rem",
+            "space-lg": "1.25rem",
+            "space-xxs": "0.25rem"
+          },
+          "fontFamily": {
+            "body-md": [
+              "Public Sans"
+            ],
+            "title-md": [
+              "Public Sans"
+            ],
+            "headline-lg": [
+              "Public Sans"
+            ],
+            "mono-data-lg": [
+              "Courier Prime"
+            ],
+            "headline-md": [
+              "Public Sans"
+            ],
+            "label-md": [
+              "Public Sans"
+            ],
+            "mono-data-md": [
+              "Courier Prime"
+            ],
+            "mono-data-sm": [
+              "Courier Prime"
+            ],
+            "body-sm": [
+              "Public Sans"
+            ]
+          },
+          "fontSize": {
+            "body-md": [
+              "15px",
+              {
+                "lineHeight": "22px",
+                "fontWeight": "400"
+              }
+            ],
+            "title-md": [
+              "18px",
+              {
+                "lineHeight": "24px",
+                "fontWeight": "600"
+              }
+            ],
+            "headline-lg": [
+              "32px",
+              {
+                "lineHeight": "40px",
+                "letterSpacing": "-0.02em",
+                "fontWeight": "600"
+              }
+            ],
+            "mono-data-lg": [
+              "24px",
+              {
+                "lineHeight": "28px",
+                "fontWeight": "400"
+              }
+            ],
+            "headline-md": [
+              "24px",
+              {
+                "lineHeight": "32px",
+                "letterSpacing": "-0.01em",
+                "fontWeight": "600"
+              }
+            ],
+            "label-md": [
+              "13px",
+              {
+                "lineHeight": "16px",
+                "letterSpacing": "0.01em",
+                "fontWeight": "600"
+              }
+            ],
+            "mono-data-md": [
+              "15px",
+              {
+                "lineHeight": "20px",
+                "fontWeight": "400"
+              }
+            ],
+            "mono-data-sm": [
+              "13px",
+              {
+                "lineHeight": "16px",
+                "fontWeight": "400"
+              }
+            ],
+            "body-sm": [
+              "13px",
+              {
+                "lineHeight": "18px",
+                "fontWeight": "400"
+              }
+            ]
+          }
+        },
+      },
+    }
+  </script>
+</head>
+<body class="bg-background text-on-surface antialiased min-h-screen flex justify-center items-start selection:bg-secondary-fixed selection:text-on-surface">
+<!-- Android Viewport Frame: 360px wide, min-h-[800px] -->
+<main class="w-[360px] min-h-[800px] bg-background flex flex-col justify-between relative overflow-hidden">
+<!-- Top Section: Status Bar + App Bar + Intro -->
+<header class="w-full shrink-0">
+<!-- Native Android Status Bar (24px) -->
+<div class="h-6 px-margin flex items-center justify-between font-label-md text-label-md text-secondary select-none">
+<span class="font-semibold text-[13px] tracking-tight">09:41</span>
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] leading-none" data-icon="wifi">wifi</span>
+<span class="material-symbols-outlined text-[16px] leading-none" data-icon="signal_cellular_alt">signal_cellular_alt</span>
+<span class="material-symbols-outlined text-[16px] leading-none" data-icon="battery_full">battery_full</span>
+</div>
+</div>
+<!-- App Header Bar (No shadows, flat surface) -->
+<div class="h-14 px-margin flex items-center gap-2">
+<button aria-label="Kembali" class="w-10 h-10 -ml-2 rounded-full flex items-center justify-center text-on-surface active:bg-surface-container transition-colors" type="button">
+<span class="material-symbols-outlined text-[22px]" data-icon="arrow_back">arrow_back</span>
+</button>
+<h1 class="font-title-md text-title-md text-on-surface">Gagal Menghubungkan</h1>
+</div>
+<!-- Subtitle description -->
+<div class="px-margin pt-1 pb-3">
+<p class="font-body-sm text-body-sm text-secondary">
+          3 kondisi kegagalan pairing dan penanganannya:
+        </p>
+</div>
+</header>
+<!-- Content Section: 3 Error Variants Vertical Cards -->
+<section class="px-margin flex flex-col gap-3 flex-1 pb-4">
+<!-- Card 1: Sandi WiFi salah -->
+<article class="bg-surface-bright rounded-[20px] p-margin flex flex-col">
+<!-- Header Row -->
+<div class="flex items-center gap-3 mb-2.5">
+<div class="w-9 h-9 rounded-full bg-error-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-error text-[20px]" data-icon="wifi_off">wifi_off</span>
+</div>
+<h2 class="font-title-md text-[16px] leading-tight text-on-surface">Sandi WiFi salah</h2>
+</div>
+<!-- Factual & Next Steps -->
+<p class="font-body-sm text-body-sm text-on-surface mb-1">
+          Alat tidak dapat terhubung ke jaringan 'Rumah-Utama'.
+        </p>
+<p class="font-body-sm text-body-sm text-secondary mb-3.5">
+          Periksa kembali kata sandi WiFi dan coba hubungkan lagi.
+        </p>
+<!-- Action Buttons Row -->
+<div class="flex items-center justify-end gap-2 pt-1 border-t border-surface-container-highest">
+<button class="h-9 px-3.5 rounded-lg border border-outline-variant font-label-md text-label-md text-on-surface active:bg-surface-container transition-colors min-w-[68px] text-center" type="button">
+            Batal
+          </button>
+<button class="h-9 px-3.5 rounded-lg bg-primary-container font-label-md text-label-md text-on-primary-container active:opacity-90 transition-opacity min-w-[76px] text-center" type="button">
+            Coba lagi
+          </button>
+</div>
+</article>
+<!-- Card 2: Kode pairing kedaluwarsa -->
+<article class="bg-surface-bright rounded-[20px] p-margin flex flex-col">
+<!-- Header Row -->
+<div class="flex items-center gap-3 mb-2.5">
+<div class="w-9 h-9 rounded-full bg-error-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-error text-[20px]" data-icon="timer_off">timer_off</span>
+</div>
+<h2 class="font-title-md text-[16px] leading-tight text-on-surface">Kode pairing kedaluwarsa</h2>
+</div>
+<!-- Factual & Next Steps -->
+<p class="font-body-sm text-body-sm text-on-surface mb-1">
+          Batas waktu 10 menit kode pairing telah habis.
+        </p>
+<p class="font-body-sm text-body-sm text-secondary mb-3.5">
+          Buat kode pairing baru dan tekan tombol BOOT pada alat.
+        </p>
+<!-- Action Buttons Row -->
+<div class="flex items-center justify-end gap-2 pt-1 border-t border-surface-container-highest">
+<button class="h-9 px-3.5 rounded-lg border border-outline-variant font-label-md text-label-md text-on-surface active:bg-surface-container transition-colors min-w-[68px] text-center" type="button">
+            Batal
+          </button>
+<button class="h-9 px-3.5 rounded-lg bg-primary-container font-label-md text-label-md text-on-primary-container active:opacity-90 transition-opacity min-w-[104px] text-center" type="button">
+            Buat kode baru
+          </button>
+</div>
+</article>
+<!-- Card 3: Server tidak terjangkau -->
+<article class="bg-surface-bright rounded-[20px] p-margin flex flex-col">
+<!-- Header Row -->
+<div class="flex items-center gap-3 mb-2.5">
+<div class="w-9 h-9 rounded-full bg-error-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-error text-[20px]" data-icon="cloud_off">cloud_off</span>
+</div>
+<h2 class="font-title-md text-[16px] leading-tight text-on-surface">Server tidak terjangkau</h2>
+</div>
+<!-- Factual & Next Steps -->
+<p class="font-body-sm text-body-sm text-on-surface mb-1">
+          Modul terhubung ke WiFi tetapi tidak merespons server lokal.
+        </p>
+<p class="font-body-sm text-body-sm text-secondary mb-3.5">
+          Pastikan gateway server rumah menyala dan dalam subnet yang sama.
+        </p>
+<!-- Action Buttons Row -->
+<div class="flex items-center justify-end gap-2 pt-1 border-t border-surface-container-highest">
+<button class="h-9 px-3.5 rounded-lg border border-outline-variant font-label-md text-label-md text-on-surface active:bg-surface-container transition-colors min-w-[68px] text-center" type="button">
+            Batal
+          </button>
+<button class="h-9 px-3.5 rounded-lg bg-primary-container font-label-md text-label-md text-on-primary-container active:opacity-90 transition-opacity min-w-[80px] text-center" type="button">
+            Cek server
+          </button>
+</div>
+</article>
+</section>
+<!-- Bottom Global Action -->
+<footer class="w-full px-margin pb-6 pt-1 flex flex-col items-center">
+<button class="h-12 w-full flex items-center justify-center rounded-xl font-label-md text-label-md text-primary-container active:bg-surface-container transition-colors" type="button">
+        Kembali ke Beranda
+      </button>
+</footer>
+</main>
+</body></html>

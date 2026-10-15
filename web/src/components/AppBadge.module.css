@@ -1,0 +1,60 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-chip);
+  font-family: var(--font-body);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  line-height: 1;
+  white-space: nowrap;
+  user-select: none;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-pill);
+  flex-shrink: 0;
+}
+
+.ok {
+  background-color: var(--color-accent-light);
+  color: var(--color-status-ok);
+}
+.ok .dot {
+  background-color: var(--color-status-ok);
+}
+
+.warn {
+  background-color: var(--color-subtle);
+  color: var(--color-status-warn);
+}
+.warn .dot {
+  background-color: var(--color-status-warn);
+}
+
+.danger {
+  background-color: var(--color-subtle);
+  color: var(--color-status-danger);
+}
+.danger .dot {
+  background-color: var(--color-status-danger);
+}
+
+.accent {
+  background-color: var(--color-accent-light);
+  color: var(--color-accent);
+}
+.accent .dot {
+  background-color: var(--color-accent);
+}
+
+.neutral {
+  background-color: var(--color-subtle);
+  color: var(--color-text-secondary);
+}
+.neutral .dot {
+  background-color: var(--color-border);
+}

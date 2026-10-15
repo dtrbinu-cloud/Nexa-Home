@@ -10,21 +10,27 @@ class AppColors {
   // Theme Terang (Light)
   static const Color lightBg = Color(0xFFF4F1EA);
   static const Color lightSurface = Color(0xFFFBF9F4);
-  static const Color lightBorder = Color(0xFFD9D3C6);
+  static const Color lightSubtle = Color(0xFFECE7DC);
+  static const Color lightBorder = Color(0xFFE5E0D5);
+  static const Color lightBorderSubtle = Color(0xFFE5E0D5);
   static const Color lightText = Color(0xFF1F2421);
   static const Color lightTextSecondary = Color(0xFF5E655F);
   static const Color lightAccent = Color(0xFF2F6B5B);
   static const Color lightAccentHover = Color(0xFF255849);
+  static const Color lightAccentLight = Color(0xFFE4EDE9);
   static const Color lightAccentText = Color(0xFFFBF9F4);
 
   // Theme Gelap (Dark)
   static const Color darkBg = Color(0xFF151816);
   static const Color darkSurface = Color(0xFF1D211E);
+  static const Color darkSubtle = Color(0xFF232824);
   static const Color darkBorder = Color(0xFF2D332F);
+  static const Color darkBorderSubtle = Color(0xFF2D332F);
   static const Color darkText = Color(0xFFE8E6DF);
-  static const Color darkTextSecondary = Color(0xFF8E948F);
+  static const Color darkTextSecondary = Color(0xFF8A938C);
   static const Color darkAccent = Color(0xFF5FA08E);
-  static const Color darkAccentHover = Color(0xFF4D8575);
+  static const Color darkAccentHover = Color(0xFF71B4A1);
+  static const Color darkAccentLight = Color(0xFF1F2C27);
   static const Color darkAccentText = Color(0xFF151816);
 
   // Status (Universal)
@@ -39,24 +45,54 @@ class AppSpacing {
   static const double space2 = 8.0; // 8px
   static const double space3 = 12.0; // 12px
   static const double space4 = 16.0; // 16px
+  static const double space5 = 20.0; // 20px
   static const double space6 = 24.0; // 24px
   static const double space8 = 32.0; // 32px
 }
 
 class AppRadius {
-  static const double sm = 6.0; // 6px
-  static const double md = 10.0; // 10px
+  static const double sm = 12.0; // 12px (button, input)
+  static const double md = 20.0; // 20px (card, panel)
+  static const double lg = 24.0; // 24px (device tile)
+  static const double chip = 8.0; // 8px (chip)
+  static const double button = 12.0;
+  static const double input = 12.0;
+  static const double card = 20.0;
+  static const double tile = 24.0;
+  static const double pill = 16.0;
+  static const double bar = 2.0;
+  static const double full = 999.0;
+
   static const Radius radiusSm = Radius.circular(sm);
   static const Radius radiusMd = Radius.circular(md);
+  static const Radius radiusLg = Radius.circular(lg);
+  static const Radius radiusChip = Radius.circular(chip);
+  static const Radius radiusBar = Radius.circular(bar);
   static const BorderRadius borderSm = BorderRadius.all(radiusSm);
   static const BorderRadius borderMd = BorderRadius.all(radiusMd);
+  static const BorderRadius borderLg = BorderRadius.all(radiusLg);
+  static const BorderRadius borderChip = BorderRadius.all(radiusChip);
+  static const BorderRadius borderCard = BorderRadius.all(Radius.circular(card));
+  static const BorderRadius borderTile = BorderRadius.all(Radius.circular(tile));
+  static const BorderRadius borderButton = BorderRadius.all(Radius.circular(button));
+  static const BorderRadius borderPill = BorderRadius.all(Radius.circular(pill));
+  static const BorderRadius borderBar = BorderRadius.all(Radius.circular(bar));
 }
 
 class AppDimensions {
-  static const double controlHeight = 40.0;
+  static const double controlHeight = 48.0;
   static const double borderWidth = 1.0;
+  static const double listRowMinHeight = 56.0;
+  static const double toggleWidth = 56.0;
+  static const double toggleHeight = 32.0;
+  static const double toggleThumbSize = 26.0;
+  static const double screenMargin = 16.0;
+  static const double screenMarginAuth = 24.0;
+  static const double cardGap = 12.0;
+  static const double sectionGap = 24.0;
   static const double iconSizeSm = 20.0;
   static const double iconSizeMd = 24.0;
+  static const double iconSizeLg = 32.0;
 }
 
 class AppTypography {

@@ -8,11 +8,12 @@ class AppToast {
     bool isError = false,
   }) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final bg = isDark ? AppColors.darkSurface : AppColors.lightSurface;
-    final border = isError
+    final bg = isError
         ? AppColors.statusDanger
-        : (isDark ? AppColors.darkAccent : AppColors.lightAccent);
-    final text = isDark ? AppColors.darkText : AppColors.lightText;
+        : (isDark ? AppColors.darkSurface : AppColors.lightSurface);
+    final text = isError
+        ? AppColors.lightSurface
+        : (isDark ? AppColors.darkText : AppColors.lightText);
 
     ScaffoldMessenger.of(context).hideCurrentSnackBar();
     ScaffoldMessenger.of(context).showSnackBar(
@@ -29,7 +30,6 @@ class AppToast {
           decoration: BoxDecoration(
             color: bg,
             borderRadius: AppRadius.borderSm,
-            border: Border.all(color: border, width: AppDimensions.borderWidth),
           ),
           padding: const EdgeInsets.symmetric(
             horizontal: AppSpacing.space4,

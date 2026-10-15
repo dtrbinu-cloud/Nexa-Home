@@ -11,6 +11,7 @@ from sqlalchemy import delete, select
 from server.app.core.automation_engine import process_telemetry_automations
 from server.app.core.config import settings
 from server.app.core.database import AsyncSessionLocal
+from server.app.core.device_queue import device_queue
 from server.app.core.ws_manager import ws_manager
 from server.app.models.automation import NotificationLog
 from server.app.models.device import Channel, Device, TelemetryLog
@@ -82,12 +83,14 @@ class MqttService:
     def _on_connect(self, client, userdata, flags, rc, properties=None):
         logger.info("Connected to MQTT broker with result code %s", rc)
         self._connected = True
-        # Subscribe to all home topics
+        # Subscribe to all home and iot topics
         prefix = settings.MQTT_TOPIC_PREFIX
-        client.subscribe(f"{prefix}/+/availability", qos=1)
-        client.subscribe(f"{prefix}/+/state", qos=1)
-        client.subscribe(f"{prefix}/+/event", qos=2)
-        client.subscribe(f"{prefix}/+/ack", qos=1)
+        for p in set([prefix, "home", "iot"]):
+            client.subscribe(f"{p}/+/availability", qos=1)
+            client.subscribe(f"{p}/+/state", qos=1)
+            client.subscribe(f"{p}/+/status", qos=1)
+            client.subscribe(f"{p}/+/event", qos=2)
+            client.subscribe(f"{p}/+/ack", qos=1)
 
     def _on_disconnect(self, client, userdata, disconnect_flags_or_rc, properties=None):
         logger.warning("Disconnected from MQTT broker.")
@@ -114,13 +117,13 @@ class MqttService:
         device_id = parts[1]
         msg_type = parts[2]
 
-        if prefix != settings.MQTT_TOPIC_PREFIX:
+        if prefix not in (settings.MQTT_TOPIC_PREFIX, "home", "iot"):
             return
 
         try:
             if msg_type == "availability":
                 await self._handle_availability(device_id, payload_raw.strip().lower())
-            elif msg_type == "state":
+            elif msg_type in ("state", "status"):
                 data = json.loads(payload_raw)
                 await self._handle_state(device_id, data)
             elif msg_type == "event":
@@ -164,8 +167,36 @@ class MqttService:
 
     async def _handle_state(self, device_id: str, data: Dict[str, Any]):
         now = datetime.datetime.utcnow()
+
+        # Jika ada pair_code dari ESP32 via MQTT, daftarkan ke registry
+        if data.get("pair_code"):
+            device_queue.register_pair_code(
+                pair_code=str(data["pair_code"]).strip(),
+                device_id=device_id,
+                device_key=data.get("device_key"),
+                status=data.get("status") or data,
+            )
+
+        # Unpack status jika dikirim dalam bentuk status dict seperti esp32_thonny.py
         channels_data = data.get("channels", {})
         sensors_data = data.get("sensors", {}) or data.get("telemetry", {})
+
+        if "status" in data and isinstance(data["status"], dict):
+            st = data["status"]
+            if not channels_data:
+                channels_data = {
+                    "lamp": bool(st.get("lamp")),
+                    "lamp_tengah": bool(st.get("lamp_tengah")),
+                    "lamp_dapur_tamu": bool(st.get("lamp_dapur_tamu")),
+                    "lamp_kamar": bool(st.get("lamp_kamar")),
+                    "relay": bool(st.get("relay")),
+                    "relay_fan": bool(st.get("relay")),
+                }
+            if not sensors_data:
+                sensors_data = {
+                    "mq2": st.get("gas_raw", 0),
+                    "ldr": st.get("ldr", 0),
+                }
 
         async with AsyncSessionLocal() as db:
             query = select(Device).where(Device.id == device_id)
@@ -245,6 +276,9 @@ class MqttService:
         })
 
     async def _handle_ack(self, device_id: str, data: Dict[str, Any]):
+        cmd_id = data.get("command_id") or data.get("id")
+        if cmd_id:
+            device_queue.ack_command(device_id, str(cmd_id), ok=data.get("ok", True))
         await ws_manager.broadcast({
             "type": "ack",
             "device_id": device_id,

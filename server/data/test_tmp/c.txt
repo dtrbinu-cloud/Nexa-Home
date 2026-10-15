@@ -1,0 +1,6 @@
+listener 18884 127.0.0.1
+allow_anonymous false
+password_file C:/Users/DELL/Downloads/Nexa Home/server/data/test_tmp/p.txt
+acl_file C:/Users/DELL/Downloads/Nexa Home/server/data/test_tmp/a.txt
+log_dest stdout
+log_type all

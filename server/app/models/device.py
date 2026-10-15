@@ -29,6 +29,9 @@ class Channel(Base):
     device_id = Column(String(50), ForeignKey("devices.id", ondelete="CASCADE"), nullable=False)
     channel_key = Column(String(50), nullable=False)  # contoh: "lamp_tengah", "mq2", "ldr"
     name = Column(String(100), nullable=False)
+    alias = Column(String(100), nullable=True)  # contoh: "lampu kamar", "kipas"
+    is_sensitive = Column(Boolean, default=False, nullable=False)  # aksi butuh konfirmasi
+    allowed_for_child = Column(Boolean, default=True, nullable=False)  # izin kontrol anak
     channel_type = Column(String(30), nullable=False)  # switch, relay, gas_sensor, light_sensor, buzzer
     current_value = Column(Text, nullable=True)  # "true", "false", "1450"
     unit = Column(String(20), nullable=True)  # "PPM", "raw", "%", etc.

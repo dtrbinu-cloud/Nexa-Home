@@ -1,204 +1,188 @@
-import { useEffect, useState } from 'react';
-import {
-  House,
-  Cpu,
-  Moon,
-  Sun,
-  CheckCircle,
-  WifiHigh,
-  ArrowsClockwise,
-} from '@phosphor-icons/react';
-import './App.css';
+import React, { Suspense } from 'react';
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ThemeProvider } from './context/ThemeContext';
+import { AuthProvider, useAuth } from './context/AuthContext';
+import { AppShell } from './components/AppShell';
+import { LoginPage } from './pages/LoginPage';
+import { ApprovalPendingScreen } from './components/ApprovalPendingScreen';
 
-interface ServerHealth {
-  status: string;
-  app: string;
-  version: string;
-  environment: string;
-  uptime_seconds: number;
-  database: {
-    status: string;
-    journal_mode: string;
-  };
-}
+// Lazy loading halaman-halaman berat untuk optimasi bundle & fast initial load
+const BerandaPage = React.lazy(() =>
+  import('./pages/BerandaPage').then((m) => ({ default: m.BerandaPage }))
+);
+const PerangkatPage = React.lazy(() =>
+  import('./pages/PerangkatPage').then((m) => ({ default: m.PerangkatPage }))
+);
+const AsistenPage = React.lazy(() =>
+  import('./pages/AsistenPage').then((m) => ({ default: m.AsistenPage }))
+);
+const KameraPage = React.lazy(() =>
+  import('./pages/KameraPage').then((m) => ({ default: m.KameraPage }))
+);
+const KeluargaPage = React.lazy(() =>
+  import('./pages/KeluargaPage').then((m) => ({ default: m.KeluargaPage }))
+);
+const PengaturanPage = React.lazy(() =>
+  import('./pages/PengaturanPage').then((m) => ({ default: m.PengaturanPage }))
+);
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: 1,
+      refetchOnWindowFocus: false,
+    },
+  },
+});
+
+const PageLoadingFallback: React.FC = () => (
+  <div
+    style={{
+      minHeight: '60vh',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: 'transparent',
+      color: 'var(--color-text-secondary)',
+      fontFamily: 'var(--font-body)',
+      fontSize: 'var(--text-sm)',
+    }}
+  >
+    <span>Memuat halaman...</span>
+  </div>
+);
+
+// Guard rute terproteksi: arahkan ke /login jika belum login, atau tahan di ApprovalPendingScreen bila belum disetujui
+const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const { user, isAuthenticated, isLoading } = useAuth();
+  const location = useLocation();
+
+  if (isLoading) {
+    return (
+      <div
+        style={{
+          minHeight: '100vh',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          backgroundColor: 'var(--color-bg)',
+          color: 'var(--color-text)',
+          fontFamily: 'var(--font-body)',
+        }}
+      >
+        <span>Memeriksa sesi login...</span>
+      </div>
+    );
+  }
+
+  if (!isAuthenticated) {
+    return <Navigate to={`/login${location.search}`} state={{ from: location }} replace />;
+  }
+
+  if (user && user.is_approved === false) {
+    return <ApprovalPendingScreen />;
+  }
+
+  return <>{children}</>;
+};
+
+// Guard rute berdasarkan peran pengguna
+const RoleRoute: React.FC<{
+  roles: ('admin' | 'member' | 'child')[];
+  children: React.ReactNode;
+}> = ({ roles, children }) => {
+  const { user } = useAuth();
+  const userRole = user?.role || 'member';
+
+  if (!roles.includes(userRole)) {
+    return <Navigate to="/beranda" replace />;
+  }
+
+  return <>{children}</>;
+};
 
 export function App() {
-  const [theme, setTheme] = useState<'light' | 'dark'>('light');
-  const [health, setHealth] = useState<ServerHealth | null>(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
-  const toggleTheme = () => {
-    const nextTheme = theme === 'light' ? 'dark' : 'light';
-    setTheme(nextTheme);
-    document.documentElement.setAttribute('data-theme', nextTheme);
-  };
-
-  const checkHealth = async () => {
-    setLoading(true);
-    setError(null);
-    try {
-      const res = await fetch('http://127.0.0.1:8000/api/health');
-      if (!res.ok) {
-        throw new Error(`HTTP ${res.status}`);
-      }
-      const data: ServerHealth = await res.json();
-      setHealth(data);
-    } catch (err: unknown) {
-      const msg = err instanceof Error ? err.message : 'Koneksi gagal';
-      setError(msg);
-      setHealth(null);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    checkHealth();
-  }, []);
-
   return (
-    <div className="app-shell">
-      <header className="topbar">
-        <div className="brand">
-          <House size={24} weight="regular" />
-          <span>Rumah</span>
-          <span className="brand-badge">v0.1.0</span>
-        </div>
-        <div className="topbar-actions">
-          <button
-            type="button"
-            onClick={toggleTheme}
-            aria-label="Ganti mode tampilan"
-          >
-            {theme === 'light' ? (
-              <>
-                <Moon size={20} weight="regular" />
-                <span>Mode Gelap</span>
-              </>
-            ) : (
-              <>
-                <Sun size={20} weight="regular" />
-                <span>Mode Terang</span>
-              </>
-            )}
-          </button>
-        </div>
-      </header>
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider>
+        <AuthProvider>
+          <BrowserRouter>
+            <Routes>
+              {/* Rute Otentikasi Langsung */}
+              <Route path="/login" element={<LoginPage />} />
 
-      <main className="main-content">
-        <section className="header-section">
-          <h1 className="page-title">Smart Home & Pengawasan Keluarga</h1>
-          <p className="page-subtitle">
-            Fondasi repositori dan konfigurasi awal (Tahap 0)
-          </p>
-        </section>
-
-        <div className="grid-two">
-          <div className="card">
-            <h2 className="card-title">
-              <Cpu size={20} weight="regular" />
-              <span>Status Backend</span>
-            </h2>
-            <div className="stat-row">
-              <span className="stat-label">Layanan</span>
-              <span className="stat-value">FastAPI (Python 3.11)</span>
-            </div>
-            <div className="stat-row">
-              <span className="stat-label">Status Koneksi</span>
-              {loading ? (
-                <span className="status-badge warn">Memeriksa...</span>
-              ) : health?.status === 'ok' ? (
-                <span className="status-badge ok">Terhubung</span>
-              ) : (
-                <span className="status-badge danger">
-                  {error ?? 'Terputus'}
-                </span>
-              )}
-            </div>
-            <div className="stat-row">
-              <span className="stat-label">Database</span>
-              <span className="stat-value">
-                {health?.database.status === 'connected'
-                  ? `SQLite (${health.database.journal_mode.toUpperCase()})`
-                  : 'Belum terhubung'}
-              </span>
-            </div>
-            <div className="stat-row">
-              <span className="stat-label">Uptime Server</span>
-              <span className="stat-value">
-                {health ? `${health.uptime_seconds} detik` : '-'}
-              </span>
-            </div>
-            <div style={{ marginTop: 'var(--space-2)' }}>
-              <button
-                type="button"
-                className="primary"
-                onClick={checkHealth}
-                disabled={loading}
+              {/* Rute Aplikasi Utama di dalam AppShell dengan Suspense Code-Splitting */}
+              <Route
+                path="/"
+                element={
+                  <ProtectedRoute>
+                    <AppShell />
+                  </ProtectedRoute>
+                }
               >
-                <ArrowsClockwise size={20} weight="regular" />
-                <span>{loading ? 'Menghubungkan...' : 'Periksa Ulang'}</span>
-              </button>
-            </div>
-          </div>
+                <Route index element={<Navigate to="/beranda" replace />} />
+                <Route
+                  path="beranda"
+                  element={
+                    <Suspense fallback={<PageLoadingFallback />}>
+                      <BerandaPage />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="perangkat"
+                  element={
+                    <Suspense fallback={<PageLoadingFallback />}>
+                      <PerangkatPage />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="asisten"
+                  element={
+                    <Suspense fallback={<PageLoadingFallback />}>
+                      <AsistenPage />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="kamera"
+                  element={
+                    <RoleRoute roles={['admin', 'member']}>
+                      <Suspense fallback={<PageLoadingFallback />}>
+                        <KameraPage />
+                      </Suspense>
+                    </RoleRoute>
+                  }
+                />
+                <Route
+                  path="keluarga"
+                  element={
+                    <RoleRoute roles={['admin']}>
+                      <Suspense fallback={<PageLoadingFallback />}>
+                        <KeluargaPage />
+                      </Suspense>
+                    </RoleRoute>
+                  }
+                />
+                <Route
+                  path="pengaturan"
+                  element={
+                    <Suspense fallback={<PageLoadingFallback />}>
+                      <PengaturanPage />
+                    </Suspense>
+                  }
+                />
+              </Route>
 
-          <div className="card">
-            <h2 className="card-title">
-              <WifiHigh size={20} weight="regular" />
-              <span>Ceklist Tahap 0 Selesai</span>
-            </h2>
-            <ul className="checklist">
-              <li className="checklist-item">
-                <CheckCircle
-                  size={20}
-                  weight="regular"
-                  className="checklist-icon"
-                />
-                <span>Monorepo: server, web, firmware, camera-app, docs</span>
-              </li>
-              <li className="checklist-item">
-                <CheckCircle
-                  size={20}
-                  weight="regular"
-                  className="checklist-icon"
-                />
-                <span>Dokumentasi arsitektur docs/DECISIONS.md</span>
-              </li>
-              <li className="checklist-item">
-                <CheckCircle
-                  size={20}
-                  weight="regular"
-                  className="checklist-icon"
-                />
-                <span>Sistem token desain (Public Sans & IBM Plex Mono)</span>
-              </li>
-              <li className="checklist-item">
-                <CheckCircle
-                  size={20}
-                  weight="regular"
-                  className="checklist-icon"
-                />
-                <span>Skrip orkestrasi Windows scripts/dev.ps1</span>
-              </li>
-              <li className="checklist-item">
-                <CheckCircle
-                  size={20}
-                  weight="regular"
-                  className="checklist-icon"
-                />
-                <span>Backend FastAPI + SQLite mode WAL diverifikasi tes</span>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </main>
-
-      <footer className="footer">
-        <span>Sistem Smart Home "Rumah" — Risang</span>
-        <span className="mono">Target: Windows 10 | i3 gen 4 | 8GB RAM</span>
-      </footer>
-    </div>
+              {/* Fallback ke /beranda */}
+              <Route path="*" element={<Navigate to="/beranda" replace />} />
+            </Routes>
+          </BrowserRouter>
+        </AuthProvider>
+      </ThemeProvider>
+    </QueryClientProvider>
   );
 }
 

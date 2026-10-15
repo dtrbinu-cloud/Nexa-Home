@@ -1,0 +1,299 @@
+<!DOCTYPE html><html class="light" lang="id"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>12. Langkah 4 - Menghubungkan - Rumah</title>
+<!-- Google Fonts: Public Sans & Courier Prime -->
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&amp;family=Public+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;display=swap" rel="stylesheet">
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<!-- Tailwind CSS with Forms and Container Queries -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "surface-container-low": "#f6f3ec",
+            "on-tertiary": "#ffffff",
+            "inverse-primary": "#96d3bf",
+            "on-error": "#ffffff",
+            "on-surface": "#1c1c18",
+            "outline": "#707975",
+            "surface-bright": "#fcf9f2",
+            "secondary-container": "#dbe1da",
+            "primary-fixed-dim": "#96d3bf",
+            "surface-container-highest": "#e5e2db",
+            "background": "#fcf9f2",
+            "on-secondary-container": "#5d645e",
+            "on-primary-container": "#abe9d5",
+            "primary-container": "#2f6b5b",
+            "surface": "#fcf9f2",
+            "tertiary-container": "#3e6b32",
+            "surface-container-lowest": "#ffffff",
+            "surface-dim": "#dcdad3",
+            "tertiary-fixed-dim": "#a1d48f",
+            "error": "#ba1a1a",
+            "on-background": "#1c1c18",
+            "surface-container-high": "#ebe8e1",
+            "surface-tint": "#2c6859",
+            "surface-variant": "#e5e2db",
+            "on-primary-fixed-variant": "#0d5041",
+            "on-tertiary-fixed-variant": "#24501a",
+            "on-secondary": "#ffffff",
+            "error-container": "#ffdad6",
+            "on-secondary-fixed-variant": "#424843",
+            "tertiary": "#26521c",
+            "on-tertiary-fixed": "#012200",
+            "on-primary-fixed": "#002019",
+            "on-tertiary-container": "#b6eaa3",
+            "on-secondary-fixed": "#171d19",
+            "inverse-surface": "#31312c",
+            "secondary": "#59605a",
+            "inverse-on-surface": "#f3f0e9",
+            "primary": "#115344",
+            "on-surface-variant": "#404945",
+            "on-error-container": "#93000a",
+            "primary-fixed": "#b1efdb",
+            "tertiary-fixed": "#bcf1a9",
+            "surface-container": "#f1eee7",
+            "secondary-fixed-dim": "#c1c8c1",
+            "secondary-fixed": "#dde4dd",
+            "outline-variant": "#bfc9c4",
+            "on-primary": "#ffffff"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "2xl": "1.25rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "gutter-compact": "0.5rem",
+            "space-md": "1rem",
+            "space-sm": "0.75rem",
+            "space-xl": "1.5rem",
+            "margin": "1rem",
+            "gutter": "0.75rem",
+            "space-xs": "0.5rem",
+            "space-lg": "1.25rem",
+            "space-xxs": "0.25rem"
+          },
+          "fontFamily": {
+            "body-md": ["Public Sans"],
+            "title-md": ["Public Sans"],
+            "headline-lg": ["Public Sans"],
+            "mono-data-lg": ["Courier Prime"],
+            "headline-md": ["Public Sans"],
+            "label-md": ["Public Sans"],
+            "mono-data-md": ["Courier Prime"],
+            "mono-data-sm": ["Courier Prime"],
+            "body-sm": ["Public Sans"]
+          },
+          "fontSize": {
+            "body-md": [
+              "15px",
+              {
+                "lineHeight": "22px",
+                "fontWeight": "400"
+              }
+            ],
+            "title-md": [
+              "18px",
+              {
+                "lineHeight": "24px",
+                "fontWeight": "600"
+              }
+            ],
+            "headline-lg": [
+              "32px",
+              {
+                "lineHeight": "40px",
+                "letterSpacing": "-0.02em",
+                "fontWeight": "600"
+              }
+            ],
+            "mono-data-lg": [
+              "24px",
+              {
+                "lineHeight": "28px",
+                "fontWeight": "400"
+              }
+            ],
+            "headline-md": [
+              "24px",
+              {
+                "lineHeight": "32px",
+                "letterSpacing": "-0.01em",
+                "fontWeight": "600"
+              }
+            ],
+            "label-md": [
+              "13px",
+              {
+                "lineHeight": "16px",
+                "letterSpacing": "0.01em",
+                "fontWeight": "600"
+              }
+            ],
+            "mono-data-md": [
+              "15px",
+              {
+                "lineHeight": "20px",
+                "fontWeight": "400"
+              }
+            ],
+            "mono-data-sm": [
+              "13px",
+              {
+                "lineHeight": "16px",
+                "fontWeight": "400"
+              }
+            ],
+            "body-sm": [
+              "13px",
+              {
+                "lineHeight": "18px",
+                "fontWeight": "400"
+              }
+            ]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      line-height: 1;
+      text-transform: none;
+      letter-spacing: normal;
+      word-wrap: normal;
+      white-space: nowrap;
+      direction: ltr;
+    }
+  </style>
+</head>
+<body class="bg-[#F4F1EA] text-on-surface antialiased flex justify-center items-start min-h-screen selection:bg-primary-container selection:text-surface-container-lowest">
+<!-- Android Native Mobile Shell Frame (360dp x 800dp baseline) -->
+<main class="w-[360px] h-[800px] bg-[#F4F1EA] flex flex-col justify-between overflow-hidden relative select-none">
+<!-- Top System Stack (Status Bar + App Header) -->
+<header class="w-full flex-shrink-0">
+<!-- Android Status Bar -->
+<div class="h-6 px-margin flex items-center justify-between text-on-surface text-[12px] font-body-sm font-medium tracking-tight">
+<span class="font-mono-data-sm text-[12px] text-on-surface font-semibold">09:41</span>
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-on-surface" data-icon="wifi">wifi</span>
+<span class="material-symbols-outlined text-[16px] text-on-surface" data-icon="signal_cellular_4_bar">signal_cellular_4_bar</span>
+<span class="material-symbols-outlined text-[16px] text-on-surface" data-icon="battery_full">battery_full</span>
+</div>
+</div>
+<!-- Top Navigation Bar: Task-focused (Back + Title) -->
+<div class="h-14 px-margin flex items-center gap-3">
+<button aria-label="Kembali" class="w-12 h-12 -ml-2 flex items-center justify-center rounded-full text-on-surface active:bg-[#ECE7DC] transition-colors duration-150" type="button">
+<span class="material-symbols-outlined text-[24px]" data-icon="arrow_back">arrow_back</span>
+</button>
+<h1 class="font-title-md text-title-md text-on-surface tracking-tight">Tambah perangkat</h1>
+</div>
+<!-- Step Indicator Section -->
+<div class="px-margin pt-1 pb-4">
+<div class="flex items-center justify-between mb-2">
+<span class="font-label-md text-label-md text-secondary">Langkah 4 dari 4</span>
+<span class="font-mono-data-sm text-mono-data-sm text-primary font-medium">100%</span>
+</div>
+<!-- 4 Flat Segments (All filled with accent #2F6B5B) -->
+<div class="grid grid-cols-4 gap-1.5 w-full">
+<div class="h-1 rounded-full bg-primary-container"></div>
+<div class="h-1 rounded-full bg-primary-container"></div>
+<div class="h-1 rounded-full bg-primary-container"></div>
+<div class="h-1 rounded-full bg-primary-container"></div>
+</div>
+</div>
+</header>
+<!-- Main Content Area: Zero-shadow, Quiet Domesticity -->
+<div class="flex-1 px-margin flex flex-col justify-start overflow-y-auto">
+<!-- Primary Text Block -->
+<div class="mt-2 mb-6">
+<h2 class="font-headline-md text-headline-md text-on-surface tracking-tight mb-1.5">Menghubungkan</h2>
+<p class="font-body-md text-body-md text-secondary leading-snug">
+          Jangan matikan alat atau tutup aplikasi selama proses berlangsung.
+        </p>
+</div>
+<!-- Vertical Progress List Card: Flat #FBF9F4, Radius 20px (2xl), No Shadow, No Border -->
+<section class="bg-[#FBF9F4] rounded-2xl p-5 flex flex-col gap-5">
+<!-- Step 1: Menyambung ke WiFi rumah (Done) -->
+<div class="flex items-start gap-3.5 relative">
+<!-- Connector line down to step 2 -->
+<div class="absolute left-3 top-6 bottom-[-20px] w-[2px] bg-[#E5E0D5]"></div>
+<!-- Circle Icon: Completed -->
+<div class="w-6 h-6 rounded-full bg-[#EAF2E8] flex items-center justify-center flex-shrink-0 z-10">
+<span class="material-symbols-outlined text-[16px] text-[#4C7A3F]" data-icon="check" data-weight="fill" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+<div class="flex-1 min-w-0 pt-0.5">
+<h3 class="font-title-md text-[15px] leading-5 text-on-surface">Menyambung ke WiFi rumah</h3>
+<p class="font-body-sm text-body-sm text-secondary mt-0.5">Tersambung ke Rumah-Utama</p>
+</div>
+</div>
+<!-- Step 2: Menghubungi server (Done) -->
+<div class="flex items-start gap-3.5 relative">
+<!-- Connector line down to step 3 -->
+<div class="absolute left-3 top-6 bottom-[-20px] w-[2px] bg-[#E5E0D5]"></div>
+<!-- Circle Icon: Completed -->
+<div class="w-6 h-6 rounded-full bg-[#EAF2E8] flex items-center justify-center flex-shrink-0 z-10">
+<span class="material-symbols-outlined text-[16px] text-[#4C7A3F]" data-icon="check" data-weight="fill" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+<div class="flex-1 min-w-0 pt-0.5">
+<h3 class="font-title-md text-[15px] leading-5 text-on-surface">Menghubungi server</h3>
+<p class="font-body-sm text-body-sm text-secondary mt-0.5">Server lokal terdeteksi</p>
+</div>
+</div>
+<!-- Step 3: Mengaktifkan perangkat (In Progress) -->
+<div class="flex items-start gap-3.5 relative">
+<!-- Connector line down to step 4 -->
+<div class="absolute left-3 top-6 bottom-[-20px] w-[2px] bg-[#E5E0D5]"></div>
+<!-- Circle Icon: In-Progress Active Dot / Subtle Pulse Ring -->
+<div class="w-6 h-6 rounded-full bg-[#E4EDE9] flex items-center justify-center flex-shrink-0 z-10 relative">
+<span class="w-2.5 h-2.5 rounded-full bg-primary-container animate-pulse"></span>
+</div>
+<div class="flex-1 min-w-0 pt-0.5">
+<h3 class="font-title-md text-[15px] leading-5 text-on-surface">Mengaktifkan perangkat</h3>
+<p class="font-body-sm text-body-sm text-primary-container font-medium mt-0.5 flex items-center gap-1.5">
+<span>Sedang diproses...</span>
+</p>
+</div>
+</div>
+<!-- Step 4: Selesai (Pending) -->
+<div class="flex items-start gap-3.5 relative">
+<!-- Circle Icon: Pending Gray Dot -->
+<div class="w-6 h-6 rounded-full bg-[#ECE7DC] flex items-center justify-center flex-shrink-0 z-10">
+<span class="w-2 h-2 rounded-full bg-[#D9D3C6]"></span>
+</div>
+<div class="flex-1 min-w-0 pt-0.5">
+<h3 class="font-body-md text-[15px] leading-5 text-secondary">Selesai</h3>
+<p class="font-body-sm text-body-sm text-outline mt-0.5">Menunggu konfigurasi akhir</p>
+</div>
+</div>
+</section>
+<!-- Auxiliary Telemetry / Info Text -->
+<div class="mt-6 text-center">
+<p class="font-body-sm text-body-sm text-secondary">
+          Proses biasanya memakan waktu sekitar 30 detik.
+        </p>
+</div>
+</div>
+<!-- Bottom Action Area: Linear departure task, no BottomNavBar as per Source of Truth hierarchy -->
+<footer class="w-full px-margin pb-6 pt-2 flex flex-col items-center justify-end">
+<!-- 48px touch bounding box flat text button -->
+<button class="w-full h-12 flex items-center justify-center rounded-xl text-primary-container font-title-md text-[15px] active:bg-[#ECE7DC] transition-colors duration-150" type="button">
+        Batal
+      </button>
+<!-- Android Bottom Navigation Gesture Bar Indicator -->
+<div class="w-32 h-1 bg-on-surface/20 rounded-full mt-3"></div>
+</footer>
+</main>
+</body></html>

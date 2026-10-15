@@ -271,3 +271,55 @@ async def test_automation_rules_engine():
         notifs = (await db.execute(select(NotificationLog).where(NotificationLog.severity == "critical"))).scalars().all()
         assert len(notifs) >= 1
         assert "Bahaya gas bocor" in notifs[0].message
+
+
+@pytest.mark.asyncio
+async def test_claim_device_flow():
+    async with AsyncClient(
+        transport=ASGITransport(app=app, client=("127.0.0.1", 50000)),
+        base_url="http://test",
+    ) as client:
+        token = await create_admin_and_login(client)
+        headers = {"Authorization": f"Bearer {token}"}
+
+        # 1. Klaim perangkat baru via QR code / pairing token
+        claim_res = await client.post(
+            "/api/devices/claim",
+            headers=headers,
+            json={
+                "device_id": "esp32_c45a89",
+                "claim_token": "NEXA-8A4F-92C1",
+                "name": "ESP32 Lampu Teras",
+                "room": "Teras Depan",
+            },
+        )
+        assert claim_res.status_code == 200
+        data = claim_res.json()
+        assert data["status"] == "ok"
+        assert "Sambungan telah berhasil" in data["message"]
+        assert data["device"]["id"] == "esp32_c45a89"
+        assert data["device"]["name"] == "ESP32 Lampu Teras"
+
+        # 2. Cek perangkat terdaftar di list devices dengan kanal lengkap
+        list_res = await client.get("/api/devices", headers=headers)
+        assert list_res.status_code == 200
+        devs = list_res.json()["devices"]
+        claimed_dev = next((d for d in devs if d["id"] == "esp32_c45a89"), None)
+        assert claimed_dev is not None
+        assert claimed_dev["room"] == "Teras Depan"
+        assert len(claimed_dev["channels"]) >= 5
+
+        # 3. Klaim ulang untuk update nama/lokasi tidak error
+        reclaim_res = await client.post(
+            "/api/devices/claim",
+            headers=headers,
+            json={
+                "device_id": "esp32_c45a89",
+                "claim_token": "NEXA-8A4F-92C1",
+                "name": "ESP32 Lampu Teras Baru",
+                "room": "Balkon",
+            },
+        )
+        assert reclaim_res.status_code == 200
+        assert reclaim_res.json()["device"]["name"] == "ESP32 Lampu Teras Baru"
+

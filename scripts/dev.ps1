@@ -61,6 +61,16 @@ if (-not $SkipLint) {
     }
 }
 
+# 4. Bangun Frontend Production Build (web/dist) untuk Akses Cepat via aujasena.my.id & FastAPI
+Write-Host "`n[*] Menyiapkan bundle produksi frontend (npm run build)..." -ForegroundColor Green
+Push-Location $WebDir
+npm run build
+Pop-Location
+if ($LASTEXITCODE -ne 0) {
+    Write-Error "Build frontend produksi gagal!"
+    exit $LASTEXITCODE
+}
+
 # 4. Pengujian Otomatis
 if (-not $SkipTests) {
     Write-Host "`n[*] Menjalankan tes otomatis backend (pytest)..." -ForegroundColor Green
@@ -83,7 +93,7 @@ Write-Host "Tekan [Ctrl + C] untuk menghentikan semua layanan.`n" -ForegroundCol
 # 5. Jalankan Backend & Frontend sebagai Child Process (Splatting)
 $BackendParams = @{
     FilePath         = $PythonExe
-    ArgumentList     = @("-m", "uvicorn", "server.app.main:app", "--host", "127.0.0.1", "--port", "8000", "--reload")
+    ArgumentList     = @("-m", "uvicorn", "server.app.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload")
     WorkingDirectory = $RepoRoot
     PassThru         = $true
 }

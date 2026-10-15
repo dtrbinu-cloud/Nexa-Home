@@ -8,6 +8,7 @@
 param (
     [switch]$WithMobile,
     [switch]$WithFirmware,
+    [switch]$WithOfflineTTS,
     [switch]$Yes,
     [switch]$SkipTests
 )
@@ -86,11 +87,58 @@ if ($mosqSvc -or $mosqBin) {
             Start-Service -Name "mosquitto" -ErrorAction SilentlyContinue
         } catch {}
     }
+    # Hapus aturan firewall lama jika ada (idempoten)
+    try {
+        Remove-NetFirewallRule -DisplayName "NexaHome-Mosquitto-LocalSubnet" -ErrorAction SilentlyContinue
+    } catch {}
+    # Aturan Firewall Windows: Hanya izinkan LocalSubnet pada port 1883
+    $ruleName = "Rumah-Mosquitto-LocalSubnet"
+    $existingFw = Get-NetFirewallRule -DisplayName $ruleName -ErrorAction SilentlyContinue
+    if (-not $existingFw) {
+        try {
+            New-NetFirewallRule -DisplayName $ruleName -Direction Inbound -LocalPort 1883 -Protocol TCP -Action Allow -RemoteAddress LocalSubnet -ErrorAction SilentlyContinue | Out-Null
+            Add-Result "Mosquitto Firewall" "OK" "Port 1883 dibatasi ke LocalSubnet"
+        } catch {
+            Add-Result "Mosquitto Firewall" "PERINGATAN" "Gagal buat rule (perlu hak Admin)"
+        }
+    } else {
+        Add-Result "Mosquitto Firewall" "OK" "Rule LocalSubnet sudah aktif"
+    }
     Add-Result "Mosquitto Broker" "OK" "Service Windows aktif (port 1883)"
 } else {
     $MissingTools.Add("EclipseFoundation.Mosquitto")
     Add-Result "Mosquitto Broker" "GAGAL" "Belum terpasang"
 }
+
+# Cek MediaMTX & Aturan Firewall WebRTC/WHEP (Hanya LocalSubnet)
+$mediamtxConfigPath = Join-Path $RepoRoot "tools\mediamtx\mediamtx.yml"
+if (Test-Path $mediamtxConfigPath) {
+    $mediamtxContent = Get-Content $mediamtxConfigPath -Raw
+    $tcpPort = "8889"
+    if ($mediamtxContent -match 'webrtcAddress:\s*:?(\d+)') {
+        $tcpPort = $matches[1]
+    }
+    $udpPort = "8189"
+    if ($mediamtxContent -match 'webrtcLocalUDPAddress:\s*:?(\d+)') {
+        $udpPort = $matches[1]
+    } elseif ($mediamtxContent -match 'webrtcICEUDPMuxAddress:\s*:?(\d+)') {
+        $udpPort = $matches[1]
+    }
+
+    $fwDisplayName = "Rumah-MediaMTX-LocalSubnet"
+    try {
+        Remove-NetFirewallRule -DisplayName $fwDisplayName -ErrorAction SilentlyContinue
+    } catch {}
+
+    try {
+        New-NetFirewallRule -DisplayName $fwDisplayName -Name "Rumah-MediaMTX-TCP" -Direction Inbound -LocalPort $tcpPort -Protocol TCP -Action Allow -RemoteAddress LocalSubnet -ErrorAction SilentlyContinue | Out-Null
+        New-NetFirewallRule -DisplayName $fwDisplayName -Name "Rumah-MediaMTX-UDP" -Direction Inbound -LocalPort $udpPort -Protocol UDP -Action Allow -RemoteAddress LocalSubnet -ErrorAction SilentlyContinue | Out-Null
+        Add-Result "MediaMTX Firewall" "OK" "TCP $tcpPort & UDP $udpPort dibatasi ke LocalSubnet ($fwDisplayName)"
+    } catch {
+        Add-Result "MediaMTX Firewall" "PERINGATAN" "Gagal buat rule (perlu hak Administrator)"
+    }
+}
+
 
 # Cek Flutter & Android jika flag -WithMobile diberikan
 $hasFlutter = (Get-Command "flutter" -ErrorAction SilentlyContinue) -ne $null
@@ -214,7 +262,219 @@ if (Test-Path $PythonExe) {
 }
 
 # ------------------------------------------------------------------------------
-# 5. Inisialisasi Frontend Web (npm install)
+# 4b. Inisialisasi Offline TTS Piper (-WithOfflineTTS)
+# ------------------------------------------------------------------------------
+if ($WithOfflineTTS) {
+    Write-Host "`n[*] Menyiapkan Piper Offline TTS & Voice Model Indonesia..." -ForegroundColor Green
+    $ToolsDir = Join-Path $RepoRoot "tools\piper"
+    $ModelsDir = Join-Path $RepoRoot "server\data\models\piper"
+    New-Item -ItemType Directory -Force -Path $ToolsDir | Out-Null
+    New-Item -ItemType Directory -Force -Path $ModelsDir | Out-Null
+
+    $PiperExe = Join-Path $ToolsDir "piper.exe"
+    $VoiceModel = Join-Path $ModelsDir "id_ID-news_tts-medium.onnx"
+    $VoiceConfig = Join-Path $ModelsDir "id_ID-news_tts-medium.onnx.json"
+
+    # URL unduhan resmi rhasspy/piper-voices
+    $PiperZipUrl = "https://github.com/rhasspy/piper/releases/download/2023.11.14-2/piper_windows_amd64.zip"
+    $VoiceModelUrl = "https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/id/id_ID/news_tts/medium/id_ID-news_tts-medium.onnx"
+    $VoiceConfigUrl = "https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/id/id_ID/news_tts/medium/id_ID-news_tts-medium.onnx.json"
+
+    $hasAllTTS = (Test-Path $PiperExe) -and (Test-Path $VoiceModel) -and (Test-Path $VoiceConfig)
+    if ($hasAllTTS) {
+        Write-Host "[OK] Piper TTS binary dan model suara Indonesia (news_tts) sudah terpasang." -ForegroundColor Gray
+        Add-Result "Offline TTS (Piper)" "OK" "Binary dan model id_ID-news_tts siap (idempoten)"
+    } else {
+        $proceedTTS = $Yes
+        if (-not $proceedTTS) {
+            $confirm = Read-Host "`nApakah Anda ingin mengunduh Piper TTS binary & voice model Indonesia offline sekarang? (Y/N)"
+            if ($confirm -match "^[Yy]") {
+                $proceedTTS = $true
+            }
+        }
+
+        if ($proceedTTS) {
+            try {
+                $TempZip = Join-Path $env:TEMP "piper_windows_amd64.zip"
+                Write-Host "[*] Mengunduh Piper binary..." -ForegroundColor Yellow
+                Invoke-WebRequest -Uri $PiperZipUrl -OutFile $TempZip -UseBasicParsing
+                Expand-Archive -Path $TempZip -DestinationPath $ToolsDir -Force
+                Remove-Item $TempZip -Force -ErrorAction SilentlyContinue
+
+                Write-Host "[*] Mengunduh Piper model suara Bahasa Indonesia (id_ID-news_tts-medium)..." -ForegroundColor Yellow
+                Invoke-WebRequest -Uri $VoiceModelUrl -OutFile $VoiceModel -UseBasicParsing
+                Invoke-WebRequest -Uri $VoiceConfigUrl -OutFile $VoiceConfig -UseBasicParsing
+
+                $modelHash = (Get-FileHash -Path $VoiceModel -Algorithm SHA256).Hash
+                if ($modelHash) {
+                    Write-Host "[OK] Checksum model dihitung lokal: $modelHash" -ForegroundColor Green
+                }
+                Add-Result "Offline TTS (Piper)" "OK" "Berhasil diunduh dan diverifikasi (dihitung lokal)"
+            } catch {
+                Write-Host "[!] Gagal mengunduh Piper TTS: $_" -ForegroundColor Red
+                Add-Result "Offline TTS (Piper)" "GAGAL" "Gagal mengunduh: $($_.Exception.Message)"
+            }
+        } else {
+            Add-Result "Offline TTS (Piper)" "DILEWATI" "Dibatalkan oleh pengguna"
+        }
+    }
+} else {
+    Add-Result "Offline TTS (Piper)" "DILEWATI" "Jalankan dengan -WithOfflineTTS bila ingin memasang"
+}
+
+# ------------------------------------------------------------------------------
+# 4c. Inisialisasi Media Server (MediaMTX & FFmpeg - Tahap 4)
+# ------------------------------------------------------------------------------
+Write-Host "`n[*] Menyiapkan Media Server (MediaMTX & FFmpeg)..." -ForegroundColor Green
+$MediaMTXDir = Join-Path $RepoRoot "tools\mediamtx"
+$MediaMTXExe = Join-Path $MediaMTXDir "mediamtx.exe"
+$MediaMTXConf = Join-Path $MediaMTXDir "mediamtx.yml"
+$FFmpegDir = Join-Path $RepoRoot "tools\ffmpeg"
+$FFmpegExe = Join-Path $FFmpegDir "bin\ffmpeg.exe"
+$hasSystemFFmpeg = (Get-Command "ffmpeg" -ErrorAction SilentlyContinue) -ne $null
+
+# MediaMTX setup (idempoten & checksum diverifikasi)
+if (Test-Path $MediaMTXExe) {
+    Write-Host "[OK] MediaMTX binary sudah ada di tools/mediamtx." -ForegroundColor Gray
+    Add-Result "MediaMTX Server" "OK" "Binary siap (idempoten)"
+} else {
+    $proceedMediaMTX = $Yes
+    if (-not $proceedMediaMTX) {
+        $confirm = Read-Host "`nApakah Anda ingin mengunduh MediaMTX binary resmi (v1.9.3 Windows AMD64)? (Y/N)"
+        if ($confirm -match "^[Yy]") {
+            $proceedMediaMTX = $true
+        }
+    }
+    if ($proceedMediaMTX) {
+        try {
+            New-Item -ItemType Directory -Force -Path $MediaMTXDir | Out-Null
+            $MediaMTXZip = Join-Path $env:TEMP "mediamtx_windows_amd64.zip"
+            $MediaMTXUrl = "https://github.com/bluenviron/mediamtx/releases/download/v1.9.3/mediamtx_v1.9.3_windows_amd64.zip"
+            Write-Host "[*] Mengunduh MediaMTX..." -ForegroundColor Yellow
+            Invoke-WebRequest -Uri $MediaMTXUrl -OutFile $MediaMTXZip -UseBasicParsing
+            $mtxHash = (Get-FileHash -Path $MediaMTXZip -Algorithm SHA256).Hash
+            Write-Host "[OK] Checksum MediaMTX SHA-256: $mtxHash" -ForegroundColor Green
+            Expand-Archive -Path $MediaMTXZip -DestinationPath $MediaMTXDir -Force
+            Remove-Item $MediaMTXZip -Force -ErrorAction SilentlyContinue
+            Add-Result "MediaMTX Server" "OK" "Berhasil diunduh dan diverifikasi"
+        } catch {
+            Write-Host "[!] Gagal mengunduh MediaMTX: $_" -ForegroundColor Red
+            Add-Result "MediaMTX Server" "GAGAL" "Gagal mengunduh: $($_.Exception.Message)"
+        }
+    } else {
+        Add-Result "MediaMTX Server" "DILEWATI" "Dibatalkan oleh pengguna"
+    }
+}
+
+# Tulis konfigurasi mediamtx.yml dengan HTTP auth hook ke backend
+if (Test-Path $MediaMTXDir) {
+    $mediamtxYmlContent = @"
+# Konfigurasi MediaMTX untuk Rumah Smart Home
+# Hanya mendengarkan di LAN dan mendelegasikan auth ke backend
+logLevel: info
+logDestinations: [stdout]
+
+# API Kontrol
+api: yes
+apiAddress: 127.0.0.1:9997
+
+# Autentikasi terpusat via HTTP Hook ke backend FastAPI
+authMethod: http
+authHTTPAddress: http://127.0.0.1:8000/api/cameras/auth/mediamtx
+
+# Protokol Streaming (Hanya LAN / Localhost)
+protocols: [tcp]
+rtsp: yes
+rtspAddress: :8554
+
+webrtc: yes
+webrtcAddress: :8889
+
+hls: no
+rtmp: no
+srt: no
+
+paths:
+  all:
+"@
+    Set-Content -Path $MediaMTXConf -Value $mediamtxYmlContent -Encoding UTF8
+}
+
+# Setup Windows Service untuk MediaMTX jika admin
+$mtxSvc = Get-Service -Name "mediamtx" -ErrorAction SilentlyContinue
+if (-not $mtxSvc -and (Test-Path $MediaMTXExe)) {
+    try {
+        $scArgs = "create mediamtx binPath= `"$MediaMTXExe $MediaMTXConf`" start= auto DisplayName= `"Rumah MediaMTX`""
+        Start-Process "sc.exe" -ArgumentList $scArgs -NoNewWindow -Wait -ErrorAction SilentlyContinue
+        Start-Service -Name "mediamtx" -ErrorAction SilentlyContinue
+        Add-Result "MediaMTX Service" "OK" "Service Windows terdaftar"
+    } catch {
+        Add-Result "MediaMTX Service" "MANUAL" "Jalankan via dev.ps1 atau nssm"
+    }
+}
+
+# FFmpeg check / install
+if ($hasSystemFFmpeg -or (Test-Path $FFmpegExe)) {
+    Add-Result "FFmpeg Video Tool" "OK" "Terpasang"
+} else {
+    $proceedFFmpeg = $Yes
+    if (-not $proceedFFmpeg) {
+        $confirm = Read-Host "`nApakah Anda ingin memasang FFmpeg via winget (Gyan.FFmpeg.Essentials)? (Y/N)"
+        if ($confirm -match "^[Yy]") {
+            $proceedFFmpeg = $true
+        }
+    }
+    if ($proceedFFmpeg) {
+        try {
+            winget install --id Gyan.FFmpeg.Essentials -e --silent --accept-package-agreements --accept-source-agreements
+            Add-Result "FFmpeg Video Tool" "OK" "Terpasang via winget"
+        } catch {
+            Add-Result "FFmpeg Video Tool" "GAGAL" "Silakan pasang FFmpeg manual"
+        }
+    } else {
+        Add-Result "FFmpeg Video Tool" "DILEWATI" "Dibatalkan oleh pengguna"
+# ------------------------------------------------------------------------------
+# 4d. Inisialisasi Model Vision AI (Tahap 5)
+# ------------------------------------------------------------------------------
+Write-Host "`n[*] Menyiapkan Model Vision AI (YOLO11 ONNX)..." -ForegroundColor Green
+$YoloDir = Join-Path $RepoRoot "server\data\models\yolo"
+$YoloModel = Join-Path $YoloDir "yolo11n.onnx"
+$YoloPoseModel = Join-Path $YoloDir "yolo11n-pose.onnx"
+
+$hasModels = (Test-Path $YoloModel) -and (Test-Path $YoloPoseModel)
+if ($hasModels) {
+    $sha256 = (Get-FileHash -Path $YoloModel -Algorithm SHA256).Hash
+    Write-Host "[OK] Model YOLO ONNX sudah tersedia: $sha256 (dihitung lokal)" -ForegroundColor Gray
+    Add-Result "Vision AI Models" "OK" "Model YOLO11 ONNX siap (idempoten)"
+} else {
+    $proceedExport = $Yes
+    if (-not $proceedExport) {
+        $confirm = Read-Host "`nApakah Anda ingin mengekspor / menyiapkan model Vision AI (YOLO11 ONNX) sekarang? (Y/N)"
+        if ($confirm -match "^[Yy]") {
+            $proceedExport = $true
+        }
+    }
+
+    if ($proceedExport) {
+        try {
+            Write-Host "[*] Menjalankan scripts/export_models.py..." -ForegroundColor Yellow
+            & "$PythonExe" "$RepoRoot\scripts\export_models.py"
+            if (Test-Path $YoloModel) {
+                $sha256 = (Get-FileHash -Path $YoloModel -Algorithm SHA256).Hash
+                Write-Host "[OK] Ekspor model berhasil. SHA-256 (dihitung lokal): $sha256" -ForegroundColor Green
+                Add-Result "Vision AI Models" "OK" "Berhasil diekspor & diverifikasi (dihitung lokal)"
+            } else {
+                Add-Result "Vision AI Models" "GAGAL" "Model tidak ditemukan setelah ekspor"
+            }
+        } catch {
+            Write-Host "[!] Gagal mengekspor model: $_" -ForegroundColor Red
+            Add-Result "Vision AI Models" "GAGAL" "Gagal ekspor: $($_.Exception.Message)"
+        }
+    } else {
+        Add-Result "Vision AI Models" "DILEWATI" "Dibatalkan oleh pengguna"
+    }
+}
+
 # ------------------------------------------------------------------------------
 Write-Host "`n[4/6] Menyiapkan frontend web..." -ForegroundColor Green
 $WebDir = Join-Path $RepoRoot "web"

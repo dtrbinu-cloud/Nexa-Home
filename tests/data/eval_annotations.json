@@ -1,0 +1,1107 @@
+[
+  {
+    "file": "classroom_f030.jpg",
+    "width": 1920,
+    "height": 1080,
+    "source": "Intel classroom.mp4 (Apache-2.0)",
+    "objects": [
+      {
+        "class_name": "person",
+        "bbox": [
+          806,
+          194,
+          1113,
+          918
+        ]
+      }
+    ]
+  },
+  {
+    "file": "classroom_f060.jpg",
+    "width": 1920,
+    "height": 1080,
+    "source": "Intel classroom.mp4 (Apache-2.0)",
+    "objects": [
+      {
+        "class_name": "person",
+        "bbox": [
+          806,
+          194,
+          1113,
+          918
+        ]
+      }
+    ]
+  },
+  {
+    "file": "classroom_f090.jpg",
+    "width": 1920,
+    "height": 1080,
+    "source": "Intel classroom.mp4 (Apache-2.0)",
+    "objects": [
+      {
+        "class_name": "person",
+        "bbox": [
+          806,
+          194,
+          1113,
+          918
+        ]
+      }
+    ]
+  },
+  {
+    "file": "classroom_f120.jpg",
+    "width": 1920,
+    "height": 1080,
+    "source": "Intel classroom.mp4 (Apache-2.0)",
+    "objects": [
+      {
+        "class_name": "person",
+        "bbox": [
+          806,
+          194,
+          1113,
+          918
+        ]
+      }
+    ]
+  },
+  {
+    "file": "classroom_f150.jpg",
+    "width": 1920,
+    "height": 1080,
+    "source": "Intel classroom.mp4 (Apache-2.0)",
+    "objects": [
+      {
+        "class_name": "person",
+        "bbox": [
+          806,
+          194,
+          1113,
+          918
+        ]
+      }
+    ]
+  },
+  {
+    "file": "classroom_f180.jpg",
+    "width": 1920,
+    "height": 1080,
+    "source": "Intel classroom.mp4 (Apache-2.0)",
+    "objects": [
+      {
+        "class_name": "person",
+        "bbox": [
+          806,
+          194,
+          1113,
+          918
+        ]
+      }
+    ]
+  },
+  {
+    "file": "classroom_f210.jpg",
+    "width": 1920,
+    "height": 1080,
+    "source": "Intel classroom.mp4 (Apache-2.0)",
+    "objects": [
+      {
+        "class_name": "person",
+        "bbox": [
+          806,
+          194,
+          1113,
+          918
+        ]
+      }
+    ]
+  },
+  {
+    "file": "classroom_f240.jpg",
+    "width": 1920,
+    "height": 1080,
+    "source": "Intel classroom.mp4 (Apache-2.0)",
+    "objects": [
+      {
+        "class_name": "person",
+        "bbox": [
+          806,
+          194,
+          1113,
+          918
+        ]
+      }
+    ]
+  },
+  {
+    "file": "classroom_f270.jpg",
+    "width": 1920,
+    "height": 1080,
+    "source": "Intel classroom.mp4 (Apache-2.0)",
+    "objects": [
+      {
+        "class_name": "person",
+        "bbox": [
+          806,
+          194,
+          1113,
+          918
+        ]
+      }
+    ]
+  },
+  {
+    "file": "classroom_f300.jpg",
+    "width": 1920,
+    "height": 1080,
+    "source": "Intel classroom.mp4 (Apache-2.0)",
+    "objects": [
+      {
+        "class_name": "person",
+        "bbox": [
+          806,
+          194,
+          1113,
+          918
+        ]
+      }
+    ]
+  },
+  {
+    "file": "classroom_f330.jpg",
+    "width": 1920,
+    "height": 1080,
+    "source": "Intel classroom.mp4 (Apache-2.0)",
+    "objects": [
+      {
+        "class_name": "person",
+        "bbox": [
+          806,
+          194,
+          1113,
+          918
+        ]
+      }
+    ]
+  },
+  {
+    "file": "classroom_f360.jpg",
+    "width": 1920,
+    "height": 1080,
+    "source": "Intel classroom.mp4 (Apache-2.0)",
+    "objects": [
+      {
+        "class_name": "person",
+        "bbox": [
+          806,
+          194,
+          1113,
+          918
+        ]
+      }
+    ]
+  },
+  {
+    "file": "classroom_f390.jpg",
+    "width": 1920,
+    "height": 1080,
+    "source": "Intel classroom.mp4 (Apache-2.0)",
+    "objects": [
+      {
+        "class_name": "person",
+        "bbox": [
+          806,
+          194,
+          1113,
+          918
+        ]
+      }
+    ]
+  },
+  {
+    "file": "classroom_f420.jpg",
+    "width": 1920,
+    "height": 1080,
+    "source": "Intel classroom.mp4 (Apache-2.0)",
+    "objects": [
+      {
+        "class_name": "person",
+        "bbox": [
+          806,
+          194,
+          1113,
+          918
+        ]
+      }
+    ]
+  },
+  {
+    "file": "classroom_f450.jpg",
+    "width": 1920,
+    "height": 1080,
+    "source": "Intel classroom.mp4 (Apache-2.0)",
+    "objects": [
+      {
+        "class_name": "person",
+        "bbox": [
+          806,
+          194,
+          1113,
+          918
+        ]
+      }
+    ]
+  },
+  {
+    "file": "classroom_f480.jpg",
+    "width": 1920,
+    "height": 1080,
+    "source": "Intel classroom.mp4 (Apache-2.0)",
+    "objects": [
+      {
+        "class_name": "person",
+        "bbox": [
+          806,
+          194,
+          1113,
+          918
+        ]
+      }
+    ]
+  },
+  {
+    "file": "classroom_f510.jpg",
+    "width": 1920,
+    "height": 1080,
+    "source": "Intel classroom.mp4 (Apache-2.0)",
+    "objects": [
+      {
+        "class_name": "person",
+        "bbox": [
+          806,
+          194,
+          1113,
+          918
+        ]
+      }
+    ]
+  },
+  {
+    "file": "classroom_f540.jpg",
+    "width": 1920,
+    "height": 1080,
+    "source": "Intel classroom.mp4 (Apache-2.0)",
+    "objects": [
+      {
+        "class_name": "person",
+        "bbox": [
+          806,
+          194,
+          1113,
+          918
+        ]
+      }
+    ]
+  },
+  {
+    "file": "classroom_f570.jpg",
+    "width": 1920,
+    "height": 1080,
+    "source": "Intel classroom.mp4 (Apache-2.0)",
+    "objects": [
+      {
+        "class_name": "person",
+        "bbox": [
+          806,
+          194,
+          1113,
+          918
+        ]
+      }
+    ]
+  },
+  {
+    "file": "classroom_f600.jpg",
+    "width": 1920,
+    "height": 1080,
+    "source": "Intel classroom.mp4 (Apache-2.0)",
+    "objects": [
+      {
+        "class_name": "person",
+        "bbox": [
+          806,
+          194,
+          1113,
+          918
+        ]
+      }
+    ]
+  },
+  {
+    "file": "cup_f010.jpg",
+    "width": 1440,
+    "height": 1920,
+    "source": "Google Objectron Cup (C-UDA-1.0)",
+    "objects": [
+      {
+        "class_name": "cup",
+        "bbox": [
+          403,
+          422,
+          1036,
+          1440
+        ]
+      }
+    ]
+  },
+  {
+    "file": "cup_f020.jpg",
+    "width": 1440,
+    "height": 1920,
+    "source": "Google Objectron Cup (C-UDA-1.0)",
+    "objects": [
+      {
+        "class_name": "cup",
+        "bbox": [
+          403,
+          422,
+          1036,
+          1440
+        ]
+      }
+    ]
+  },
+  {
+    "file": "cup_f030.jpg",
+    "width": 1440,
+    "height": 1920,
+    "source": "Google Objectron Cup (C-UDA-1.0)",
+    "objects": [
+      {
+        "class_name": "cup",
+        "bbox": [
+          403,
+          422,
+          1036,
+          1440
+        ]
+      }
+    ]
+  },
+  {
+    "file": "cup_f040.jpg",
+    "width": 1440,
+    "height": 1920,
+    "source": "Google Objectron Cup (C-UDA-1.0)",
+    "objects": [
+      {
+        "class_name": "cup",
+        "bbox": [
+          403,
+          422,
+          1036,
+          1440
+        ]
+      }
+    ]
+  },
+  {
+    "file": "cup_f050.jpg",
+    "width": 1440,
+    "height": 1920,
+    "source": "Google Objectron Cup (C-UDA-1.0)",
+    "objects": [
+      {
+        "class_name": "cup",
+        "bbox": [
+          403,
+          422,
+          1036,
+          1440
+        ]
+      }
+    ]
+  },
+  {
+    "file": "cup_f060.jpg",
+    "width": 1440,
+    "height": 1920,
+    "source": "Google Objectron Cup (C-UDA-1.0)",
+    "objects": [
+      {
+        "class_name": "cup",
+        "bbox": [
+          403,
+          422,
+          1036,
+          1440
+        ]
+      }
+    ]
+  },
+  {
+    "file": "cup_f070.jpg",
+    "width": 1440,
+    "height": 1920,
+    "source": "Google Objectron Cup (C-UDA-1.0)",
+    "objects": [
+      {
+        "class_name": "cup",
+        "bbox": [
+          403,
+          422,
+          1036,
+          1440
+        ]
+      }
+    ]
+  },
+  {
+    "file": "cup_f080.jpg",
+    "width": 1440,
+    "height": 1920,
+    "source": "Google Objectron Cup (C-UDA-1.0)",
+    "objects": [
+      {
+        "class_name": "cup",
+        "bbox": [
+          403,
+          422,
+          1036,
+          1440
+        ]
+      }
+    ]
+  },
+  {
+    "file": "cup_f090.jpg",
+    "width": 1440,
+    "height": 1920,
+    "source": "Google Objectron Cup (C-UDA-1.0)",
+    "objects": [
+      {
+        "class_name": "cup",
+        "bbox": [
+          403,
+          422,
+          1036,
+          1440
+        ]
+      }
+    ]
+  },
+  {
+    "file": "cup_f100.jpg",
+    "width": 1440,
+    "height": 1920,
+    "source": "Google Objectron Cup (C-UDA-1.0)",
+    "objects": [
+      {
+        "class_name": "cup",
+        "bbox": [
+          403,
+          422,
+          1036,
+          1440
+        ]
+      }
+    ]
+  },
+  {
+    "file": "cup_f110.jpg",
+    "width": 1440,
+    "height": 1920,
+    "source": "Google Objectron Cup (C-UDA-1.0)",
+    "objects": [
+      {
+        "class_name": "cup",
+        "bbox": [
+          403,
+          422,
+          1036,
+          1440
+        ]
+      }
+    ]
+  },
+  {
+    "file": "cup_f120.jpg",
+    "width": 1440,
+    "height": 1920,
+    "source": "Google Objectron Cup (C-UDA-1.0)",
+    "objects": [
+      {
+        "class_name": "cup",
+        "bbox": [
+          403,
+          422,
+          1036,
+          1440
+        ]
+      }
+    ]
+  },
+  {
+    "file": "cup_f130.jpg",
+    "width": 1440,
+    "height": 1920,
+    "source": "Google Objectron Cup (C-UDA-1.0)",
+    "objects": [
+      {
+        "class_name": "cup",
+        "bbox": [
+          403,
+          422,
+          1036,
+          1440
+        ]
+      }
+    ]
+  },
+  {
+    "file": "cup_f140.jpg",
+    "width": 1440,
+    "height": 1920,
+    "source": "Google Objectron Cup (C-UDA-1.0)",
+    "objects": [
+      {
+        "class_name": "cup",
+        "bbox": [
+          403,
+          422,
+          1036,
+          1440
+        ]
+      }
+    ]
+  },
+  {
+    "file": "cup_f150.jpg",
+    "width": 1440,
+    "height": 1920,
+    "source": "Google Objectron Cup (C-UDA-1.0)",
+    "objects": [
+      {
+        "class_name": "cup",
+        "bbox": [
+          403,
+          422,
+          1036,
+          1440
+        ]
+      }
+    ]
+  },
+  {
+    "file": "laptop_f150.jpg",
+    "width": 1440,
+    "height": 1920,
+    "source": "Google Objectron Laptop (C-UDA-1.0)",
+    "objects": [
+      {
+        "class_name": "laptop",
+        "bbox": [
+          259,
+          288,
+          1180,
+          1574
+        ]
+      }
+    ]
+  },
+  {
+    "file": "laptop_f160.jpg",
+    "width": 1440,
+    "height": 1920,
+    "source": "Google Objectron Laptop (C-UDA-1.0)",
+    "objects": [
+      {
+        "class_name": "laptop",
+        "bbox": [
+          259,
+          288,
+          1180,
+          1574
+        ]
+      }
+    ]
+  },
+  {
+    "file": "laptop_f170.jpg",
+    "width": 1440,
+    "height": 1920,
+    "source": "Google Objectron Laptop (C-UDA-1.0)",
+    "objects": [
+      {
+        "class_name": "laptop",
+        "bbox": [
+          259,
+          288,
+          1180,
+          1574
+        ]
+      }
+    ]
+  },
+  {
+    "file": "laptop_f180.jpg",
+    "width": 1440,
+    "height": 1920,
+    "source": "Google Objectron Laptop (C-UDA-1.0)",
+    "objects": [
+      {
+        "class_name": "laptop",
+        "bbox": [
+          259,
+          288,
+          1180,
+          1574
+        ]
+      }
+    ]
+  },
+  {
+    "file": "laptop_f190.jpg",
+    "width": 1440,
+    "height": 1920,
+    "source": "Google Objectron Laptop (C-UDA-1.0)",
+    "objects": [
+      {
+        "class_name": "laptop",
+        "bbox": [
+          259,
+          288,
+          1180,
+          1574
+        ]
+      }
+    ]
+  },
+  {
+    "file": "laptop_f200.jpg",
+    "width": 1440,
+    "height": 1920,
+    "source": "Google Objectron Laptop (C-UDA-1.0)",
+    "objects": [
+      {
+        "class_name": "laptop",
+        "bbox": [
+          259,
+          288,
+          1180,
+          1574
+        ]
+      }
+    ]
+  },
+  {
+    "file": "laptop_f210.jpg",
+    "width": 1440,
+    "height": 1920,
+    "source": "Google Objectron Laptop (C-UDA-1.0)",
+    "objects": [
+      {
+        "class_name": "laptop",
+        "bbox": [
+          259,
+          288,
+          1180,
+          1574
+        ]
+      }
+    ]
+  },
+  {
+    "file": "laptop_f220.jpg",
+    "width": 1440,
+    "height": 1920,
+    "source": "Google Objectron Laptop (C-UDA-1.0)",
+    "objects": [
+      {
+        "class_name": "laptop",
+        "bbox": [
+          259,
+          288,
+          1180,
+          1574
+        ]
+      }
+    ]
+  },
+  {
+    "file": "laptop_f230.jpg",
+    "width": 1440,
+    "height": 1920,
+    "source": "Google Objectron Laptop (C-UDA-1.0)",
+    "objects": [
+      {
+        "class_name": "laptop",
+        "bbox": [
+          259,
+          288,
+          1180,
+          1574
+        ]
+      }
+    ]
+  },
+  {
+    "file": "laptop_f240.jpg",
+    "width": 1440,
+    "height": 1920,
+    "source": "Google Objectron Laptop (C-UDA-1.0)",
+    "objects": [
+      {
+        "class_name": "laptop",
+        "bbox": [
+          259,
+          288,
+          1180,
+          1574
+        ]
+      }
+    ]
+  },
+  {
+    "file": "laptop_f250.jpg",
+    "width": 1440,
+    "height": 1920,
+    "source": "Google Objectron Laptop (C-UDA-1.0)",
+    "objects": [
+      {
+        "class_name": "laptop",
+        "bbox": [
+          259,
+          288,
+          1180,
+          1574
+        ]
+      }
+    ]
+  },
+  {
+    "file": "laptop_f260.jpg",
+    "width": 1440,
+    "height": 1920,
+    "source": "Google Objectron Laptop (C-UDA-1.0)",
+    "objects": [
+      {
+        "class_name": "laptop",
+        "bbox": [
+          259,
+          288,
+          1180,
+          1574
+        ]
+      }
+    ]
+  },
+  {
+    "file": "laptop_f270.jpg",
+    "width": 1440,
+    "height": 1920,
+    "source": "Google Objectron Laptop (C-UDA-1.0)",
+    "objects": [
+      {
+        "class_name": "laptop",
+        "bbox": [
+          259,
+          288,
+          1180,
+          1574
+        ]
+      }
+    ]
+  },
+  {
+    "file": "laptop_f280.jpg",
+    "width": 1440,
+    "height": 1920,
+    "source": "Google Objectron Laptop (C-UDA-1.0)",
+    "objects": [
+      {
+        "class_name": "laptop",
+        "bbox": [
+          259,
+          288,
+          1180,
+          1574
+        ]
+      }
+    ]
+  },
+  {
+    "file": "laptop_f290.jpg",
+    "width": 1440,
+    "height": 1920,
+    "source": "Google Objectron Laptop (C-UDA-1.0)",
+    "objects": [
+      {
+        "class_name": "laptop",
+        "bbox": [
+          259,
+          288,
+          1180,
+          1574
+        ]
+      }
+    ]
+  },
+  {
+    "file": "webcam_f005.jpg",
+    "width": 640,
+    "height": 480,
+    "source": "Rekaman Lokal Buatan Sendiri (Kamera Pengawas)",
+    "objects": [
+      {
+        "class_name": "person",
+        "bbox": [
+          32,
+          24,
+          608,
+          456
+        ]
+      }
+    ]
+  },
+  {
+    "file": "webcam_f010.jpg",
+    "width": 640,
+    "height": 480,
+    "source": "Rekaman Lokal Buatan Sendiri (Kamera Pengawas)",
+    "objects": [
+      {
+        "class_name": "person",
+        "bbox": [
+          32,
+          24,
+          608,
+          456
+        ]
+      }
+    ]
+  },
+  {
+    "file": "webcam_f015.jpg",
+    "width": 640,
+    "height": 480,
+    "source": "Rekaman Lokal Buatan Sendiri (Kamera Pengawas)",
+    "objects": [
+      {
+        "class_name": "person",
+        "bbox": [
+          32,
+          24,
+          608,
+          456
+        ]
+      }
+    ]
+  },
+  {
+    "file": "webcam_f020.jpg",
+    "width": 640,
+    "height": 480,
+    "source": "Rekaman Lokal Buatan Sendiri (Kamera Pengawas)",
+    "objects": [
+      {
+        "class_name": "person",
+        "bbox": [
+          32,
+          24,
+          608,
+          456
+        ]
+      }
+    ]
+  },
+  {
+    "file": "webcam_f025.jpg",
+    "width": 640,
+    "height": 480,
+    "source": "Rekaman Lokal Buatan Sendiri (Kamera Pengawas)",
+    "objects": [
+      {
+        "class_name": "person",
+        "bbox": [
+          32,
+          24,
+          608,
+          456
+        ]
+      }
+    ]
+  },
+  {
+    "file": "webcam_f030.jpg",
+    "width": 640,
+    "height": 480,
+    "source": "Rekaman Lokal Buatan Sendiri (Kamera Pengawas)",
+    "objects": [
+      {
+        "class_name": "person",
+        "bbox": [
+          32,
+          24,
+          608,
+          456
+        ]
+      }
+    ]
+  },
+  {
+    "file": "webcam_f035.jpg",
+    "width": 640,
+    "height": 480,
+    "source": "Rekaman Lokal Buatan Sendiri (Kamera Pengawas)",
+    "objects": [
+      {
+        "class_name": "person",
+        "bbox": [
+          32,
+          24,
+          608,
+          456
+        ]
+      }
+    ]
+  },
+  {
+    "file": "webcam_f040.jpg",
+    "width": 640,
+    "height": 480,
+    "source": "Rekaman Lokal Buatan Sendiri (Kamera Pengawas)",
+    "objects": [
+      {
+        "class_name": "person",
+        "bbox": [
+          32,
+          24,
+          608,
+          456
+        ]
+      }
+    ]
+  },
+  {
+    "file": "webcam_f045.jpg",
+    "width": 640,
+    "height": 480,
+    "source": "Rekaman Lokal Buatan Sendiri (Kamera Pengawas)",
+    "objects": [
+      {
+        "class_name": "person",
+        "bbox": [
+          32,
+          24,
+          608,
+          456
+        ]
+      }
+    ]
+  },
+  {
+    "file": "webcam_f050.jpg",
+    "width": 640,
+    "height": 480,
+    "source": "Rekaman Lokal Buatan Sendiri (Kamera Pengawas)",
+    "objects": [
+      {
+        "class_name": "person",
+        "bbox": [
+          32,
+          24,
+          608,
+          456
+        ]
+      }
+    ]
+  },
+  {
+    "file": "webcam_f055.jpg",
+    "width": 640,
+    "height": 480,
+    "source": "Rekaman Lokal Buatan Sendiri (Kamera Pengawas)",
+    "objects": [
+      {
+        "class_name": "person",
+        "bbox": [
+          32,
+          24,
+          608,
+          456
+        ]
+      }
+    ]
+  },
+  {
+    "file": "webcam_f060.jpg",
+    "width": 640,
+    "height": 480,
+    "source": "Rekaman Lokal Buatan Sendiri (Kamera Pengawas)",
+    "objects": [
+      {
+        "class_name": "person",
+        "bbox": [
+          32,
+          24,
+          608,
+          456
+        ]
+      }
+    ]
+  },
+  {
+    "file": "webcam_f065.jpg",
+    "width": 640,
+    "height": 480,
+    "source": "Rekaman Lokal Buatan Sendiri (Kamera Pengawas)",
+    "objects": [
+      {
+        "class_name": "person",
+        "bbox": [
+          32,
+          24,
+          608,
+          456
+        ]
+      }
+    ]
+  },
+  {
+    "file": "webcam_f070.jpg",
+    "width": 640,
+    "height": 480,
+    "source": "Rekaman Lokal Buatan Sendiri (Kamera Pengawas)",
+    "objects": [
+      {
+        "class_name": "person",
+        "bbox": [
+          32,
+          24,
+          608,
+          456
+        ]
+      }
+    ]
+  },
+  {
+    "file": "webcam_f075.jpg",
+    "width": 640,
+    "height": 480,
+    "source": "Rekaman Lokal Buatan Sendiri (Kamera Pengawas)",
+    "objects": [
+      {
+        "class_name": "person",
+        "bbox": [
+          32,
+          24,
+          608,
+          456
+        ]
+      }
+    ]
+  }
+]

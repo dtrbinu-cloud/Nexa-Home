@@ -1,0 +1,385 @@
+<!DOCTYPE html><html class="light" lang="id"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+<title>Rumah - Beranda Bahaya</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&amp;family=Courier+Prime:wght@400;700&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-primary": "#ffffff",
+            "surface": "#fcf9f2",
+            "on-tertiary-fixed": "#012200",
+            "secondary-container": "#dbe1da",
+            "surface-container-low": "#f6f3ec",
+            "surface-container-high": "#ebe8e1",
+            "error": "#ba1a1a",
+            "surface-bright": "#fcf9f2",
+            "surface-container-lowest": "#ffffff",
+            "error-container": "#ffdad6",
+            "surface-variant": "#e5e2db",
+            "tertiary-container": "#3e6b32",
+            "surface-container-highest": "#e5e2db",
+            "outline": "#707975",
+            "surface-container": "#f1eee7",
+            "inverse-surface": "#31312c",
+            "on-primary-fixed": "#002019",
+            "secondary-fixed": "#dde4dd",
+            "outline-variant": "#bfc9c4",
+            "on-error": "#ffffff",
+            "surface-dim": "#dcdad3",
+            "on-background": "#1c1c18",
+            "inverse-on-surface": "#f3f0e9",
+            "inverse-primary": "#96d3bf",
+            "on-surface-variant": "#404945",
+            "surface-tint": "#2c6859",
+            "on-error-container": "#93000a",
+            "on-secondary": "#ffffff",
+            "on-secondary-fixed": "#171d19",
+            "background": "#fcf9f2",
+            "primary": "#115344",
+            "on-tertiary-fixed-variant": "#24501a",
+            "on-primary-container": "#abe9d5",
+            "primary-container": "#2f6b5b",
+            "secondary-fixed-dim": "#c1c8c1",
+            "on-tertiary-container": "#b6eaa3",
+            "on-secondary-fixed-variant": "#424843",
+            "tertiary-fixed": "#bcf1a9",
+            "on-surface": "#1c1c18",
+            "tertiary-fixed-dim": "#a1d48f",
+            "primary-fixed-dim": "#96d3bf",
+            "tertiary": "#26521c",
+            "on-secondary-container": "#5d645e",
+            "on-tertiary": "#ffffff",
+            "primary-fixed": "#b1efdb",
+            "secondary": "#59605a",
+            "on-primary-fixed-variant": "#0d5041"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "space-lg": "1.25rem",
+            "gutter-compact": "0.5rem",
+            "space-xs": "0.5rem",
+            "space-xl": "1.5rem",
+            "space-md": "1rem",
+            "space-xxs": "0.25rem",
+            "space-sm": "0.75rem",
+            "gutter": "0.75rem",
+            "margin": "1rem"
+          },
+          "fontFamily": {
+            "body-md": ["Public Sans", "sans-serif"],
+            "mono-data-lg": ["Courier Prime", "monospace"],
+            "title-md": ["Public Sans", "sans-serif"],
+            "headline-md": ["Public Sans", "sans-serif"],
+            "mono-data-sm": ["Courier Prime", "monospace"],
+            "mono-data-md": ["Courier Prime", "monospace"],
+            "headline-lg": ["Public Sans", "sans-serif"],
+            "body-sm": ["Public Sans", "sans-serif"],
+            "label-md": ["Public Sans", "sans-serif"],
+            "plex-mono": ["IBM Plex Mono", "monospace"]
+          },
+          "fontSize": {
+            "body-md": ["15px", { "lineHeight": "22px", "fontWeight": "400" }],
+            "mono-data-lg": ["24px", { "lineHeight": "28px", "fontWeight": "400" }],
+            "title-md": ["18px", { "lineHeight": "24px", "fontWeight": "600" }],
+            "headline-md": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "mono-data-sm": ["13px", { "lineHeight": "16px", "fontWeight": "400" }],
+            "mono-data-md": ["15px", { "lineHeight": "20px", "fontWeight": "400" }],
+            "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+            "body-sm": ["13px", { "lineHeight": "18px", "fontWeight": "400" }],
+            "label-md": ["13px", { "lineHeight": "16px", "letterSpacing": "0.01em", "fontWeight": "600" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    body {
+      background-color: #F4F1EA;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+    .material-symbols-outlined.fill-icon {
+      font-variation-settings: 'FILL' 1, 'wght' 500, 'GRAD' 0, 'opsz' 24;
+    }
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    /* Fixed base card styles according to Quiet Domesticity */
+    .floor-0 { background-color: #F4F1EA; }
+    .floor-1 { background-color: #FBF9F4; }
+    .floor-2 { background-color: #ECE7DC; }
+    .floor-3 { background-color: #E4EDE9; }
+    .danger-banner-bg { background-color: #B23A2E; }
+    .danger-accent-text { color: #B23A2E; }
+  </style>
+</head>
+<body class="floor-0 text-on-surface antialiased flex justify-center min-h-screen">
+<!-- Android Device Simulation Container 360 x 800 -->
+<div class="w-full max-w-[360px] min-h-[800px] flex flex-col relative pb-24 overflow-x-hidden floor-0">
+<!-- Android System Status Bar (Edge-to-Edge flat) -->
+<div class="w-full h-6 px-margin flex items-center justify-between floor-0 select-none pt-1">
+<span class="font-plex-mono text-[12px] font-medium text-secondary">19:45</span>
+<div class="flex items-center gap-1.5 text-secondary">
+<span class="material-symbols-outlined text-[14px]">signal_cellular_4_bar</span>
+<span class="material-symbols-outlined text-[14px]">wifi</span>
+<span class="material-symbols-outlined text-[14px]">battery_std</span>
+</div>
+</div>
+<!-- TopAppBar (Shared Component adherence) -->
+<header class="bg-background dark:bg-inverse-surface flex justify-between items-center w-full px-margin h-16 max-w-[360px] mx-auto select-none">
+<div class="flex items-center gap-3">
+<h1 class="text-headline-md font-headline-md font-bold text-on-surface dark:text-inverse-on-surface tracking-tight">Rumah</h1>
+</div>
+<button aria-label="Pengaturan" class="w-12 h-12 flex items-center justify-center rounded-full hover:bg-surface-container-high dark:hover:bg-surface-container-highest transition-colors duration-150 active:opacity-80 text-secondary dark:text-secondary-fixed">
+<span class="material-symbols-outlined text-2xl">settings</span>
+</button>
+</header>
+<!-- Urgent Hazard State Banner (Danger Red #B23A2E directly under TopAppBar) -->
+<section class="danger-banner-bg text-white w-full px-margin py-3.5 flex flex-col gap-2.5">
+<div class="flex items-start gap-2.5">
+<div class="w-7 h-7 rounded-full bg-white/20 flex items-center justify-center shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-[18px] text-white fill-icon" style="font-variation-settings: 'FILL' 1;">warning</span>
+</div>
+<div class="flex-1">
+<h2 class="font-title-md text-title-md text-white font-semibold leading-tight">Gas terdeteksi di Dapur</h2>
+<p class="font-plex-mono text-[13px] text-white/90 tracking-wide mt-0.5">1820 dari batas 1500</p>
+</div>
+</div>
+<!-- Actions inside banner -->
+<div class="grid grid-cols-2 gap-2 mt-1">
+<button class="h-[38px] px-3 rounded-lg border border-white/60 text-white font-label-md text-label-md font-semibold flex items-center justify-center active:bg-white/10 transition-colors">
+          Bunyikan alarm
+        </button>
+<button class="h-[38px] px-3 rounded-lg bg-white text-[#B23A2E] font-label-md text-label-md font-semibold flex items-center justify-center active:bg-white/90 transition-colors">
+          Matikan alarm
+        </button>
+</div>
+</section>
+<!-- Main Content Canvas -->
+<main class="flex-1 flex flex-col gap-4 px-margin pt-3">
+<!-- Sensor Cards Row (3-column layout) -->
+<section class="grid grid-cols-3 gap-2">
+<!-- Gas Card (Danger State) -->
+<div class="floor-1 p-2.5 rounded-xl flex flex-col justify-between h-[84px]">
+<div class="flex items-center justify-between">
+<span class="font-body-sm text-body-sm text-secondary">Gas</span>
+<span class="w-2 h-2 rounded-full bg-[#B23A2E]"></span>
+</div>
+<div>
+<div class="font-label-md text-label-md font-bold danger-accent-text leading-tight">Bahaya</div>
+<div class="font-plex-mono text-[13px] text-[#B23A2E] font-medium leading-none mt-1">1820</div>
+</div>
+</div>
+<!-- Cahaya Card -->
+<div class="floor-1 p-2.5 rounded-xl flex flex-col justify-between h-[84px]">
+<div class="flex items-center justify-between">
+<span class="font-body-sm text-body-sm text-secondary">Cahaya</span>
+<span class="material-symbols-outlined text-[16px] text-secondary">wb_sunny</span>
+</div>
+<div>
+<div class="font-label-md text-label-md font-semibold text-on-surface leading-tight">Terang</div>
+<div class="font-mono-data-sm text-mono-data-sm text-secondary leading-none mt-1">320 lx</div>
+</div>
+</div>
+<!-- Online Card -->
+<div class="floor-1 p-2.5 rounded-xl flex flex-col justify-between h-[84px]">
+<div class="flex items-center justify-between">
+<span class="font-body-sm text-body-sm text-secondary">Online</span>
+<span class="material-symbols-outlined text-[16px] text-primary">sensors</span>
+</div>
+<div>
+<div class="font-label-md text-label-md font-semibold text-on-surface leading-tight">3 dari 4</div>
+<div class="font-body-sm text-[11px] text-secondary leading-none mt-1">Aktif</div>
+</div>
+</div>
+</section>
+<!-- Room Horizontal Scrollable Chips -->
+<section class="overflow-x-auto no-scrollbar -mx-margin px-margin py-0.5 flex items-center gap-2">
+<button class="h-8 px-4 rounded-lg bg-primary text-white font-label-md text-label-md font-semibold shrink-0">
+          Semua
+        </button>
+<button class="h-8 px-3.5 rounded-lg floor-2 text-secondary font-label-md text-label-md shrink-0">
+          Ruang tengah
+        </button>
+<button class="h-8 px-3.5 rounded-lg floor-2 text-secondary font-label-md text-label-md shrink-0">
+          Kamar
+        </button>
+<button class="h-8 px-3.5 rounded-lg floor-2 text-secondary font-label-md text-label-md shrink-0">
+          Dapur
+        </button>
+</section>
+<!-- 2-Column Device Tiles (Radius 24px) -->
+<section class="grid grid-cols-2 gap-gutter">
+<!-- Tile 1: Lampu utama (Ruang tengah, menyala, ON tint bg) -->
+<div class="floor-3 rounded-[24px] p-3.5 flex flex-col justify-between min-h-[128px]">
+<div class="flex items-center justify-between">
+<div class="w-9 h-9 rounded-full bg-white flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[20px] fill-icon" style="font-variation-settings: 'FILL' 1;">lightbulb</span>
+</div>
+<!-- Flat toggle ON -->
+<div class="w-12 h-6 rounded-full bg-primary-container p-0.5 flex justify-end items-center">
+<div class="w-5 h-5 rounded-full bg-white"></div>
+</div>
+</div>
+<div>
+<h3 class="font-label-md text-label-md text-on-surface font-semibold">Lampu utama</h3>
+<p class="font-body-sm text-[12px] text-secondary">Ruang tengah</p>
+<div class="mt-1 flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+<span class="font-mono-data-sm text-[11px] text-primary font-medium">Menyala</span>
+</div>
+</div>
+</div>
+<!-- Tile 2: Lampu meja (Kamar, mati, card bg) -->
+<div class="floor-1 rounded-[24px] p-3.5 flex flex-col justify-between min-h-[128px]">
+<div class="flex items-center justify-between">
+<div class="w-9 h-9 rounded-full floor-2 flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[20px]">desk</span>
+</div>
+<!-- Flat toggle OFF -->
+<div class="w-12 h-6 rounded-full floor-2 p-0.5 flex justify-start items-center">
+<div class="w-5 h-5 rounded-full bg-white"></div>
+</div>
+</div>
+<div>
+<h3 class="font-label-md text-label-md text-on-surface font-semibold">Lampu meja</h3>
+<p class="font-body-sm text-[12px] text-secondary">Kamar</p>
+<div class="mt-1 flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span class="font-mono-data-sm text-[11px] text-secondary">Mati</span>
+</div>
+</div>
+</div>
+<!-- Tile 3: Lampu dapur (Dapur, menyala, ON tint bg) -->
+<div class="floor-3 rounded-[24px] p-3.5 flex flex-col justify-between min-h-[128px]">
+<div class="flex items-center justify-between">
+<div class="w-9 h-9 rounded-full bg-white flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[20px] fill-icon" style="font-variation-settings: 'FILL' 1;">light</span>
+</div>
+<!-- Flat toggle ON -->
+<div class="w-12 h-6 rounded-full bg-primary-container p-0.5 flex justify-end items-center">
+<div class="w-5 h-5 rounded-full bg-white"></div>
+</div>
+</div>
+<div>
+<h3 class="font-label-md text-label-md text-on-surface font-semibold">Lampu dapur</h3>
+<p class="font-body-sm text-[12px] text-secondary">Dapur</p>
+<div class="mt-1 flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+<span class="font-mono-data-sm text-[11px] text-primary font-medium">Menyala</span>
+</div>
+</div>
+</div>
+<!-- Tile 4: Kipas angin (Level 2 dari 3, menyala, ON tint bg) -->
+<div class="floor-3 rounded-[24px] p-3.5 flex flex-col justify-between min-h-[128px]">
+<div class="flex items-center justify-between">
+<div class="w-9 h-9 rounded-full bg-white flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[20px] fill-icon" style="font-variation-settings: 'FILL' 1;">mode_fan</span>
+</div>
+<!-- Flat toggle ON -->
+<div class="w-12 h-6 rounded-full bg-primary-container p-0.5 flex justify-end items-center">
+<div class="w-5 h-5 rounded-full bg-white"></div>
+</div>
+</div>
+<div>
+<h3 class="font-label-md text-label-md text-on-surface font-semibold">Kipas angin</h3>
+<p class="font-body-sm text-[12px] text-secondary">Level 2 dari 3</p>
+<div class="mt-1 flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+<span class="font-mono-data-sm text-[11px] text-primary font-medium">Menyala</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Section "Terakhir" with "Lihat semua" -->
+<section class="mt-1 mb-2">
+<div class="flex items-center justify-between mb-2">
+<h2 class="font-title-md text-title-md text-on-surface font-semibold">Terakhir</h2>
+<button class="font-label-md text-label-md text-primary font-semibold hover:underline">
+            Lihat semua
+          </button>
+</div>
+<!-- List of 3 rows -->
+<div class="floor-1 rounded-2xl px-3 py-1">
+<!-- Row 1: Gas terdeteksi (Danger row) -->
+<div class="py-2.5 flex items-start gap-2.5 border-b border-[#E5E0D5]">
+<span class="font-plex-mono text-[12px] text-[#B23A2E] font-medium pt-0.5 shrink-0">19:44</span>
+<div class="flex-1 font-body-sm text-body-sm text-on-surface leading-tight">
+              Gas terdeteksi di Dapur <span class="font-plex-mono text-[12px] text-[#B23A2E] font-semibold">(1820)</span>
+</div>
+</div>
+<!-- Row 2: Lampu utama -->
+<div class="py-2.5 flex items-start gap-2.5 border-b border-[#E5E0D5]">
+<span class="font-plex-mono text-[12px] text-secondary font-medium pt-0.5 shrink-0">19:42</span>
+<div class="flex-1 font-body-sm text-body-sm text-on-surface leading-tight">
+              Lampu utama dinyalakan oleh Bapak
+            </div>
+</div>
+<!-- Row 3: Kipas dapur -->
+<div class="py-2.5 flex items-start gap-2.5">
+<span class="font-plex-mono text-[12px] text-secondary font-medium pt-0.5 shrink-0">19:30</span>
+<div class="flex-1 font-body-sm text-body-sm text-on-surface leading-tight">
+              Kipas dapur diaktifkan otomatis
+            </div>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar (Shared Component exact specification: 4 tabs, 80px high, #FBF9F4, 25% width each) -->
+<nav class="fixed bottom-0 left-0 right-0 max-w-[360px] mx-auto h-20 bg-surface-container-lowest dark:bg-surface-container-high z-50 flex items-center justify-around select-none" style="background-color: #FBF9F4;">
+<!-- Tab 1: Beranda (ACTIVE: Pill filled with #E4EDE9 and accent color #2F6B5B) -->
+<a aria-current="page" class="w-1/4 h-full flex flex-col items-center justify-center gap-1 transition-colors duration-200 active:scale-95" href="#">
+<div class="w-16 h-8 rounded-full flex items-center justify-center" style="background-color: #E4EDE9; color: #2F6B5B;">
+<span class="material-symbols-outlined text-[20px] fill-icon" style="font-variation-settings: 'FILL' 1;">home</span>
+</div>
+<span class="font-label-md text-label-md font-semibold" style="color: #2F6B5B;">Beranda</span>
+</a>
+<!-- Tab 2: Kamera (INACTIVE) -->
+<a class="w-1/4 h-full flex flex-col items-center justify-center gap-1 text-secondary dark:text-secondary-fixed transition-colors duration-200 active:scale-95" href="#">
+<div class="w-16 h-8 flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]">videocam</span>
+</div>
+<span class="font-body-sm text-body-sm">Kamera</span>
+</a>
+<!-- Tab 3: Asisten (INACTIVE) -->
+<a class="w-1/4 h-full flex flex-col items-center justify-center gap-1 text-secondary dark:text-secondary-fixed transition-colors duration-200 active:scale-95" href="#">
+<div class="w-16 h-8 flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]">mic</span>
+</div>
+<span class="font-body-sm text-body-sm">Asisten</span>
+</a>
+<!-- Tab 4: Lainnya (INACTIVE) -->
+<a class="w-1/4 h-full flex flex-col items-center justify-center gap-1 text-secondary dark:text-secondary-fixed transition-colors duration-200 active:scale-95" href="#">
+<div class="w-16 h-8 flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]">more_horiz</span>
+</div>
+<span class="font-body-sm text-body-sm">Lainnya</span>
+</a>
+</nav>
+</div>
+</body></html>

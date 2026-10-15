@@ -10,9 +10,11 @@ class StorageService {
   static const _keyBiometric = 'biometric_enabled';
   static const _keyUsername = 'saved_username';
   static const _keyRole = 'saved_role';
+  static const _keyTtsVoice = 'tts_voice';
+  static const _keyTtsAutoPlay = 'tts_auto_play';
 
-  // Default server URL: emulator uses 10.0.2.2, default physical LAN/localhost
-  static const defaultServerUrl = 'http://10.0.2.2:8000';
+  // Default server URL: domain produksi resmi yang dapat diakses langsung oleh ponsel fisik
+  static const defaultServerUrl = 'https://aujasena.my.id';
 
   static Future<String> getServerUrl() async {
     final val = await _storage.read(key: _keyServerUrl);
@@ -77,10 +79,29 @@ class StorageService {
     }
   }
 
+  static Future<String> getTtsVoice() async {
+    final val = await _storage.read(key: _keyTtsVoice);
+    return val ?? 'id-ID-ArdiNeural';
+  }
+
+  static Future<void> setTtsVoice(String voice) async {
+    await _storage.write(key: _keyTtsVoice, value: voice);
+  }
+
+  static Future<bool> isTtsAutoPlay() async {
+    final val = await _storage.read(key: _keyTtsAutoPlay);
+    return val == null || val == 'true';
+  }
+
+  static Future<void> setTtsAutoPlay(bool enabled) async {
+    await _storage.write(key: _keyTtsAutoPlay, value: enabled ? 'true' : 'false');
+  }
+
   static Future<void> clearAuth() async {
     await _storage.delete(key: _keyAccessToken);
     await _storage.delete(key: _keyRefreshToken);
     await _storage.delete(key: _keyUsername);
     await _storage.delete(key: _keyRole);
   }
+
 }

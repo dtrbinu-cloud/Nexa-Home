@@ -78,3 +78,12 @@ Desktop.ini
 .DS_Store
 .idea/
 .vscode/
+
+# COCO Evaluation Datasets (JANGAN DI-COMMIT)
+tests/data/coco_val2017_subset/
+tests/data/instances_val2017.json
+
+# Cadangan Sistem & File Backup (JANGAN DI-COMMIT)
+backups/
+*.bak
+*.sha256

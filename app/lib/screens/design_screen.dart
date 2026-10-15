@@ -183,12 +183,6 @@ class _DesignScreenState extends State<DesignScreen> {
       decoration: BoxDecoration(
         color: color,
         borderRadius: AppRadius.borderSm,
-        border: Border.all(
-          color: Theme.of(context).brightness == Brightness.dark
-              ? AppColors.darkBorder
-              : AppColors.lightBorder,
-          width: AppDimensions.borderWidth,
-        ),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+
+<html lang="id"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Pemutar Rekaman - Kamera - Rumah</title>
+<!-- Google Fonts: Public Sans & Courier Prime / Material Symbols -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&amp;family=Public+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS with custom config -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-tertiary-container": "#b6eaa3",
+            "error-container": "#ffdad6",
+            "on-error": "#ffffff",
+            "secondary-fixed": "#dde4dd",
+            "on-surface": "#1c1c18",
+            "primary": "#115344",
+            "on-background": "#1c1c18",
+            "outline": "#707975",
+            "tertiary-fixed-dim": "#a1d48f",
+            "on-tertiary-fixed-variant": "#24501a",
+            "surface-variant": "#e5e2db",
+            "on-error-container": "#93000a",
+            "outline-variant": "#bfc9c4",
+            "surface-container": "#f1eee7",
+            "inverse-on-surface": "#f3f0e9",
+            "on-secondary": "#ffffff",
+            "inverse-primary": "#96d3bf",
+            "error": "#ba1a1a",
+            "on-primary-fixed-variant": "#0d5041",
+            "tertiary-fixed": "#bcf1a9",
+            "secondary-fixed-dim": "#c1c8c1",
+            "on-primary-fixed": "#002019",
+            "surface-dim": "#dcdad3",
+            "surface": "#fcf9f2",
+            "on-secondary-fixed-variant": "#424843",
+            "on-surface-variant": "#404945",
+            "surface-container-low": "#f6f3ec",
+            "on-primary": "#ffffff",
+            "on-secondary-fixed": "#171d19",
+            "on-tertiary": "#ffffff",
+            "on-primary-container": "#abe9d5",
+            "on-tertiary-fixed": "#012200",
+            "on-secondary-container": "#5d645e",
+            "secondary": "#59605a",
+            "surface-container-high": "#ebe8e1",
+            "inverse-surface": "#31312c",
+            "surface-tint": "#2c6859",
+            "secondary-container": "#dbe1da",
+            "primary-container": "#2f6b5b",
+            "primary-fixed-dim": "#96d3bf",
+            "tertiary-container": "#3e6b32",
+            "tertiary": "#26521c",
+            "surface-container-lowest": "#ffffff",
+            "surface-bright": "#fcf9f2",
+            "primary-fixed": "#b1efdb",
+            "background": "#fcf9f2",
+            "surface-container-highest": "#e5e2db"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "margin": "1rem",
+            "gutter-compact": "0.5rem",
+            "space-xxs": "0.25rem",
+            "space-sm": "0.75rem",
+            "space-lg": "1.25rem",
+            "gutter": "0.75rem",
+            "space-xs": "0.5rem",
+            "space-xl": "1.5rem",
+            "space-md": "1rem"
+          },
+          "fontFamily": {
+            "title-md": ["Public Sans"],
+            "headline-md": ["Public Sans"],
+            "headline-lg": ["Public Sans"],
+            "mono-data-md": ["Courier Prime"],
+            "mono-data-sm": ["Courier Prime"],
+            "body-sm": ["Public Sans"],
+            "label-md": ["Public Sans"],
+            "body-md": ["Public Sans"],
+            "mono-data-lg": ["Courier Prime"]
+          },
+          "fontSize": {
+            "title-md": ["18px", { "lineHeight": "24px", "fontWeight": "600" }],
+            "headline-md": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+            "mono-data-md": ["15px", { "lineHeight": "20px", "fontWeight": "400" }],
+            "mono-data-sm": ["13px", { "lineHeight": "16px", "fontWeight": "400" }],
+            "body-sm": ["13px", { "lineHeight": "18px", "fontWeight": "400" }],
+            "label-md": ["13px", { "lineHeight": "16px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+            "body-md": ["15px", { "lineHeight": "22px", "fontWeight": "400" }],
+            "mono-data-lg": ["24px", { "lineHeight": "28px", "fontWeight": "400" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      line-height: 1;
+      text-transform: none;
+      letter-spacing: normal;
+      word-wrap: normal;
+      white-space: nowrap;
+      direction: ltr;
+    }
+  </style>
+</head>
+<body class="bg-surface-container text-on-surface antialiased min-h-screen flex items-center justify-center p-0 md:p-6 select-none font-body-md text-body-md">
+<!-- Mobile Frame Container (360x800) -->
+<main class="w-full max-w-[360px] h-[800px] bg-background flex flex-col relative overflow-hidden">
+<!-- Android Status Bar (24px) -->
+<header class="w-full h-6 px-margin flex items-center justify-between z-20 shrink-0 select-none">
+<span class="font-mono-data-sm text-mono-data-sm font-semibold tracking-tight text-on-surface">09:41</span>
+<div class="flex items-center space-x-1.5 text-on-surface">
+<span class="material-symbols-outlined text-[15px]" data-icon="network_cell">network_cell</span>
+<span class="material-symbols-outlined text-[15px]" data-icon="wifi">wifi</span>
+<span class="material-symbols-outlined text-[17px]" data-icon="battery_full">battery_full</span>
+</div>
+</header>
+<!-- Top App Bar (Task Sub-Screen: Focused Detail Playback) -->
+<nav aria-label="Navigasi Atas" class="w-full h-14 px-2 flex items-center justify-between shrink-0 z-10">
+<button aria-label="Kembali ke Galeri Rekaman" class="w-11 h-11 flex items-center justify-center rounded-full hover:bg-surface-container-high transition-colors text-on-surface" type="button">
+<span class="material-symbols-outlined text-[22px]" data-icon="arrow_back">arrow_back</span>
+</button>
+<h1 class="font-title-md text-title-md text-on-surface flex-1 text-left px-2">
+        Rekaman Teras
+      </h1>
+<button aria-label="Bagikan Rekaman" class="w-11 h-11 flex items-center justify-center rounded-full hover:bg-surface-container-high transition-colors text-on-surface" type="button">
+<span class="material-symbols-outlined text-[22px]" data-icon="share">share</span>
+</button>
+</nav>
+<!-- Scrollable Body Content -->
+<section class="flex-1 overflow-y-auto px-margin space-y-4 pb-6">
+<!-- 1. 16:9 Video Playback Card -->
+<article class="relative w-full aspect-video rounded-[20px] bg-[#151816] overflow-hidden flex flex-col justify-between p-3.5 select-none">
+<!-- Video Ambient Snapshot Background -->
+<div class="absolute inset-0 w-full h-full bg-cover bg-center opacity-40 mix-blend-luminosity" data-alt="A peaceful outdoor domestic front terrace at night captured through an infrared security camera with crisp high-definition contrast. The porch contains textured stone flooring, potted tropical plants, and subtle ambient warm streetlamp spill from outside the frame. The color treatment leans into soft quiet monochromatic dark charcoal, deep forest moss undertones, and gentle domestic stillness without high-tech flares." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCVE-s5rWQetwmIt1f4entlD4XI4flvb82lUFXCpeHMkVbEjHJF45mjBiEzOu-qxy2iJWbVzSVvWeli6ndYTBYUddHQ_doXrUsj9K-OFlGcT_K6Rl4Qb9VV5Clrl0HoTDn6rxE5CH3BPZyCDSC0HjC1KdsQxsTZIyidmYEwPEvlXY7rny6S4Sb78R-Y6K--2i2B1HZ8LkzF9B1JCtB0m3nVzvQgr4DOg4SMHnEA6S24ISIpPnCYm3wW')"></div>
+<!-- Video Header Pill Status -->
+<div class="relative z-10 flex items-center justify-between w-full">
+<div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#151816]/80 text-surface backdrop-blur-[2px]">
+<span class="w-1.5 h-1.5 rounded-full bg-error animate-pulse"></span>
+<span class="font-mono-data-sm text-[11px] leading-tight text-surface">KAM-01 • TERAS</span>
+</div>
+<span class="font-mono-data-sm text-[11px] px-2 py-0.5 rounded bg-[#151816]/70 text-secondary-fixed">720p HD</span>
+</div>
+<!-- Centered Play / Pause Action Button -->
+<div class="relative z-10 flex items-center justify-center">
+<button aria-label="Putar Rekaman" class="w-12 h-12 rounded-full bg-[#1F2421]/60 hover:bg-[#1F2421]/80 text-surface flex items-center justify-center transition-transform active:scale-95" type="button">
+<span class="material-symbols-outlined text-[30px] translate-x-0.5" data-icon="play_arrow" data-weight="fill" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</button>
+</div>
+<!-- Playback Time Overlays -->
+<div class="relative z-10 flex items-center justify-between text-surface px-0.5">
+<span class="font-mono-data-sm text-mono-data-sm text-surface tracking-wider">00:42 / 01:00</span>
+<button aria-label="Layar Penuh" class="text-surface hover:text-surface-variant flex items-center" type="button">
+<span class="material-symbols-outlined text-[18px]" data-icon="fullscreen">fullscreen</span>
+</button>
+</div>
+</article>
+<!-- 2. Video Scrubber Controls -->
+<section aria-label="Kendali Pemutaran" class="space-y-3">
+<!-- Progress Scrubber Track -->
+<div aria-label="Durasi Pemutaran" aria-valuemax="60" aria-valuemin="0" aria-valuenow="42" class="w-full py-2 cursor-pointer group" role="slider">
+<div class="relative w-full h-1 bg-surface-variant rounded-full flex items-center">
+<!-- Filled Progress (Accent Color #2F6B5B) -->
+<div class="h-full bg-primary-container rounded-full" style="width: 70%;"></div>
+<!-- Scrubber Thumb (Round 16px) -->
+<div class="absolute w-4 h-4 rounded-full bg-primary-container -ml-2 transition-transform group-hover:scale-110" style="left: 70%;"></div>
+</div>
+</div>
+<!-- Playback Buttons Grid -->
+<div class="flex items-center justify-center gap-6">
+<!-- Rewind 10s -->
+<button aria-label="Mundur 10 detik" class="min-w-[48px] h-11 px-2 flex flex-col items-center justify-center text-secondary hover:text-on-surface transition-colors" type="button">
+<span class="material-symbols-outlined text-[22px]" data-icon="replay_10">replay_10</span>
+<span class="font-body-sm text-[11px] leading-none mt-0.5">-10dtk</span>
+</button>
+<!-- Center Play/Pause Circle (48px, Accent #2F6B5B fill) -->
+<button aria-label="Jeda atau Lanjutkan Putar" class="w-12 h-12 rounded-full bg-primary-container text-surface flex items-center justify-center transition-colors active:scale-95" type="button">
+<span class="material-symbols-outlined text-[26px]" data-icon="pause" data-weight="fill" style="font-variation-settings: 'FILL' 1;">pause</span>
+</button>
+<!-- Forward 10s -->
+<button aria-label="Maju 10 detik" class="min-w-[48px] h-11 px-2 flex flex-col items-center justify-center text-secondary hover:text-on-surface transition-colors" type="button">
+<span class="material-symbols-outlined text-[22px]" data-icon="forward_10">forward_10</span>
+<span class="font-body-sm text-[11px] leading-none mt-0.5">+10dtk</span>
+</button>
+</div>
+</section>
+<!-- 3. Metadata Card (Card Background #FBF9F4, Radius 20px, 16px Padding) -->
+<section aria-label="Informasi Berkas Rekaman" class="bg-surface rounded-[20px] p-margin space-y-0">
+<!-- Row 1: Waktu kejadian -->
+<div class="flex items-center justify-between min-h-[44px] py-2">
+<span class="font-body-sm text-body-sm text-secondary">Waktu kejadian</span>
+<span class="font-mono-data-sm text-mono-data-sm font-medium text-on-surface">Hari ini, 02:14:18</span>
+</div>
+<!-- Hairline Divider -->
+<div class="h-[1px] w-full bg-surface-variant"></div>
+<!-- Row 2: Pemicu -->
+<div class="flex items-center justify-between min-h-[44px] py-2">
+<span class="font-body-sm text-body-sm text-secondary">Pemicu</span>
+<div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-[8px] bg-surface-container-highest text-primary-container">
+<span class="material-symbols-outlined text-[14px]" data-icon="motion_sensor_active">motion_sensor_active</span>
+<span class="font-label-md text-label-md">Gerakan terdeteksi</span>
+</div>
+</div>
+<!-- Hairline Divider -->
+<div class="h-[1px] w-full bg-surface-variant"></div>
+<!-- Row 3: Durasi -->
+<div class="flex items-center justify-between min-h-[44px] py-2">
+<span class="font-body-sm text-body-sm text-secondary">Durasi</span>
+<span class="font-mono-data-sm text-mono-data-sm font-medium text-on-surface">1 menit 00 detik</span>
+</div>
+<!-- Hairline Divider -->
+<div class="h-[1px] w-full bg-surface-variant"></div>
+<!-- Row 4: Ukuran berkas -->
+<div class="flex items-center justify-between min-h-[44px] py-2">
+<span class="font-body-sm text-body-sm text-secondary">Ukuran berkas</span>
+<span class="font-mono-data-sm text-mono-data-sm font-medium text-on-surface">14.2 MB (720p)</span>
+</div>
+</section>
+<!-- 4. Action Buttons -->
+<section aria-label="Aksi Rekaman" class="pt-1 space-y-2">
+<!-- Primary Action Button: Simpan ke HP -->
+<button class="w-full h-12 rounded-xl bg-primary-container hover:bg-primary transition-colors flex items-center justify-center gap-2 text-surface font-label-md text-label-md active:opacity-90" type="button">
+<span class="material-symbols-outlined text-[20px]" data-icon="download">download</span>
+<span>Simpan ke HP</span>
+</button>
+<!-- Destructive Text Button: Hapus rekaman -->
+<button class="w-full h-12 flex items-center justify-center rounded-xl text-error hover:bg-error-container/20 transition-colors font-label-md text-label-md active:opacity-80" type="button">
+<span class="material-symbols-outlined text-[19px] mr-1.5" data-icon="delete">delete</span>
+<span>Hapus rekaman</span>
+</button>
+</section>
+</section>
+<!-- Android Home Indicator / Navigation Bar Pill (Quiet Minimalist Floor) -->
+<footer class="w-full h-4 flex items-center justify-center pb-2 z-20 shrink-0">
+<div class="w-24 h-1 bg-outline-variant/60 rounded-full"></div>
+</footer>
+</main>
+</body></html>

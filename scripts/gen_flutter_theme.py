@@ -11,6 +11,7 @@ from pathlib import Path
 ROOT_DIR = Path(__file__).resolve().parent.parent
 TOKENS_JSON_PATH = ROOT_DIR / "web" / "src" / "design-tokens.json"
 FLUTTER_THEME_OUT = ROOT_DIR / "app" / "lib" / "theme" / "tokens.dart"
+CAMERA_THEME_OUT = ROOT_DIR / "camera-app" / "lib" / "theme" / "tokens.dart"
 
 
 def hex_to_flutter_color(hex_str: str) -> str:
@@ -45,21 +46,27 @@ class AppColors {{
   // Theme Terang (Light)
   static const Color lightBg = {hex_to_flutter_color(light["bg"])};
   static const Color lightSurface = {hex_to_flutter_color(light["surface"])};
+  static const Color lightSubtle = {hex_to_flutter_color(light.get("subtle", "#ECE7DC"))};
   static const Color lightBorder = {hex_to_flutter_color(light["border"])};
+  static const Color lightBorderSubtle = {hex_to_flutter_color(light.get("borderSubtle", light["border"]))};
   static const Color lightText = {hex_to_flutter_color(light["text"])};
   static const Color lightTextSecondary = {hex_to_flutter_color(light["textSecondary"])};
   static const Color lightAccent = {hex_to_flutter_color(light["accent"])};
   static const Color lightAccentHover = {hex_to_flutter_color(light["accentHover"])};
+  static const Color lightAccentLight = {hex_to_flutter_color(light.get("accentLight", light["surface"]))};
   static const Color lightAccentText = {hex_to_flutter_color(light["surface"])};
 
   // Theme Gelap (Dark)
   static const Color darkBg = {hex_to_flutter_color(dark["bg"])};
   static const Color darkSurface = {hex_to_flutter_color(dark["surface"])};
+  static const Color darkSubtle = {hex_to_flutter_color(dark.get("subtle", "#232824"))};
   static const Color darkBorder = {hex_to_flutter_color(dark["border"])};
+  static const Color darkBorderSubtle = {hex_to_flutter_color(dark.get("borderSubtle", dark["border"]))};
   static const Color darkText = {hex_to_flutter_color(dark["text"])};
   static const Color darkTextSecondary = {hex_to_flutter_color(dark["textSecondary"])};
   static const Color darkAccent = {hex_to_flutter_color(dark["accent"])};
   static const Color darkAccentHover = {hex_to_flutter_color(dark["accentHover"])};
+  static const Color darkAccentLight = {hex_to_flutter_color(dark.get("accentLight", dark["surface"]))};
   static const Color darkAccentText = {hex_to_flutter_color(dark["bg"])};
 
   // Status (Universal)
@@ -74,24 +81,54 @@ class AppSpacing {{
   static const double space2 = {float(spacing["2"].replace("px", ""))}; // 8px
   static const double space3 = {float(spacing["3"].replace("px", ""))}; // 12px
   static const double space4 = {float(spacing["4"].replace("px", ""))}; // 16px
+  static const double space5 = {float(spacing.get("5", "20px").replace("px", ""))}; // 20px
   static const double space6 = {float(spacing["6"].replace("px", ""))}; // 24px
   static const double space8 = {float(spacing["8"].replace("px", ""))}; // 32px
 }}
 
 class AppRadius {{
-  static const double sm = {float(radius["sm"].replace("px", ""))}; // 6px
-  static const double md = {float(radius["md"].replace("px", ""))}; // 10px
+  static const double sm = {float(radius["sm"].replace("px", ""))}; // 12px (button, input)
+  static const double md = {float(radius["md"].replace("px", ""))}; // 20px (card, panel)
+  static const double lg = {float(radius.get("lg", "24px").replace("px", ""))}; // 24px (device tile)
+  static const double chip = {float(radius.get("chip", "8px").replace("px", ""))}; // 8px (chip)
+  static const double button = 12.0;
+  static const double input = 12.0;
+  static const double card = 20.0;
+  static const double tile = 24.0;
+  static const double pill = {float(radius.get("pill", "16px").replace("px", ""))};
+  static const double bar = {float(radius.get("bar", "2px").replace("px", ""))};
+  static const double full = 999.0;
+
   static const Radius radiusSm = Radius.circular(sm);
   static const Radius radiusMd = Radius.circular(md);
+  static const Radius radiusLg = Radius.circular(lg);
+  static const Radius radiusChip = Radius.circular(chip);
+  static const Radius radiusBar = Radius.circular(bar);
   static const BorderRadius borderSm = BorderRadius.all(radiusSm);
   static const BorderRadius borderMd = BorderRadius.all(radiusMd);
+  static const BorderRadius borderLg = BorderRadius.all(radiusLg);
+  static const BorderRadius borderChip = BorderRadius.all(radiusChip);
+  static const BorderRadius borderCard = BorderRadius.all(Radius.circular(card));
+  static const BorderRadius borderTile = BorderRadius.all(Radius.circular(tile));
+  static const BorderRadius borderButton = BorderRadius.all(Radius.circular(button));
+  static const BorderRadius borderPill = BorderRadius.all(Radius.circular(pill));
+  static const BorderRadius borderBar = BorderRadius.all(Radius.circular(bar));
 }}
 
 class AppDimensions {{
-  static const double controlHeight = 40.0;
+  static const double controlHeight = {float(data.get("controlHeight", "48px").replace("px", ""))};
   static const double borderWidth = 1.0;
+  static const double listRowMinHeight = 56.0;
+  static const double toggleWidth = 56.0;
+  static const double toggleHeight = 32.0;
+  static const double toggleThumbSize = 26.0;
+  static const double screenMargin = 16.0;
+  static const double screenMarginAuth = 24.0;
+  static const double cardGap = 12.0;
+  static const double sectionGap = 24.0;
   static const double iconSizeSm = 20.0;
   static const double iconSizeMd = 24.0;
+  static const double iconSizeLg = 32.0;
 }}
 
 class AppTypography {{
@@ -198,6 +235,10 @@ class AppTheme {{
     FLUTTER_THEME_OUT.parent.mkdir(parents=True, exist_ok=True)
     FLUTTER_THEME_OUT.write_text(content, encoding="utf-8")
     print(f"[OK] Berhasil menghasilkan {FLUTTER_THEME_OUT}")
+
+    CAMERA_THEME_OUT.parent.mkdir(parents=True, exist_ok=True)
+    CAMERA_THEME_OUT.write_text(content, encoding="utf-8")
+    print(f"[OK] Berhasil menghasilkan {CAMERA_THEME_OUT}")
 
 
 if __name__ == "__main__":

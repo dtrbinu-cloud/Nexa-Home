@@ -1,0 +1,289 @@
+<!DOCTYPE html><html class="light" lang="id"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Rumah - Lampu utama</title>
+<!-- Google Fonts: Public Sans & Courier Prime / IBM Plex Mono feel -->
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&amp;family=Public+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;display=swap" rel="stylesheet">
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-primary": "#ffffff",
+            "surface": "#fcf9f2",
+            "on-tertiary-fixed": "#012200",
+            "secondary-container": "#dbe1da",
+            "surface-container-low": "#f6f3ec",
+            "surface-container-high": "#ebe8e1",
+            "error": "#ba1a1a",
+            "surface-bright": "#fcf9f2",
+            "surface-container-lowest": "#ffffff",
+            "error-container": "#ffdad6",
+            "surface-variant": "#e5e2db",
+            "tertiary-container": "#3e6b32",
+            "surface-container-highest": "#e5e2db",
+            "outline": "#707975",
+            "surface-container": "#f1eee7",
+            "inverse-surface": "#31312c",
+            "on-primary-fixed": "#002019",
+            "secondary-fixed": "#dde4dd",
+            "outline-variant": "#bfc9c4",
+            "on-error": "#ffffff",
+            "surface-dim": "#dcdad3",
+            "on-background": "#1c1c18",
+            "inverse-on-surface": "#f3f0e9",
+            "inverse-primary": "#96d3bf",
+            "on-surface-variant": "#404945",
+            "surface-tint": "#2c6859",
+            "on-error-container": "#93000a",
+            "on-secondary": "#ffffff",
+            "on-secondary-fixed": "#171d19",
+            "background": "#fcf9f2",
+            "primary": "#115344",
+            "on-tertiary-fixed-variant": "#24501a",
+            "on-primary-container": "#abe9d5",
+            "primary-container": "#2f6b5b",
+            "secondary-fixed-dim": "#c1c8c1",
+            "on-tertiary-container": "#b6eaa3",
+            "on-secondary-fixed-variant": "#424843",
+            "tertiary-fixed": "#bcf1a9",
+            "on-surface": "#1c1c18",
+            "tertiary-fixed-dim": "#a1d48f",
+            "primary-fixed-dim": "#96d3bf",
+            "tertiary": "#26521c",
+            "on-secondary-container": "#5d645e",
+            "on-tertiary": "#ffffff",
+            "primary-fixed": "#b1efdb",
+            "secondary": "#59605a",
+            "on-primary-fixed-variant": "#0d5041"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "2xl": "1.25rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "space-lg": "1.25rem",
+            "gutter-compact": "0.5rem",
+            "space-xs": "0.5rem",
+            "space-xl": "1.5rem",
+            "space-md": "1rem",
+            "space-xxs": "0.25rem",
+            "space-sm": "0.75rem",
+            "gutter": "0.75rem",
+            "margin": "1rem"
+          },
+          "fontFamily": {
+            "body-md": ["Public Sans", "sans-serif"],
+            "mono-data-lg": ["Courier Prime", "monospace"],
+            "title-md": ["Public Sans", "sans-serif"],
+            "headline-md": ["Public Sans", "sans-serif"],
+            "mono-data-sm": ["Courier Prime", "monospace"],
+            "mono-data-md": ["Courier Prime", "monospace"],
+            "headline-lg": ["Public Sans", "sans-serif"],
+            "body-sm": ["Public Sans", "sans-serif"],
+            "label-md": ["Public Sans", "sans-serif"]
+          },
+          "fontSize": {
+            "body-md": ["15px", { "lineHeight": "22px", "fontWeight": "400" }],
+            "mono-data-lg": ["24px", { "lineHeight": "28px", "fontWeight": "400" }],
+            "title-md": ["18px", { "lineHeight": "24px", "fontWeight": "600" }],
+            "headline-md": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "mono-data-sm": ["13px", { "lineHeight": "16px", "fontWeight": "400" }],
+            "mono-data-md": ["15px", { "lineHeight": "20px", "fontWeight": "400" }],
+            "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+            "body-sm": ["13px", { "lineHeight": "18px", "fontWeight": "400" }],
+            "label-md": ["13px", { "lineHeight": "16px", "letterSpacing": "0.01em", "fontWeight": "600" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+    .material-symbols-filled {
+      font-variation-settings: 'FILL' 1, 'wght' 500, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+    /* Absolute Flat zero-shadow architecture */
+    * {
+      -webkit-tap-highlight-color: transparent;
+      box-shadow: none !important;
+      text-shadow: none !important;
+    }
+  </style>
+</head>
+<body class="bg-background text-on-surface antialiased flex justify-center items-start min-h-screen selection:bg-secondary-fixed">
+<!-- Android Frame Simulation (360x800 Baseline) -->
+<main class="w-full max-w-[360px] min-h-[800px] bg-background relative flex flex-col pb-8 overflow-x-hidden">
+<!-- Android Native Status Bar -->
+<header class="w-full h-6 px-margin flex items-center justify-between text-on-surface select-none pt-1">
+<span class="font-label-md text-label-md tracking-tight">09:41</span>
+<div class="flex items-center gap-1.5 opacity-80">
+<span class="material-symbols-outlined text-[15px]" data-icon="wifi">wifi</span>
+<span class="material-symbols-outlined text-[15px]" data-icon="signal_cellular_alt">signal_cellular_alt</span>
+<span class="material-symbols-outlined text-[16px]" data-icon="battery_full">battery_full</span>
+</div>
+</header>
+<!-- Top App Bar (Task-focused subscreen without global nav bar per semantic rule) -->
+<nav class="w-full h-14 px-space-xs flex items-center justify-between bg-background">
+<button aria-label="Kembali" class="w-12 h-12 flex items-center justify-center rounded-full text-on-surface transition-colors duration-150 hover:bg-surface-container-high active:opacity-70" type="button">
+<span class="material-symbols-outlined text-[24px]" data-icon="arrow_back">arrow_back</span>
+</button>
+<h1 class="font-title-md text-title-md text-on-surface text-center flex-1 truncate px-2">
+        Lampu utama
+      </h1>
+<button aria-label="Pilihan lainnya" class="w-12 h-12 flex items-center justify-center rounded-full text-on-surface transition-colors duration-150 hover:bg-surface-container-high active:opacity-70" type="button">
+<span class="material-symbols-outlined text-[24px]" data-icon="more_vert">more_vert</span>
+</button>
+</nav>
+<!-- Main Content Canvas -->
+<div class="flex-1 px-margin flex flex-col gap-space-lg pt-space-xs">
+<!-- Large Centered Hero Section -->
+<section class="flex flex-col items-center justify-center text-center pt-2 pb-1">
+<!-- ON Tint Circular Hero Icon Container -->
+<div class="w-16 h-16 rounded-full bg-secondary-fixed flex items-center justify-center mb-space-sm transition-colors duration-200">
+<span class="material-symbols-filled text-primary-container text-[36px]" data-icon="lightbulb" data-weight="fill" style="font-variation-settings: 'FILL' 1;">lightbulb</span>
+</div>
+<!-- Device Title & Room Placement -->
+<h2 class="font-headline-md text-headline-md text-on-surface tracking-tight">
+          Lampu utama
+        </h2>
+<p class="font-body-md text-body-md text-secondary mt-0.5">
+          Ruang tengah
+        </p>
+<!-- Huge Pill Toggle Switch (Interactive UI State) -->
+<div class="mt-space-lg flex items-center justify-center">
+<button aria-checked="true" aria-label="Saklar Lampu Utama" class="w-[72px] h-[40px] rounded-full bg-primary-container p-[3px] transition-colors duration-200 flex items-center justify-end relative cursor-pointer active:opacity-90" id="device-toggle" role="switch" type="button">
+<span class="w-[34px] h-[34px] rounded-full bg-surface-container-lowest transition-transform duration-200" id="toggle-thumb"></span>
+</button>
+</div>
+</section>
+<!-- Section "Jadwal" Card -->
+<section class="bg-surface-container-lowest rounded-2xl p-space-md flex flex-col gap-space-sm">
+<div class="flex items-center justify-between pb-1">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px] text-primary" data-icon="schedule">schedule</span>
+<h3 class="font-body-md text-body-md font-semibold text-on-surface">Jadwal</h3>
+</div>
+<button class="h-8 px-space-xs flex items-center justify-center text-primary font-label-md text-label-md hover:bg-surface-container-high rounded transition-colors duration-150" type="button">
+            + Tambah
+          </button>
+</div>
+<!-- Schedule Row 1 -->
+<div class="pt-2 flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<span class="font-mono-data-md text-mono-data-md text-on-surface font-normal tracking-tight">18:00 - 23:00</span>
+<span class="font-label-md text-label-md text-primary bg-secondary-fixed px-2 py-0.5 rounded">Aktif</span>
+</div>
+<!-- Day Chips -->
+<div class="flex items-center justify-between gap-1 pt-1">
+<span class="w-[34px] h-[26px] rounded flex items-center justify-center font-label-md text-[11px] bg-primary text-on-primary">Sen</span>
+<span class="w-[34px] h-[26px] rounded flex items-center justify-center font-label-md text-[11px] bg-primary text-on-primary">Sel</span>
+<span class="w-[34px] h-[26px] rounded flex items-center justify-center font-label-md text-[11px] bg-primary text-on-primary">Rab</span>
+<span class="w-[34px] h-[26px] rounded flex items-center justify-center font-label-md text-[11px] bg-primary text-on-primary">Kam</span>
+<span class="w-[34px] h-[26px] rounded flex items-center justify-center font-label-md text-[11px] bg-primary text-on-primary">Jum</span>
+<span class="w-[34px] h-[26px] rounded flex items-center justify-center font-label-md text-[11px] bg-surface-variant text-secondary">Sab</span>
+<span class="w-[34px] h-[26px] rounded flex items-center justify-center font-label-md text-[11px] bg-surface-variant text-secondary">Min</span>
+</div>
+</div>
+<!-- Hairline Separator -->
+<div class="h-[1px] w-full bg-surface-variant my-1"></div>
+<!-- Schedule Row 2 -->
+<div class="flex flex-col gap-space-xs pb-1">
+<div class="flex items-center justify-between">
+<span class="font-mono-data-md text-mono-data-md text-on-surface font-normal tracking-tight">05:30 - 06:15</span>
+<span class="font-label-md text-label-md text-secondary bg-surface-variant px-2 py-0.5 rounded">Senyap</span>
+</div>
+<!-- Day Chips -->
+<div class="flex items-center justify-between gap-1 pt-1">
+<span class="w-[34px] h-[26px] rounded flex items-center justify-center font-label-md text-[11px] bg-primary text-on-primary">Sen</span>
+<span class="w-[34px] h-[26px] rounded flex items-center justify-center font-label-md text-[11px] bg-primary text-on-primary">Sel</span>
+<span class="w-[34px] h-[26px] rounded flex items-center justify-center font-label-md text-[11px] bg-primary text-on-primary">Rab</span>
+<span class="w-[34px] h-[26px] rounded flex items-center justify-center font-label-md text-[11px] bg-primary text-on-primary">Kam</span>
+<span class="w-[34px] h-[26px] rounded flex items-center justify-center font-label-md text-[11px] bg-primary text-on-primary">Jum</span>
+<span class="w-[34px] h-[26px] rounded flex items-center justify-center font-label-md text-[11px] bg-primary text-on-primary">Sab</span>
+<span class="w-[34px] h-[26px] rounded flex items-center justify-center font-label-md text-[11px] bg-primary text-on-primary">Min</span>
+</div>
+</div>
+</section>
+<!-- Section "Info" Card -->
+<section class="bg-surface-container-lowest rounded-2xl p-space-md flex flex-col">
+<div class="flex items-center gap-2 pb-space-sm">
+<span class="material-symbols-outlined text-[20px] text-primary" data-icon="info">info</span>
+<h3 class="font-body-md text-body-md font-semibold text-on-surface">Info Perangkat</h3>
+</div>
+<div class="divide-y divide-surface-variant">
+<!-- Row 1: ID Perangkat -->
+<div class="py-2.5 flex items-center justify-between">
+<span class="font-body-md text-body-md text-secondary">ID perangkat</span>
+<span class="font-mono-data-sm text-mono-data-sm text-on-surface bg-surface-container-low px-2 py-0.5 rounded">esp32-ruang-01</span>
+</div>
+<!-- Row 2: Firmware -->
+<div class="py-2.5 flex items-center justify-between">
+<span class="font-body-md text-body-md text-secondary">Firmware</span>
+<span class="font-mono-data-sm text-mono-data-sm text-on-surface">1.0.3</span>
+</div>
+<!-- Row 3: Sinyal WiFi -->
+<div class="py-2.5 flex items-center justify-between">
+<span class="font-body-md text-body-md text-secondary">Sinyal WiFi</span>
+<div class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-primary-container"></span>
+<span class="font-body-sm text-body-sm text-on-surface">-58 dBm (Bagus)</span>
+</div>
+</div>
+<!-- Row 4: IP Lokal -->
+<div class="py-2.5 flex items-center justify-between">
+<span class="font-body-md text-body-md text-secondary">IP lokal</span>
+<span class="font-mono-data-sm text-mono-data-sm text-on-surface">192.168.1.42</span>
+</div>
+</div>
+</section>
+<!-- Destructive Action Section -->
+<div class="pt-space-xs pb-2 flex flex-col items-center">
+<button class="w-full h-12 flex items-center justify-center rounded-xl text-error font-body-md text-body-md font-semibold transition-colors duration-150 hover:bg-error-container/30 active:bg-error-container/60" type="button">
+          Hapus perangkat
+        </button>
+</div>
+</div>
+<!-- Android Home Navigation Bar Pill -->
+<footer class="w-full flex justify-center py-2">
+<div class="w-32 h-1 bg-on-surface/20 rounded-full"></div>
+</footer>
+</main>
+<!-- Interactive Logic for Native Feel -->
+<script>
+    const toggleBtn = document.getElementById('device-toggle');
+    const toggleThumb = document.getElementById('toggle-thumb');
+    let isOn = true;
+
+    toggleBtn.addEventListener('click', () => {
+      isOn = !isOn;
+      toggleBtn.setAttribute('aria-checked', isOn ? 'true' : 'false');
+      if (isOn) {
+        toggleBtn.classList.remove('bg-surface-variant', 'justify-start');
+        toggleBtn.classList.add('bg-primary-container', 'justify-end');
+      } else {
+        toggleBtn.classList.remove('bg-primary-container', 'justify-end');
+        toggleBtn.classList.add('bg-surface-variant', 'justify-start');
+      }
+    });
+  </script>
+</body></html>

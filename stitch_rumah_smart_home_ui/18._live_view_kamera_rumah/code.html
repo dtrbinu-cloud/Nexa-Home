@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+
+<html class="light" lang="id"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Live View - Kamera - Rumah</title>
+<!-- Google Fonts: Public Sans & Courier Prime / IBM Plex Mono fallback -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&amp;family=Public+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Configuration -->
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-tertiary-container": "#b6eaa3",
+            "error-container": "#ffdad6",
+            "on-error": "#ffffff",
+            "secondary-fixed": "#dde4dd",
+            "on-surface": "#1c1c18",
+            "primary": "#115344",
+            "on-background": "#1c1c18",
+            "outline": "#707975",
+            "tertiary-fixed-dim": "#a1d48f",
+            "on-tertiary-fixed-variant": "#24501a",
+            "surface-variant": "#e5e2db",
+            "on-error-container": "#93000a",
+            "outline-variant": "#bfc9c4",
+            "surface-container": "#f1eee7",
+            "inverse-on-surface": "#f3f0e9",
+            "on-secondary": "#ffffff",
+            "inverse-primary": "#96d3bf",
+            "error": "#ba1a1a",
+            "on-primary-fixed-variant": "#0d5041",
+            "tertiary-fixed": "#bcf1a9",
+            "secondary-fixed-dim": "#c1c8c1",
+            "on-primary-fixed": "#002019",
+            "surface-dim": "#dcdad3",
+            "surface": "#fcf9f2",
+            "on-secondary-fixed-variant": "#424843",
+            "on-surface-variant": "#404945",
+            "surface-container-low": "#f6f3ec",
+            "on-primary": "#ffffff",
+            "on-secondary-fixed": "#171d19",
+            "on-tertiary": "#ffffff",
+            "on-primary-container": "#abe9d5",
+            "on-tertiary-fixed": "#012200",
+            "on-secondary-container": "#5d645e",
+            "secondary": "#59605a",
+            "surface-container-high": "#ebe8e1",
+            "inverse-surface": "#31312c",
+            "surface-tint": "#2c6859",
+            "secondary-container": "#dbe1da",
+            "primary-container": "#2f6b5b",
+            "primary-fixed-dim": "#96d3bf",
+            "tertiary-container": "#3e6b32",
+            "tertiary": "#26521c",
+            "surface-container-lowest": "#ffffff",
+            "surface-bright": "#fcf9f2",
+            "primary-fixed": "#b1efdb",
+            "background": "#fcf9f2",
+            "surface-container-highest": "#e5e2db"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "margin": "1rem",
+            "gutter-compact": "0.5rem",
+            "space-xxs": "0.25rem",
+            "space-sm": "0.75rem",
+            "space-lg": "1.25rem",
+            "gutter": "0.75rem",
+            "space-xs": "0.5rem",
+            "space-xl": "1.5rem",
+            "space-md": "1rem"
+          },
+          "fontFamily": {
+            "title-md": ["Public Sans", "sans-serif"],
+            "headline-md": ["Public Sans", "sans-serif"],
+            "headline-lg": ["Public Sans", "sans-serif"],
+            "mono-data-md": ["Courier Prime", "monospace"],
+            "mono-data-sm": ["Courier Prime", "monospace"],
+            "body-sm": ["Public Sans", "sans-serif"],
+            "label-md": ["Public Sans", "sans-serif"],
+            "body-md": ["Public Sans", "sans-serif"],
+            "mono-data-lg": ["Courier Prime", "monospace"]
+          },
+          "fontSize": {
+            "title-md": ["18px", { "lineHeight": "24px", "fontWeight": "600" }],
+            "headline-md": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+            "mono-data-md": ["15px", { "lineHeight": "20px", "fontWeight": "400" }],
+            "mono-data-sm": ["13px", { "lineHeight": "16px", "fontWeight": "400" }],
+            "body-sm": ["13px", { "lineHeight": "18px", "fontWeight": "400" }],
+            "label-md": ["13px", { "lineHeight": "16px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+            "body-md": ["15px", { "lineHeight": "22px", "fontWeight": "400" }],
+            "mono-data-lg": ["24px", { "lineHeight": "28px", "fontWeight": "400" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      font-size: 20px;
+      line-height: 1;
+      display: inline-block;
+    }
+    /* Touch target guarantee without visual bloat */
+    .tap-target-48 {
+      min-width: 48px;
+      min-height: 48px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    /* Hide scrollbars for clean presentation */
+    ::-webkit-scrollbar {
+      display: none;
+    }
+  </style>
+</head>
+<body class="bg-[#F4F1EA] text-on-surface antialiased flex justify-center items-start min-h-screen py-0 sm:py-6">
+<!-- Mobile Frame Container: 360px wide, min 800px tall -->
+<main class="w-full max-w-[360px] min-h-[800px] bg-[#F4F1EA] flex flex-col relative overflow-hidden select-none">
+<!-- 0. Standard Android Status Bar -->
+<header class="w-full h-8 px-4 flex justify-between items-center text-on-surface pt-1 z-20">
+<span class="font-mono-data-sm text-mono-data-sm font-semibold tracking-tight">09:41</span>
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] leading-none" data-icon="network_cell">network_cell</span>
+<span class="material-symbols-outlined text-[16px] leading-none" data-icon="wifi">wifi</span>
+<span class="material-symbols-outlined text-[18px] leading-none" data-icon="battery_full">battery_full</span>
+</div>
+</header>
+<!-- Top Bar: Detail Screen (Title "Teras", Back & Fullscreen actions) -->
+<!-- Navigation shell suppressed per destination/task-focused rule -->
+<nav class="w-full h-14 px-margin flex items-center justify-between z-10">
+<button aria-label="Kembali" class="tap-target-48 -ml-2 text-on-surface rounded-full hover:bg-surface-container active:bg-surface-container-high transition-colors" type="button">
+<span class="material-symbols-outlined" data-icon="arrow_back">arrow_back</span>
+</button>
+<h1 class="font-title-md text-title-md text-[#1F2421] tracking-tight">Teras</h1>
+<div class="flex items-center -mr-2">
+<button aria-label="Layar penuh" class="tap-target-48 text-on-surface rounded-full hover:bg-surface-container active:bg-surface-container-high transition-colors" type="button">
+<span class="material-symbols-outlined" data-icon="fullscreen">fullscreen</span>
+</button>
+</div>
+</nav>
+<!-- Scrollable Body Content -->
+<div class="flex-1 px-margin pb-8 flex flex-col gap-3 overflow-y-auto">
+<!-- 1. 16:9 Large Video Player Placeholder Card -->
+<section class="relative w-full aspect-video bg-[#1D211E] rounded-[20px] overflow-hidden flex items-center justify-center">
+<!-- Live Badge Top-Left -->
+<div class="absolute top-3 left-3 flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-black/40 backdrop-blur-none">
+<span class="w-2 h-2 rounded-full bg-[#4C7A3F]"></span>
+<span class="font-mono-data-sm text-[11px] text-white tracking-widest font-bold">LIVE</span>
+</div>
+<!-- Video Aspect Ratio Guide / Offline Indicator Mock -->
+<div class="flex flex-col items-center justify-center gap-1 text-[#8A938C]">
+<span class="material-symbols-outlined text-4xl" data-icon="videocam">videocam</span>
+<span class="font-label-md text-[11px] tracking-wide text-[#8A938C]/80">Siaran Langsung</span>
+</div>
+<!-- Audio mute/unmute small pill bottom-right -->
+<div class="absolute bottom-3 right-3 w-8 h-8 rounded-full bg-black/30 flex items-center justify-center text-white/80">
+<span class="material-symbols-outlined text-[18px]" data-icon="volume_off">volume_off</span>
+</div>
+</section>
+<!-- 2. Status and Control Bar Below Video -->
+<section class="flex items-center justify-between pt-1">
+<!-- Status & Latency -->
+<div class="flex flex-col">
+<span class="font-label-md text-body-sm font-semibold text-[#4C7A3F] flex items-center gap-1">
+            Live - jaringan rumah
+          </span>
+<span class="font-mono-data-sm text-mono-data-sm text-[#5E655F]">
+            0.8 dtk
+          </span>
+</div>
+<!-- Action Controls -->
+<div class="flex items-center gap-2">
+<!-- Snapshot Button -->
+<button class="h-[44px] px-3.5 bg-[#ECE7DC] hover:bg-[#E5E0D5] active:bg-surface-variant text-[#1F2421] rounded-xl flex items-center gap-1.5 transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]" data-icon="photo_camera">photo_camera</span>
+<span class="font-label-md text-body-sm">Snapshot</span>
+</button>
+<!-- Mode Privasi Toggle Switch -->
+<div class="flex items-center" title="Mode privasi">
+<button aria-checked="false" aria-label="Mode privasi" class="w-[56px] h-[32px] bg-[#ECE7DC] rounded-full p-[3px] flex items-center transition-colors" role="switch" type="button">
+<span class="w-[26px] h-[26px] bg-[#FBF9F4] rounded-full"></span>
+</button>
+</div>
+</div>
+</section>
+<!-- 3. Notice Row Card -->
+<section class="bg-[#ECE7DC] rounded-xl p-3 flex items-start gap-2.5">
+<span class="material-symbols-outlined text-[#5E655F] text-[18px] shrink-0 mt-0.5" data-icon="info">info</span>
+<p class="font-body-sm text-body-sm text-[#5E655F] leading-[18px]">
+          Live hanya di jaringan rumah. Di luar rumah tersedia snapshot.
+        </p>
+</section>
+<!-- 4. Segmented Tabs -->
+<section class="flex items-center gap-2 pt-1" role="tablist">
+<!-- Tab: Rekaman (Active) -->
+<button aria-selected="true" class="h-8 px-4 rounded-full bg-[#E4EDE9] text-[#2F6B5B] font-label-md text-[14px] flex items-center justify-center" role="tab" type="button">
+          Rekaman
+        </button>
+<!-- Tab: Kejadian (Inactive) -->
+<button aria-selected="false" class="h-8 px-4 rounded-full text-[#5E655F] font-body-md text-[14px] flex items-center justify-center hover:bg-surface-container active:bg-surface-variant transition-colors" role="tab" type="button">
+          Kejadian
+        </button>
+</section>
+<!-- 5. List of Recorded Clips Card -->
+<section class="bg-[#FBF9F4] rounded-[20px] flex flex-col overflow-hidden">
+<!-- Row 1 -->
+<div class="px-4 py-3 flex items-center justify-between hover:bg-[#F4F1EA]/60 transition-colors">
+<div class="flex items-center gap-3">
+<!-- 16:9 Thumbnail Placeholder -->
+<div class="w-[48px] h-[27px] bg-[#ECE7DC] rounded-[6px] shrink-0 flex items-center justify-center text-[#5E655F]">
+<span class="material-symbols-outlined text-[14px]" data-icon="play_arrow">play_arrow</span>
+</div>
+<!-- Metadata Cluster -->
+<div class="flex flex-col">
+<span class="font-mono-data-sm text-[14px] text-[#1F2421] font-medium leading-tight">
+                02:14 - 02:15
+              </span>
+<div class="flex items-center gap-1.5 mt-0.5">
+<span class="px-1.5 py-0.5 rounded-[8px] bg-[#ECE7DC] font-label-md text-[11px] text-[#5E655F] leading-none">
+                  Gerakan
+                </span>
+<span class="font-mono-data-sm text-[12px] text-[#5E655F]">
+                  1 mnt
+                </span>
+</div>
+</div>
+</div>
+<!-- Trailing Download Button (Phosphor/Material download) -->
+<button aria-label="Unduh rekaman 02:14" class="tap-target-48 -mr-2 text-[#5E655F] hover:text-[#1F2421] rounded-full active:bg-[#ECE7DC] transition-colors" type="button">
+<span class="material-symbols-outlined text-[20px]" data-icon="download">download</span>
+</button>
+</div>
+<!-- Hairline Divider -->
+<div class="h-[1px] bg-[#E5E0D5] ml-16 mr-4"></div>
+<!-- Row 2 -->
+<div class="px-4 py-3 flex items-center justify-between hover:bg-[#F4F1EA]/60 transition-colors">
+<div class="flex items-center gap-3">
+<!-- 16:9 Thumbnail Placeholder -->
+<div class="w-[48px] h-[27px] bg-[#ECE7DC] rounded-[6px] shrink-0 flex items-center justify-center text-[#5E655F]">
+<span class="material-symbols-outlined text-[14px]" data-icon="play_arrow">play_arrow</span>
+</div>
+<!-- Metadata Cluster -->
+<div class="flex flex-col">
+<span class="font-mono-data-sm text-[14px] text-[#1F2421] font-medium leading-tight">
+                01:40 - 01:42
+              </span>
+<div class="flex items-center gap-1.5 mt-0.5">
+<span class="px-1.5 py-0.5 rounded-[8px] bg-[#ECE7DC] font-label-md text-[11px] text-[#5E655F] leading-none">
+                  Gerakan
+                </span>
+<span class="font-mono-data-sm text-[12px] text-[#5E655F]">
+                  2 mnt
+                </span>
+</div>
+</div>
+</div>
+<!-- Trailing Download Button -->
+<button aria-label="Unduh rekaman 01:40" class="tap-target-48 -mr-2 text-[#5E655F] hover:text-[#1F2421] rounded-full active:bg-[#ECE7DC] transition-colors" type="button">
+<span class="material-symbols-outlined text-[20px]" data-icon="download">download</span>
+</button>
+</div>
+<!-- Hairline Divider -->
+<div class="h-[1px] bg-[#E5E0D5] ml-16 mr-4"></div>
+<!-- Row 3 -->
+<div class="px-4 py-3 flex items-center justify-between hover:bg-[#F4F1EA]/60 transition-colors">
+<div class="flex items-center gap-3">
+<!-- 16:9 Thumbnail Placeholder -->
+<div class="w-[48px] h-[27px] bg-[#ECE7DC] rounded-[6px] shrink-0 flex items-center justify-center text-[#5E655F]">
+<span class="material-symbols-outlined text-[14px]" data-icon="play_arrow">play_arrow</span>
+</div>
+<!-- Metadata Cluster -->
+<div class="flex flex-col">
+<span class="font-mono-data-sm text-[14px] text-[#1F2421] font-medium leading-tight">
+                00:15 - 00:16
+              </span>
+<div class="flex items-center gap-1.5 mt-0.5">
+<span class="px-1.5 py-0.5 rounded-[8px] bg-[#ECE7DC] font-label-md text-[11px] text-[#5E655F] leading-none">
+                  Orang lewat
+                </span>
+<span class="font-mono-data-sm text-[12px] text-[#5E655F]">
+                  1 mnt
+                </span>
+</div>
+</div>
+</div>
+<!-- Trailing Download Button -->
+<button aria-label="Unduh rekaman 00:15" class="tap-target-48 -mr-2 text-[#5E655F] hover:text-[#1F2421] rounded-full active:bg-[#ECE7DC] transition-colors" type="button">
+<span class="material-symbols-outlined text-[20px]" data-icon="download">download</span>
+</button>
+</div>
+</section>
+</div>
+<!-- Android Gesture Pill / Home Indicator Area (Clean finish without BottomNavBar on detail view) -->
+<footer class="w-full h-7 flex items-center justify-center pb-2 bg-[#F4F1EA]">
+<div class="w-32 h-1 bg-[#1F2421]/20 rounded-full"></div>
+</footer>
+</main>
+<script>
+    // Lightweight toggle micro-interaction for Privacy Mode
+    document.addEventListener('DOMContentLoaded', () => {
+      const toggle = document.querySelector('[role="switch"]');
+      if (toggle) {
+        toggle.addEventListener('click', () => {
+          const isChecked = toggle.getAttribute('aria-checked') === 'true';
+          toggle.setAttribute('aria-checked', !isChecked);
+          const thumb = toggle.querySelector('span');
+          if (!isChecked) {
+            toggle.classList.remove('bg-[#ECE7DC]');
+            toggle.classList.add('bg-[#2F6B5B]');
+            thumb.classList.add('translate-x-6');
+          } else {
+            toggle.classList.remove('bg-[#2F6B5B]');
+            toggle.classList.add('bg-[#ECE7DC]');
+            thumb.classList.remove('translate-x-6');
+          }
+        });
+      }
+    });
+  </script>
+</body></html>

@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+
+<html class="light" lang="id"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Rumah - Sistem Rumah Tangga</title>
+<!-- Google Fonts: Public Sans & IBM Plex Mono -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&amp;family=Public+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS CDN with Forms and Container Queries -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Configuration -->
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "surface-variant": "#dfe4df",
+            "primary": "#115344",
+            "primary-container": "#2f6b5b",
+            "background": "#F4F1EA",
+            "surface": "#FBF9F4",
+            "card-on": "#E4EDE9",
+            "brand-green": "#2F6B5B",
+            "status-green": "#4C7A3F",
+            "muted-text": "#5E655F",
+            "on-surface": "#181d1a"
+          },
+          fontFamily: {
+            "public": ["Public Sans", "sans-serif"],
+            "mono": ["IBM Plex Mono", "monospace"]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    *, *::before, *::after {
+      box-shadow: none !important;
+      backdrop-filter: none !important;
+      text-shadow: none !important;
+    }
+    body {
+      background-color: #F4F1EA;
+      color: #181d1a;
+      font-family: 'Public Sans', sans-serif;
+    }
+  </style>
+</head>
+<body class="bg-[#F4F1EA] text-[#181d1a] antialiased min-h-screen">
+<!-- ========================================== -->
+<!-- 1. FIXED SIDEBAR (240px wide, #FBF9F4)     -->
+<!-- ========================================== -->
+<aside class="fixed left-0 top-0 h-screen w-[240px] bg-[#FBF9F4] border-r border-[#D9D3C6] z-30 flex flex-col justify-between py-6 px-4">
+<!-- Brand Title & Navigation Links -->
+<div class="flex flex-col gap-6">
+<!-- Wordmark text only -->
+<div class="px-2 pt-1">
+<h1 class="font-public font-bold text-[24px] leading-tight text-[#181d1a] tracking-tight">Rumah</h1>
+<p class="font-public text-[13px] text-[#5E655F] mt-0.5">Rumah Tangga</p>
+</div>
+<!-- Navigation Items (Public Sans 15px) -->
+<nav aria-label="Navigasi Utama" class="flex flex-col gap-1.5 w-full">
+<!-- Beranda (Active) -->
+<a class="flex items-center gap-3 px-3.5 py-2.5 text-[#2F6B5B] bg-[#E4EDE9] rounded-[12px] font-public text-[15px] font-semibold transition-colors" href="#beranda">
+<span class="material-symbols-outlined text-[20px]" data-icon="home">home</span>
+<span>Beranda</span>
+</a>
+<!-- Perangkat -->
+<a class="flex items-center gap-3 px-3.5 py-2.5 text-[#5E655F] hover:text-[#181d1a] hover:bg-[#ECE7DC] rounded-[12px] font-public text-[15px] font-medium transition-colors" href="#perangkat">
+<span class="material-symbols-outlined text-[20px]" data-icon="devices">devices</span>
+<span>Perangkat</span>
+</a>
+<!-- Asisten -->
+<a class="flex items-center gap-3 px-3.5 py-2.5 text-[#5E655F] hover:text-[#181d1a] hover:bg-[#ECE7DC] rounded-[12px] font-public text-[15px] font-medium transition-colors" href="#asisten">
+<span class="material-symbols-outlined text-[20px]" data-icon="smart_toy">smart_toy</span>
+<span>Asisten</span>
+</a>
+<!-- Kamera -->
+<a class="flex items-center gap-3 px-3.5 py-2.5 text-[#5E655F] hover:text-[#181d1a] hover:bg-[#ECE7DC] rounded-[12px] font-public text-[15px] font-medium transition-colors" href="#kamera">
+<span class="material-symbols-outlined text-[20px]" data-icon="videocam">videocam</span>
+<span>Kamera</span>
+</a>
+<!-- Keluarga -->
+<a class="flex items-center gap-3 px-3.5 py-2.5 text-[#5E655F] hover:text-[#181d1a] hover:bg-[#ECE7DC] rounded-[12px] font-public text-[15px] font-medium transition-colors" href="#keluarga">
+<span class="material-symbols-outlined text-[20px]" data-icon="group">group</span>
+<span>Keluarga</span>
+</a>
+<!-- Pengaturan -->
+<a class="flex items-center gap-3 px-3.5 py-2.5 text-[#5E655F] hover:text-[#181d1a] hover:bg-[#ECE7DC] rounded-[12px] font-public text-[15px] font-medium transition-colors" href="#pengaturan">
+<span class="material-symbols-outlined text-[20px]" data-icon="settings">settings</span>
+<span>Pengaturan</span>
+</a>
+</nav>
+</div>
+<!-- Sidebar Footer Telemetry Indicator -->
+<div class="px-2 pt-4 border-t border-[#D9D3C6]">
+<div class="flex items-center gap-2 text-[#2F6B5B] font-public text-[13px] font-medium">
+<span class="w-2 h-2 rounded-full bg-[#4C7A3F]"></span>
+<span>Server terhubung</span>
+</div>
+<div class="mt-1.5 font-mono text-[12px] text-[#5E655F]">
+        ESP32 · MQTT (Lokal)
+      </div>
+</div>
+</aside>
+<!-- ========================================== -->
+<!-- 2. TOPBAR (left-240px, fixed)              -->
+<!-- ========================================== -->
+<header class="fixed top-0 left-[240px] right-0 h-16 bg-[#FBF9F4] border-b border-[#D9D3C6] z-20 px-8 flex items-center justify-between">
+<!-- Left Title & Connected Badge -->
+<div class="flex items-center gap-4">
+<h2 class="font-public font-bold text-[24px] text-[#181d1a] tracking-tight leading-none">Beranda</h2>
+<span class="inline-flex items-center gap-2 px-3 py-1 bg-[#E4EDE9] text-[#2F6B5B] rounded-[8px] font-public text-[13px] font-medium leading-none">
+<span class="w-2 h-2 rounded-full bg-[#4C7A3F] flex-shrink-0"></span>
+<span>Server terhubung</span>
+</span>
+</div>
+<!-- Right Profile Context (Year 2026) -->
+<div class="flex items-center gap-4">
+<span class="font-mono text-[13px] text-[#5E655F] hidden sm:inline">2026</span>
+<div class="h-5 w-px bg-[#D9D3C6]"></div>
+<!-- User "Budi · Admin" with round initial circle "B" (36px, bg #2F6B5B) -->
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-full bg-[#2F6B5B] text-white font-public text-[14px] font-bold flex items-center justify-center">
+          B
+        </div>
+<div class="font-public text-[14px] font-medium text-[#181d1a]">
+          Budi <span class="text-[#5E655F] font-normal">· Admin</span>
+</div>
+</div>
+</div>
+</header>
+<!-- ========================================== -->
+<!-- 3. MAIN DASHBOARD CONTENT AREA            -->
+<!-- ========================================== -->
+<main class="ml-[240px] pt-24 pb-20 px-8 max-w-[1440px] mx-auto min-h-screen">
+<div class="flex flex-col gap-6">
+<!-- ======================================== -->
+<!-- SECTION 1: SUMMARY METRICS (4 CARDS)    -->
+<!-- No borders, 20px radius, 24px padding    -->
+<!-- ======================================== -->
+<section aria-label="Ringkasan Status Rumah" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+<!-- Summary Card 1: Perangkat menyala -->
+<div class="bg-[#FBF9F4] rounded-[20px] p-6 flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="font-public text-[15px] font-medium text-[#5E655F]">Perangkat menyala</span>
+<div class="w-12 h-12 rounded-full bg-[#E4EDE9] flex items-center justify-center text-[#2F6B5B]">
+<span class="material-symbols-outlined text-[24px]" data-icon="power_settings_new">power_settings_new</span>
+</div>
+</div>
+<div class="mt-4 flex items-baseline justify-between">
+<div class="font-mono text-[24px] font-semibold text-[#181d1a] tracking-tight">
+              3 dari 4
+            </div>
+<span class="font-public text-[14px] font-semibold text-[#2F6B5B]">
+              Aktif
+            </span>
+</div>
+</div>
+<!-- Summary Card 2: Sensor gas -->
+<div class="bg-[#FBF9F4] rounded-[20px] p-6 flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="font-public text-[15px] font-medium text-[#5E655F]">Sensor gas</span>
+<div class="w-12 h-12 rounded-full bg-[#ECE7DC] flex items-center justify-center text-[#4C7A3F]">
+<span class="material-symbols-outlined text-[24px]" data-icon="detector_smoke">detector_smoke</span>
+</div>
+</div>
+<div class="mt-4 flex items-baseline justify-between">
+<div class="font-mono text-[18px] font-semibold text-[#181d1a] tracking-tight truncate pr-2">
+              Gas 820 <span class="font-mono text-[13px] font-normal text-[#5E655F]">(ambang 1500)</span>
+</div>
+<span class="font-public text-[14px] font-semibold text-[#4C7A3F] flex-shrink-0">
+              Aman
+            </span>
+</div>
+</div>
+<!-- Summary Card 3: Cahaya -->
+<div class="bg-[#FBF9F4] rounded-[20px] p-6 flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="font-public text-[15px] font-medium text-[#5E655F]">Cahaya</span>
+<div class="w-12 h-12 rounded-full bg-[#ECE7DC] flex items-center justify-center text-[#5E655F]">
+<span class="material-symbols-outlined text-[24px]" data-icon="light_mode">light_mode</span>
+</div>
+</div>
+<div class="mt-4 flex items-baseline justify-between">
+<div class="font-public text-[18px] font-medium text-[#181d1a]">
+              Gelap · <span class="font-mono text-[24px] font-semibold text-[#181d1a]">42</span> <span class="font-mono text-[13px] text-[#5E655F]">lux</span>
+</div>
+<span class="font-public text-[14px] font-medium text-[#5E655F]">
+              Gelap
+            </span>
+</div>
+</div>
+<!-- Summary Card 4: Kamera aktif -->
+<div class="bg-[#FBF9F4] rounded-[20px] p-6 flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="font-public text-[15px] font-medium text-[#5E655F]">Kamera aktif</span>
+<div class="w-12 h-12 rounded-full bg-[#ECE7DC] flex items-center justify-center text-[#2F6B5B]">
+<span class="material-symbols-outlined text-[24px]" data-icon="videocam">videocam</span>
+</div>
+</div>
+<div class="mt-4 flex items-baseline justify-between">
+<div class="font-mono text-[18px] font-semibold text-[#181d1a] tracking-tight">
+              2 dari 3
+            </div>
+<span class="font-public text-[14px] font-semibold text-[#2F6B5B]">
+              Siaga
+            </span>
+</div>
+</div>
+</section>
+<!-- ======================================== -->
+<!-- SECTION 2 & 3: MAIN GRID (CONTROLS & LOG)-->
+<!-- ======================================== -->
+<div class="grid grid-cols-12 gap-6 items-start">
+<!-- ======================================== -->
+<!-- CONTROLS: 2-COLUMN SWITCHBOARD (Cols 8)  -->
+<!-- ======================================== -->
+<section aria-label="Kontrol Ruangan &amp; Saklar" class="col-span-12 lg:col-span-8 flex flex-col gap-4">
+<!-- Section Title Bar -->
+<div class="flex items-center justify-between pb-1">
+<div>
+<h3 class="font-public font-bold text-[20px] text-[#181d1a]">Kontrol Ruangan &amp; Saklar</h3>
+<p class="font-public text-[13px] text-[#5E655F] mt-0.5">ESP32 · MQTT terhubung langsung</p>
+</div>
+<button class="h-11 px-5 rounded-[12px] border border-[#D9D3C6] bg-transparent hover:bg-[#ECE7DC] text-[#181d1a] font-public text-[14px] font-semibold transition-colors" type="button">
+              Matikan Semua
+            </button>
+</div>
+<!-- 2-Column Device Tiles (24px radius, no border) -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<!-- Device 1: Lampu Ruang Tengah (ON) -->
+<div class="bg-[#E4EDE9] rounded-[24px] p-6 flex flex-col justify-between min-h-[170px]">
+<div class="flex items-start justify-between">
+<div class="w-12 h-12 rounded-full bg-[#FBF9F4] flex items-center justify-center text-[#2F6B5B]">
+<span class="material-symbols-outlined text-[24px]" data-icon="light">light</span>
+</div>
+<!-- Large Pill Toggle ON (56x32, 24px knob) -->
+<button aria-checked="true" class="w-14 h-8 bg-[#2F6B5B] rounded-full p-1 flex items-center justify-end transition-none cursor-pointer" role="switch" type="button">
+<span class="w-6 h-6 bg-white rounded-full block"></span>
+</button>
+</div>
+<div class="mt-4">
+<div class="flex items-center justify-between">
+<div class="font-public font-bold text-[18px] text-[#2F6B5B]">Lampu Ruang Tengah</div>
+<span class="font-public font-semibold text-[13px] text-[#2F6B5B]">ON</span>
+</div>
+<div class="font-mono text-[13px] text-[#2F6B5B] mt-0.5 opacity-90">ESP32 · MQTT</div>
+</div>
+</div>
+<!-- Device 2: Lampu Dapur & Tamu (OFF) -->
+<div class="bg-[#FBF9F4] rounded-[24px] p-6 flex flex-col justify-between min-h-[170px]">
+<div class="flex items-start justify-between">
+<div class="w-12 h-12 rounded-full bg-[#ECE7DC] flex items-center justify-center text-[#5E655F]">
+<span class="material-symbols-outlined text-[24px]" data-icon="light">light</span>
+</div>
+<!-- Large Pill Toggle OFF (56x32, 24px knob) -->
+<button aria-checked="false" class="w-14 h-8 bg-[#ECE7DC] border border-[#D9D3C6] rounded-full p-1 flex items-center justify-start transition-none cursor-pointer" role="switch" type="button">
+<span class="w-6 h-6 bg-[#FBF9F4] rounded-full block"></span>
+</button>
+</div>
+<div class="mt-4">
+<div class="flex items-center justify-between">
+<div class="font-public font-bold text-[18px] text-[#181d1a]">Lampu Dapur &amp; Tamu</div>
+<span class="font-public font-normal text-[13px] text-[#5E655F]">OFF</span>
+</div>
+<div class="font-mono text-[13px] text-[#5E655F] mt-0.5">ESP32 · MQTT</div>
+</div>
+</div>
+<!-- Device 3: Lampu Kamar (ON) -->
+<div class="bg-[#E4EDE9] rounded-[24px] p-6 flex flex-col justify-between min-h-[170px]">
+<div class="flex items-start justify-between">
+<div class="w-12 h-12 rounded-full bg-[#FBF9F4] flex items-center justify-center text-[#2F6B5B]">
+<span class="material-symbols-outlined text-[24px]" data-icon="bed">bed</span>
+</div>
+<!-- Large Pill Toggle ON -->
+<button aria-checked="true" class="w-14 h-8 bg-[#2F6B5B] rounded-full p-1 flex items-center justify-end transition-none cursor-pointer" role="switch" type="button">
+<span class="w-6 h-6 bg-white rounded-full block"></span>
+</button>
+</div>
+<div class="mt-4">
+<div class="flex items-center justify-between">
+<div class="font-public font-bold text-[18px] text-[#2F6B5B]">Lampu Kamar</div>
+<span class="font-public font-semibold text-[13px] text-[#2F6B5B]">ON</span>
+</div>
+<div class="font-mono text-[13px] text-[#2F6B5B] mt-0.5 opacity-90">ESP32 · MQTT</div>
+</div>
+</div>
+<!-- Device 4: Kipas Angin (ON) -->
+<div class="bg-[#E4EDE9] rounded-[24px] p-6 flex flex-col justify-between min-h-[170px]">
+<div class="flex items-start justify-between">
+<div class="w-12 h-12 rounded-full bg-[#FBF9F4] flex items-center justify-center text-[#2F6B5B]">
+<span class="material-symbols-outlined text-[24px]" data-icon="mode_fan">mode_fan</span>
+</div>
+<!-- Large Pill Toggle ON -->
+<button aria-checked="true" class="w-14 h-8 bg-[#2F6B5B] rounded-full p-1 flex items-center justify-end transition-none cursor-pointer" role="switch" type="button">
+<span class="w-6 h-6 bg-white rounded-full block"></span>
+</button>
+</div>
+<div class="mt-4">
+<div class="flex items-center justify-between">
+<div class="font-public font-bold text-[18px] text-[#2F6B5B]">Kipas Angin</div>
+<span class="font-public font-semibold text-[13px] text-[#2F6B5B]">ON</span>
+</div>
+<div class="font-mono text-[13px] text-[#2F6B5B] mt-0.5 opacity-90">ESP32 · MQTT</div>
+</div>
+</div>
+</div>
+</section>
+<!-- ======================================== -->
+<!-- RECENT EVENTS LOG (Cols 4)               -->
+<!-- Corner radius 20px, fill #FBF9F4, no box -->
+<!-- ======================================== -->
+<section aria-label="Aktivitas Terakhir" class="col-span-12 lg:col-span-4 flex flex-col gap-4">
+<div class="flex items-center justify-between pb-1">
+<div>
+<h3 class="font-public font-bold text-[20px] text-[#181d1a]">Aktivitas Terakhir</h3>
+<p class="font-public text-[13px] text-[#5E655F] mt-0.5">Catatan telemetri ESP32</p>
+</div>
+</div>
+<div class="bg-[#FBF9F4] rounded-[20px] p-6 flex flex-col">
+<ul class="divide-y divide-[#D9D3C6]" role="list">
+<!-- Event 1 -->
+<li class="py-4 first:pt-0">
+<div class="flex items-center justify-between">
+<span class="font-mono text-[13px] text-[#5E655F]">2026-02-28 19:42:10</span>
+<span class="inline-flex items-center px-2 py-0.5 rounded-[8px] bg-[#ECE7DC] font-public text-[11px] font-medium text-[#181d1a]">
+                    Manual
+                  </span>
+</div>
+<p class="font-public text-[15px] font-medium text-[#181d1a] mt-1.5 leading-snug">
+                  Lampu kamar dimatikan oleh Budi
+                </p>
+<div class="mt-1 font-mono text-[12px] text-[#5E655F]">
+                  Topik: rumah/kamar/lampu
+                </div>
+</li>
+<!-- Event 2 -->
+<li class="py-4">
+<div class="flex items-center justify-between">
+<span class="font-mono text-[13px] text-[#5E655F]">2026-02-28 19:15:02</span>
+<span class="inline-flex items-center px-2 py-0.5 rounded-[8px] bg-[#ECE7DC] font-public text-[11px] font-medium text-[#2F6B5B]">
+                    Sensor PIR
+                  </span>
+</div>
+<p class="font-public text-[15px] font-medium text-[#181d1a] mt-1.5 leading-snug">
+                  Kamera teras mendeteksi gerakan
+                </p>
+<div class="mt-1 font-mono text-[12px] text-[#5E655F]">
+                  Topik: rumah/teras/gerakan
+                </div>
+</li>
+<!-- Event 3 -->
+<li class="py-4">
+<div class="flex items-center justify-between">
+<span class="font-mono text-[13px] text-[#5E655F]">2026-02-28 18:30:00</span>
+<span class="inline-flex items-center px-2 py-0.5 rounded-[8px] bg-[#E4EDE9] font-public text-[11px] font-semibold text-[#2F6B5B]">
+                    Otomatisasi
+                  </span>
+</div>
+<p class="font-public text-[15px] font-medium text-[#181d1a] mt-1.5 leading-snug">
+                  Lampu ruang tengah dinyalakan otomatis
+                </p>
+<div class="mt-1 font-mono text-[12px] text-[#5E655F]">
+                  Pemicu: LDR &lt; 50 lux
+                </div>
+</li>
+<!-- Event 4 -->
+<li class="py-4 last:pb-0">
+<div class="flex items-center justify-between">
+<span class="font-mono text-[13px] text-[#5E655F]">2026-02-28 17:05:44</span>
+<span class="inline-flex items-center px-2 py-0.5 rounded-[8px] bg-[#ECE7DC] font-public text-[11px] font-semibold text-[#4C7A3F]">
+                    Sensor Gas
+                  </span>
+</div>
+<p class="font-public text-[15px] font-medium text-[#181d1a] mt-1.5 leading-snug">
+                  Sensor gas membaca 820 (Aman)
+                </p>
+<div class="mt-1 font-mono text-[12px] text-[#5E655F]">
+                  MQ-2 normal · Ambang 1500
+                </div>
+</li>
+</ul>
+<!-- Clean footer link -->
+<div class="mt-5 pt-4 border-t border-[#D9D3C6]">
+<button class="w-full h-11 border border-[#D9D3C6] rounded-[12px] bg-transparent hover:bg-[#ECE7DC] text-[#181d1a] font-public text-[14px] font-semibold flex items-center justify-center gap-2 transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">history</span>
+<span>Lihat Semua Log Kejadian</span>
+</button>
+</div>
+</div>
+</section>
+</div>
+</div>
+</main>
+<!-- ========================================== -->
+<!-- 4. SYSTEM TOAST NOTIFICATION               -->
+<!-- ========================================== -->
+<div class="fixed bottom-6 right-8 z-50 flex items-center gap-3 px-5 py-3.5 bg-[#FBF9F4] rounded-[20px] min-w-[340px]" role="alert">
+<span class="w-2.5 h-2.5 rounded-full bg-[#4C7A3F] flex-shrink-0"></span>
+<div class="flex-1 pr-2">
+<div class="font-public text-[14px] font-semibold text-[#181d1a] leading-tight">
+        Lampu ruang tengah dinyalakan
+      </div>
+<div class="font-mono text-[12px] text-[#5E655F] mt-0.5">
+        18:30:00 · Verifikasi MQTT sukses
+      </div>
+</div>
+<button aria-label="Tutup notifikasi" class="w-7 h-7 flex items-center justify-center text-[#5E655F] hover:text-[#181d1a] rounded-[8px] hover:bg-[#ECE7DC] transition-colors" onclick="this.parentElement.remove()" type="button">
+<span class="material-symbols-outlined text-[18px]">close</span>
+</button>
+</div>
+</body></html>

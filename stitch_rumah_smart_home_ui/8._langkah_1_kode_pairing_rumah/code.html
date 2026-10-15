@@ -1,0 +1,277 @@
+<!DOCTYPE html><html class="light" lang="id"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>8. Langkah 1 - Kode Pairing - Rumah</title>
+<!-- Google Fonts: Public Sans & Courier Prime / IBM Plex Mono fallback -->
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&amp;family=Public+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<!-- Tailwind CSS v3 -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "primary-container": "#2f6b5b",
+            "inverse-primary": "#96d3bf",
+            "primary-fixed": "#b1efdb",
+            "surface-bright": "#fcf9f2",
+            "surface-container-low": "#f6f3ec",
+            "error-container": "#ffdad6",
+            "secondary-fixed-dim": "#c1c8c1",
+            "inverse-surface": "#31312c",
+            "on-tertiary-fixed": "#012200",
+            "on-error-container": "#93000a",
+            "tertiary": "#26521c",
+            "on-background": "#1c1c18",
+            "on-secondary-fixed-variant": "#424843",
+            "background": "#fcf9f2",
+            "surface-variant": "#e5e2db",
+            "tertiary-fixed-dim": "#a1d48f",
+            "on-secondary-container": "#5d645e",
+            "secondary": "#59605a",
+            "tertiary-fixed": "#bcf1a9",
+            "on-tertiary": "#ffffff",
+            "surface-container-lowest": "#ffffff",
+            "outline-variant": "#bfc9c4",
+            "on-secondary-fixed": "#171d19",
+            "on-secondary": "#ffffff",
+            "surface-container": "#f1eee7",
+            "surface-dim": "#dcdad3",
+            "primary-fixed-dim": "#96d3bf",
+            "on-tertiary-fixed-variant": "#24501a",
+            "on-surface-variant": "#404945",
+            "on-primary-fixed-variant": "#0d5041",
+            "surface-container-high": "#ebe8e1",
+            "on-error": "#ffffff",
+            "tertiary-container": "#3e6b32",
+            "error": "#ba1a1a",
+            "on-primary-fixed": "#002019",
+            "primary": "#115344",
+            "outline": "#707975",
+            "inverse-on-surface": "#f3f0e9",
+            "on-primary": "#ffffff",
+            "surface-container-highest": "#e5e2db",
+            "on-tertiary-container": "#b6eaa3",
+            "secondary-container": "#dbe1da",
+            "surface-tint": "#2c6859",
+            "secondary-fixed": "#dde4dd",
+            "surface": "#fcf9f2",
+            "on-surface": "#1c1c18",
+            "on-primary-container": "#abe9d5"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "2xl": "1.25rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "space-xs": "0.5rem",
+            "space-lg": "1.25rem",
+            "gutter-compact": "0.5rem",
+            "space-xl": "1.5rem",
+            "margin": "1rem",
+            "space-sm": "0.75rem",
+            "gutter": "0.75rem",
+            "space-md": "1rem",
+            "space-xxs": "0.25rem"
+          },
+          "fontFamily": {
+            "mono-data-lg": [
+              "Courier Prime", "monospace"
+            ],
+            "headline-lg": [
+              "Public Sans", "sans-serif"
+            ],
+            "label-md": [
+              "Public Sans", "sans-serif"
+            ],
+            "body-sm": [
+              "Public Sans", "sans-serif"
+            ],
+            "headline-md": [
+              "Public Sans", "sans-serif"
+            ],
+            "mono-data-sm": [
+              "Courier Prime", "monospace"
+            ],
+            "mono-data-md": [
+              "Courier Prime", "monospace"
+            ],
+            "body-md": [
+              "Public Sans", "sans-serif"
+            ],
+            "title-md": [
+              "Public Sans", "sans-serif"
+            ]
+          },
+          "fontSize": {
+            "mono-data-lg": [
+              "24px",
+              {
+                "lineHeight": "28px",
+                "fontWeight": "400"
+              }
+            ],
+            "headline-lg": [
+              "32px",
+              {
+                "lineHeight": "40px",
+                "letterSpacing": "-0.02em",
+                "fontWeight": "600"
+              }
+            ],
+            "label-md": [
+              "13px",
+              {
+                "lineHeight": "16px",
+                "letterSpacing": "0.01em",
+                "fontWeight": "600"
+              }
+            ],
+            "body-sm": [
+              "13px",
+              {
+                "lineHeight": "18px",
+                "fontWeight": "400"
+              }
+            ],
+            "headline-md": [
+              "24px",
+              {
+                "lineHeight": "32px",
+                "letterSpacing": "-0.01em",
+                "fontWeight": "600"
+              }
+            ],
+            "mono-data-sm": [
+              "13px",
+              {
+                "lineHeight": "16px",
+                "fontWeight": "400"
+              }
+            ],
+            "mono-data-md": [
+              "15px",
+              {
+                "lineHeight": "20px",
+                "fontWeight": "400"
+              }
+            ],
+            "body-md": [
+              "15px",
+              {
+                "lineHeight": "22px",
+                "fontWeight": "400"
+              }
+            ],
+            "title-md": [
+              "18px",
+              {
+                "lineHeight": "24px",
+                "fontWeight": "600"
+              }
+            ]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+  </style>
+</head>
+<body class="bg-surface font-body-md text-on-surface antialiased min-h-screen flex items-center justify-center p-0 sm:p-4 select-none">
+<!-- Mobile Frame Container: 360 x 800 Android Canvas -->
+<div class="relative w-full max-w-[360px] h-[800px] bg-surface flex flex-col justify-between overflow-hidden">
+<!-- Top Section: Status Bar & Top App Bar & Progress Indicator -->
+<div class="w-full flex flex-col">
+<!-- Android Status Bar -->
+<div class="w-full h-8 px-margin flex items-center justify-between text-on-surface">
+<span class="font-label-md text-label-md">09:41</span>
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px]" data-icon="wifi">wifi</span>
+<span class="material-symbols-outlined text-[16px]" data-icon="signal_cellular_4_bar">signal_cellular_4_bar</span>
+<span class="material-symbols-outlined text-[16px]" data-icon="battery_full">battery_full</span>
+</div>
+</div>
+<!-- Top App Bar (Wizard / Sub-page: flat, no borders, suppressed bottom nav shell) -->
+<header class="w-full h-14 px-margin flex items-center gap-2">
+<button aria-label="Kembali" class="w-12 h-12 -ml-2 flex items-center justify-center rounded-full text-on-surface transition-colors duration-150 active:bg-surface-container" type="button">
+<span class="material-symbols-outlined text-[24px]" data-icon="arrow_back">arrow_back</span>
+</button>
+<h1 class="font-title-md text-title-md text-on-surface">Tambah perangkat</h1>
+</header>
+<!-- Step Indicator Section -->
+<div class="w-full px-6 pt-2 pb-4 flex flex-col gap-2">
+<span class="font-label-md text-label-md text-secondary">Langkah 1 dari 4</span>
+<div class="w-full grid grid-cols-4 gap-1">
+<!-- Segment 1 (Active) -->
+<div class="h-1 rounded-full bg-primary-container"></div>
+<!-- Segments 2, 3, 4 (Inactive Inset) -->
+<div class="h-1 rounded-full bg-surface-container-highest"></div>
+<div class="h-1 rounded-full bg-surface-container-highest"></div>
+<div class="h-1 rounded-full bg-surface-container-highest"></div>
+</div>
+</div>
+</div>
+<!-- Main Content Canvas (Quiet Domesticity Bento / Card Flow) -->
+<main class="w-full px-6 flex-1 flex flex-col pt-3 pb-4">
+<!-- Primary Heading & Concise Helper Instruction -->
+<div class="flex flex-col gap-2 mb-6">
+<h2 class="font-headline-md text-headline-md text-on-surface tracking-tight">Kode pairing</h2>
+<p class="font-body-md text-body-md text-secondary leading-snug">
+          Nyalakan alat. Tahan tombol BOOT 3 detik sampai LED berkedip.
+        </p>
+</div>
+<!-- Pairing Code Bento Tile (Floor 1: #FBF9F4 / surface-container-lowest) -->
+<div class="w-full bg-surface-bright rounded-2xl p-5 flex flex-col items-center justify-center text-center">
+<!-- Label -->
+<span class="font-label-md text-label-md text-secondary uppercase tracking-wider mb-2">KODE PAIRING</span>
+<!-- Big Monospace Pairing Code -->
+<div class="py-2.5">
+<span class="font-mono-data-lg text-[32px] leading-none font-semibold text-on-surface tracking-[0.2em] select-all">
+            482 915
+          </span>
+</div>
+<!-- Countdown Row with Quiet Timer Indicator -->
+<div class="mt-2 flex items-center justify-center gap-1.5 text-secondary">
+<span class="material-symbols-outlined text-[15px]" data-icon="schedule">schedule</span>
+<span class="font-mono-data-sm text-mono-data-sm">Berlaku 09:42</span>
+</div>
+</div>
+<!-- Domestic Status Confirmation Note (Floor 2 Recess) -->
+<div class="mt-4 w-full bg-surface-container-low rounded-xl px-4 py-3 flex items-center gap-3">
+<span class="material-symbols-outlined text-primary-container text-[20px]" data-icon="check_circle">check_circle</span>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface">LED Berkedip Kuning</span>
+<span class="font-body-sm text-body-sm text-secondary">Perangkat siap menerima sambungan</span>
+</div>
+</div>
+</main>
+<!-- Bottom Actions Container & Android Navigation Bar (Floor 0) -->
+<footer class="w-full px-6 pb-2 pt-2 flex flex-col gap-2">
+<!-- Primary Action Button -->
+<button class="w-full h-12 bg-primary-container hover:bg-primary active:bg-primary text-surface-bright rounded-xl font-body-md text-[15px] font-semibold flex items-center justify-center transition-colors duration-150" type="button">
+        Lanjut
+      </button>
+<!-- Secondary Text Button -->
+<button class="w-full h-12 text-primary-container hover:bg-surface-container-low active:bg-surface-container rounded-xl font-body-md text-[15px] font-semibold flex items-center justify-center transition-colors duration-150" type="button">
+        Buat kode baru
+      </button>
+<!-- Standard Android Home Pill Indicator -->
+<div class="w-full h-5 flex items-center justify-center">
+<div class="w-28 h-1 bg-on-surface-variant/40 rounded-full"></div>
+</div>
+</footer>
+</div>
+</body></html>

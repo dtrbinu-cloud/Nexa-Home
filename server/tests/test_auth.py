@@ -389,3 +389,56 @@ async def test_refresh_token_rotation():
         ref_data2 = ref_res2.json()
         newer_refresh_token = ref_data2["refresh_token"]
         assert newer_refresh_token != new_refresh_token
+
+
+@pytest.mark.asyncio
+async def test_httponly_cookie_and_logout():
+    async with AsyncClient(
+        transport=ASGITransport(app=app, client=("127.0.0.1", 50000)),
+        base_url="http://test",
+    ) as client:
+        # Setup admin
+        await client.get("/api/auth/setup-status")
+        setup_code = get_current_setup_code()
+        s_res = await client.post(
+            "/api/auth/setup-admin",
+            json={
+                "setup_code": setup_code,
+                "username": "admin",
+                "password": "PasswordAdmin123!",
+            },
+        )
+        totp_secret = s_res.json()["totp_secret"]
+
+        # Login admin
+        l_res = await client.post(
+            "/api/auth/login",
+            json={"username": "admin", "password": "PasswordAdmin123!"},
+        )
+        temp_token = l_res.json()["temp_token"]
+        v_res = await client.post(
+            "/api/auth/verify-2fa",
+            json={
+                "temp_token": temp_token,
+                "code": pyotp.TOTP(totp_secret).now(),
+            },
+        )
+        assert v_res.status_code == 200
+        # Cookie refresh_token harus ada dan bertipe httpOnly
+        assert "refresh_token" in v_res.cookies
+        refresh_cookie = v_res.cookies["refresh_token"]
+        assert refresh_cookie is not None
+
+        # Refresh tanpa JSON body (hanya mengandalkan cookie httponly)
+        ref_res = await client.post("/api/auth/refresh")
+        assert ref_res.status_code == 200
+        assert "access_token" in ref_res.json()
+        assert "refresh_token" in ref_res.cookies
+
+        # Logout -> cookie dihapus & token dicabut
+        logout_res = await client.post("/api/auth/logout")
+        assert logout_res.status_code == 200
+
+        # Coba refresh lagi setelah logout -> harus ditolak 401
+        ref_after_logout = await client.post("/api/auth/refresh")
+        assert ref_after_logout.status_code == 401
