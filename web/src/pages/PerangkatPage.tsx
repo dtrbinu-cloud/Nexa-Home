@@ -288,7 +288,9 @@ export const PerangkatPage: React.FC = () => {
                   </div>
 
                   <div className={styles.switchboardGrid}>
-                    {device.channels.map((channel) => {
+                    {device.channels
+                      .filter((ch) => ch.channel_key !== 'lamp' && ch.channel_key !== 'relay_fan')
+                      .map((channel) => {
                       const isActuator =
                         channel.channel_type === 'switch' ||
                         channel.channel_type === 'relay' ||
@@ -335,9 +337,8 @@ export const PerangkatPage: React.FC = () => {
                                     {channel.channel_key === 'lamp_tengah' && <span> · Pin 21</span>}
                                     {channel.channel_key === 'lamp_dapur_tamu' && <span> · Pin 17</span>}
                                     {channel.channel_key === 'lamp_kamar' && <span> · Pin 16</span>}
-                                    {(channel.channel_key === 'relay' || channel.channel_key === 'relay_fan') && <span> · Pin 32 (LOW)</span>}
+                                    {channel.channel_key === 'relay' && <span> · Pin 32 (LOW)</span>}
                                     {channel.channel_key === 'buzzer' && <span> · Pin 19</span>}
-                                    {channel.channel_key === 'lamp' && <span> · Semua</span>}
                                     <span> · {isOn ? 'Aktif' : 'Mati'}</span>
                                   </>
                                 ) : (

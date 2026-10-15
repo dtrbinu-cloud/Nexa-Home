@@ -29,11 +29,11 @@ class _HomeTabState extends ConsumerState<HomeTab> {
   String _selectedRoom = 'Semua';
   Timer? _refreshTimer;
 
-  int _gasValue = 412;
+  int? _gasValue;
   final int _gasThreshold = 1500;
   bool _isGasAlert = false;
   String _gasRoom = 'Dapur';
-  String _lightStatus = 'Terang';
+  String _lightStatus = '—';
   int _onlineCount = 0;
   int _totalDevices = 0;
 
@@ -68,27 +68,39 @@ class _HomeTabState extends ConsumerState<HomeTab> {
         _totalDevices = list.length;
         _onlineCount = list.where((d) => d['is_online'] == true).length;
 
-        // Cari data sensor gas dan cahaya
-        for (final d in list) {
-          final channels = d['channels'] as List<dynamic>? ?? [];
-          for (final c in channels) {
-            final type = c['channel_type']?.toString();
-            final key = c['channel_key']?.toString();
-            final val = c['current_value'];
+        if (_onlineCount == 0) {
+          _gasValue = null;
+          _lightStatus = '—';
+          if (!widget.forceDanger) _isGasAlert = false;
+        } else {
+          // Cari data sensor gas dan cahaya dari perangkat online
+          for (final d in list) {
+            if (d['is_online'] != true) continue;
+            final channels = d['channels'] as List<dynamic>? ?? [];
+            for (final c in channels) {
+              final type = c['channel_type']?.toString();
+              final key = c['channel_key']?.toString();
+              final val = c['current_value'];
 
-            if (type == 'gas_sensor' || key == 'mq2') {
-              if (val != null) {
-                final parsed = int.tryParse(val.toString()) ?? (double.tryParse(val.toString())?.toInt() ?? 412);
-                if (!widget.forceDanger) {
-                  _gasValue = parsed;
-                  _isGasAlert = _gasValue >= _gasThreshold;
+              if (type == 'gas_sensor' || key == 'mq2') {
+                if (val != null && val.toString().isNotEmpty) {
+                  final parsed = int.tryParse(val.toString()) ?? (double.tryParse(val.toString())?.toInt());
+                  if (!widget.forceDanger && parsed != null) {
+                    _gasValue = parsed;
+                    _isGasAlert = _gasValue! >= _gasThreshold;
+                  }
+                  _gasRoom = d['room']?.toString() ?? 'Dapur';
                 }
-                _gasRoom = d['room']?.toString() ?? 'Dapur';
-              }
-            } else if (type == 'light_sensor' || key == 'ldr') {
-              if (val != null) {
-                final isBright = val.toString().toLowerCase() == 'true' || val.toString() == '1' || val.toString() == 'terang';
-                _lightStatus = isBright ? 'Terang' : 'Gelap';
+              } else if (type == 'light_sensor' || key == 'ldr') {
+                if (val != null && val.toString().isNotEmpty) {
+                  final numVal = double.tryParse(val.toString());
+                  if (numVal != null) {
+                    _lightStatus = numVal < 500 ? 'Gelap' : 'Terang';
+                  } else {
+                    final isBright = val.toString().toLowerCase() == 'true' || val.toString() == '1' || val.toString() == 'terang';
+                    _lightStatus = isBright ? 'Terang' : 'Gelap';
+                  }
+                }
               }
             }
           }
@@ -194,16 +206,18 @@ class _HomeTabState extends ConsumerState<HomeTab> {
       }
     }
 
-    // Filter perangkat yang ditampilkan di grid
+    // Filter perangkat yang ditampilkan di grid (hanya 4 saklar fisik hardware ESP32 yang terhubung)
+    final physicalKeys = {'lamp_tengah', 'lamp_dapur_tamu', 'lamp_kamar', 'relay'};
     final gridItems = <Map<String, dynamic>>[];
     for (final d in _devices) {
+      if (d['is_online'] != true) continue;
       final room = d['room']?.toString() ?? 'Umum';
       if (_selectedRoom != 'Semua' && room != _selectedRoom) continue;
 
       final channels = d['channels'] as List<dynamic>? ?? [];
       for (final c in channels) {
-        final type = c['channel_type']?.toString();
-        if (type == 'switch' || type == 'relay' || type == 'buzzer') {
+        final key = c['channel_key']?.toString();
+        if (physicalKeys.contains(key)) {
           gridItems.add({
             'device': d,
             'channel': c,
@@ -344,16 +358,20 @@ class _HomeTabState extends ConsumerState<HomeTab> {
                                 ),
                                 const SizedBox(height: 2.0),
                                 Text(
-                                  _isGasAlert ? 'Bahaya' : 'Aman',
+                                  _gasValue == null
+                                      ? 'Tidak terhubung'
+                                      : (_isGasAlert ? 'Bahaya' : 'Aman'),
                                   style: AppTypography.body(
-                                    _isGasAlert ? AppColors.statusDanger : AppColors.statusOk,
+                                    _gasValue == null
+                                        ? textSec
+                                        : (_isGasAlert ? AppColors.statusDanger : AppColors.statusOk),
                                     size: AppTypography.textSm,
                                     weight: FontWeight.w600,
                                   ),
                                 ),
                                 const SizedBox(height: 2.0),
                                 Text(
-                                  '$_gasValue',
+                                  _gasValue == null ? '—' : '$_gasValue',
                                   style: AppTypography.mono(
                                     textSec,
                                     size: AppTypography.textXs,
@@ -362,7 +380,7 @@ class _HomeTabState extends ConsumerState<HomeTab> {
                               ],
                             ),
                           ),
-                          // Kolom Cahaya (hanya Terang / Gelap)
+                          // Kolom Cahaya (hanya Terang / Gelap atau Tidak terhubung)
                           Expanded(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -373,9 +391,9 @@ class _HomeTabState extends ConsumerState<HomeTab> {
                                 ),
                                 const SizedBox(height: 2.0),
                                 Text(
-                                  _lightStatus,
+                                  _onlineCount == 0 ? 'Tidak terhubung' : _lightStatus,
                                   style: AppTypography.body(
-                                    text,
+                                    _onlineCount == 0 ? textSec : text,
                                     size: AppTypography.textSm,
                                     weight: FontWeight.w600,
                                   ),
